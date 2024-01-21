@@ -8,6 +8,8 @@
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
+// console.log(`dinosaur data`, exampleDinosaurData);
+
 /**
  * getLongestDinosaur()
  * ---------------------
@@ -22,7 +24,26 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+
+function convertMetersToFeet (m){
+  return m * 3.281
+}
+
+function getLongestDinosaur(dinosaurs) {
+  let maxLength = 0;
+  let maxDino;
+  for (let dino of dinosaurs) {
+    if (dino.lengthInMeters > maxLength){
+      maxLength = dino.lengthInMeters;
+      maxDino = dino.name;
+      // console.log(`dino name`, dino.name);
+    }
+  }
+  const maxLengthFeet = convertMetersToFeet(maxLength);
+  return (maxDino) ? { [maxDino]: maxLengthFeet } : {};
+}
+
+console.log(getLongestDinosaur(exampleDinosaurData));
 
 /**
  * getDinosaurDescription()
