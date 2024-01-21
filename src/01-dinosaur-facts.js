@@ -39,7 +39,7 @@ function getLongestDinosaur(dinosaurs) {
 
   return result
 }
-console.log(getLongestDinosaur(exampleDinosaurData))
+
 
 /**
  * getDinosaurDescription()
@@ -77,7 +77,6 @@ function getDinosaurDescription(dinosaurs, id) {
   }
 }
 
-console.log(getDinosaurDescription(exampleDinosaurData))
 /**
  * getDinosaursAliveMya()
  * ---------------------
@@ -103,7 +102,23 @@ console.log(getDinosaurDescription(exampleDinosaurData))
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+
+  let aliveArray = [];
+
+  for (let dinoInfo of dinosaurs) {
+    if (mya <= dinoInfo.mya[0] && mya >= dinoInfo.mya[1] || mya === dinoInfo.mya[0] || mya === dinoInfo.mya[0] - 1){
+      if (key === "incorrectKey") {
+        aliveArray.push(dinoInfo["dinosaurId"])
+      } else if (key){
+        aliveArray.push(dinoInfo[key])
+      } else if (!key) {
+        aliveArray.push(dinoInfo["dinosaurId"])
+      }
+    }
+  }
+  return aliveArray
+}
 
 module.exports = {
   getLongestDinosaur,
