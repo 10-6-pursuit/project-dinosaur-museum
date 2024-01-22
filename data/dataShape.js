@@ -35,27 +35,28 @@ tickets: tickets - object of objects representing ticket types - {<object{}>}
   membership: tickets.membership - object representing a ticket type - {}
     description: tickets.membership.description - "General Admission" - {string}
     priceInCents: tickets.membership.priceInCents - {} - object holding ticket prices for visitors
-      child: tickets.membership.priceInCents.child - 2000 - {number}
-      adult: tickets.membership.priceInCents.adult - 3000 - {number}
-      senior: tickets.membership.priceInCents.senior - 2500 - {number}
+      child: tickets.membership.priceInCents.child - 1500 - {number}
+      adult: tickets.membership.priceInCents.adult - 2800 - {number}
+      senior: tickets.membership.priceInCents.senior - 2300 - {number}
 
-  extras: tickets.extras - object representing a ticket type - {}
-    description: tickets.extras.description - "General Admission" - {string}
-    priceInCents: tickets.extras.priceInCents - {} - object holding ticket prices for visitors
-      child: tickets.extras.priceInCents.child - 2000 - {number}
-      adult: tickets.extras.priceInCents.adult - 3000 - {number}
-      senior: tickets.extras.priceInCents.senior - 2500 - {number}
+  extras: tickets.extras - object of objects representing ticket upsales - {}
+    movie: tickets.extras.movie
+      description: tickets.extras.movie.description - "General Admission" - {string}
+      priceInCents: tickets.extras.movie.priceInCents - {} - object holding ticket prices for visitors
+        child: tickets.extras.movie.priceInCents.child - 1000 - {number}
+        adult: tickets.extras.movie.priceInCents.adult - 1000 - {number}
+        senior: tickets.extras.movie.priceInCents.senior - 1000 - {number}
 
-  education: tickets.education - object representing a ticket type - {}
-    description: tickets.education.description - "General Admission" - {string}
-    priceInCents: tickets.education.priceInCents - {} - object holding ticket prices for visitors
-      child: tickets.education.priceInCents.child - 2000 - {number}
-      adult: tickets.education.priceInCents.adult - 3000 - {number}
-      senior: tickets.education.priceInCents.senior - 2500 - {number}
+    education: tickets.extras.education - object representing a ticket type - {}
+      description: tickets.extras.education.description - "General Admission" - {string}
+      priceInCents: tickets.extras.education.priceInCents - {} - object holding ticket prices for visitors
+        child: tickets.extras.education.priceInCents.child - 1000 - {number}
+        adult: tickets.extras.education.priceInCents.adult - 1200 - {number}
+        senior: tickets.extras.education.priceInCents.senior - 1200 - {number}
 
-  terrace: tickets.terrace - object representing a ticket type - {}
-    description: tickets.terrace.description - "General Admission" - {string}
-    priceInCents: tickets.terrace.priceInCents - {} - object holding ticket prices for visitors
-      child: tickets.terrace.priceInCents.child - 2000 - {number}
-      adult: tickets.terrace.priceInCents.adult - 3000 - {number}
-      senior: tickets.terrace.priceInCents.senior - 2500 - {number}
+    terrace: tickets.extras.terrace - object representing a ticket type - {}
+      description: tickets.extras.terrace.description - "General Admission" - {string}
+      priceInCents: tickets.extras.terrace.priceInCents - {} - object holding ticket prices for visitors
+        child: tickets.extras.terrace.priceInCents.child - 500 - {number}
+        adult: tickets.extras.terrace.priceInCents.adult - 1000 - {number}
+        senior: tickets.extras.terrace.priceInCents.senior - 1000 - {number}

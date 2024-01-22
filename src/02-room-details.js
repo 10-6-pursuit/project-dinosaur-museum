@@ -100,7 +100,6 @@ const badID = 'xwG7O4wQl';
     ]
  */
 
-
 function getConnectedRoomNamesById(rooms, id) {
   // find room by id
   // get connectTo array of roomIds
@@ -112,7 +111,6 @@ function getConnectedRoomNamesById(rooms, id) {
   
   let connectedRoomsById;
   let connectedRoomsByName = [];
-  let connectedRoomError;
 
   for (let i = 0; i < rooms.length; i++) {
     roomsById.push(rooms[i].roomId);
@@ -126,7 +124,7 @@ function getConnectedRoomNamesById(rooms, id) {
   if (initialRoomIndex === null) {
     return `Room with ID of '${id}' could not be found.`
   }
-  
+
   for (let connectedRoomId of connectedRoomsById) {
     let connectedRoomIndex = roomsById.indexOf(connectedRoomId)
     if (connectedRoomIndex > -1) {
@@ -143,9 +141,8 @@ function getConnectedRoomNamesById(rooms, id) {
   return connectedRoomsByName;
 }
 
-
-console.log(getConnectedRoomNamesById(exampleRoomData, 'A6QaYdyKra'));
-console.log(getConnectedRoomNamesById(input, 'xwG7O4wQl'));
+// console.log(getConnectedRoomNamesById(exampleRoomData, 'A6QaYdyKra'));
+// console.log(getConnectedRoomNamesById(input, 'xwG7O4wQl'));
 
 /**
  * takes looks for room id in rooms and outputs the room name
