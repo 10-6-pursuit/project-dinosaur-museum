@@ -104,6 +104,11 @@ function getDinosaursAliveMya(dinosaurs, mya, key = 'dinosaurId') {
   return res;
 }
 
+// Stretch goals
+
+/** getNumber of Dinosaurs */
+
+
 module.exports = {
   getLongestDinosaur,
   getDinosaurDescription,
