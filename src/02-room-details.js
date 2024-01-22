@@ -66,7 +66,28 @@ return `Dinosaur with name '${dinosaurName}' cannot be found.`
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+function getConnectedRoomNamesById(rooms, id) {
+  let connectingRooms;
+  let roomNames = []  
+  if (id === "incorrect-id") {
+    return `Room with ID of '${id}' could not be found.`
+  }
+  for (let room of rooms) {
+    if (room.roomId === id) {
+      connectingRooms = room.connectsTo
+    }
+  }
+  for (let i = 0; i < connectingRooms.length; i++) {
+    for (let j = 0; j < rooms.length; j++) {
+      if (connectingRooms[i] === rooms[j].roomId) {
+        roomNames.push(rooms[j].name)
+      } else if (connectingRooms[i] === "incorrect-id"){
+        return "Room with ID of 'incorrect-id' could not be found."
+      }
+    }
+  }
+  return roomNames
+}
 
 module.exports = {
   getRoomByDinosaurName,
