@@ -26,7 +26,7 @@ function getLongestDinosaur(dinosaurs) {
   if (!dinosaurs.length) {
     return {};
   }
-  
+
   let max = -Infinity;
   let obj = {};
   for (let i = 0; i < dinosaurs.length; i++) {
@@ -69,13 +69,16 @@ function getDinosaurDescription(dinosaurs, id) {
     const pronunciation = dinosaurs[i].pronunciation;
     const info = dinosaurs[i].info;
     const period = dinosaurs[i].period;
-    const mya = dinosaurs[i].mya;
+    let mya = dinosaurs[i].mya
+    
+    if(mya.length > 1) {
+      mya = dinosaurs[i].mya[1];
+    } else {
+      mya = dinosaurs[i].mya;
+    }
 
     if (id === dinoID) {
-      if (mya.length > 1) {
-        newMya = mya[1];
-      }
-      return `${name} (${pronunciation})\n${info} It lived in the ${period} period, over ${newMya} million years ago.`;
+      return `${name} (${pronunciation})\n${info} It lived in the ${period} period, over ${mya} million years ago.`;
     }
   }
   return `A dinosaur with an ID of 'incorrect-id' cannot be found.`;
