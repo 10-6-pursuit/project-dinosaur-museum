@@ -73,11 +73,17 @@ function getDinosaurDescription(dinosaurs, id) {
     const dinoName = dinosaur.name;
     const dinoInfo = dinosaur.info;
     const dinoPronunciation = dinosaur.pronunciation;
+    const dinoMya = dinosaur.mya
+    const dinoPeriod = dinosaur.period
 
     if (dinoId === id) {
-      description = `${dinoName} ${dinoPronunciation}`
+      description = `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived over ${dinoMya} million years ago`
     } 
 
+  }
+
+  if(!description) {
+    description = `A dinosaur with an ID of '${id}' cannot be found.`
   }
 
   return description;
