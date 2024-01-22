@@ -31,10 +31,10 @@ function getLongestDinosaur(dinosaurs) {
   if (!dinosaurs.length) return {};
 
   for (let elem of dinosaurs) {
-    if (elem["lengthInMeters"] > maxLength) {
-      maxLength = elem["lengthInMeters"];
-      longestDinosaur = elem["name"];
-      maxFeet = elem["lengthInMeters"] * 3.281;
+    if (elem.lengthInMeters > maxLength) {
+      maxLength = elem.lengthInMeters;
+      longestDinosaur = elem.name;
+      maxFeet = elem.lengthInMeters * 3.281;
     }
   }
 
@@ -62,7 +62,22 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  for (let dino of dinosaurs) {
+    let millionYears = +Infinity;
+    if (dino.dinosaurId === id) {
+      for (let i = 0; i < dino.mya.length; i++) {
+        if (dino.mya[i] < millionYears) {
+          millionYears = dino.mya[i];
+        }
+      }
+      return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${millionYears} million years ago.`
+    }
+  }
+  return `A dinosaur with an ID of '${id}' cannot be found.`;
+}
+
+//console.log(getDinosaurDescription(exampleDinosaurData,"U9vuZmgKwUr"));
 
 /**
  * getDinosaursAliveMya()
