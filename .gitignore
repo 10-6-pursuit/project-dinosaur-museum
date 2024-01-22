@@ -1,2 +1,7 @@
 node_modules/
 .DS_Store
+02-room-details.js
+03-ticket-calculator.js
+02-room-details.test.js
+03-ticket-calculator.test.js
+
