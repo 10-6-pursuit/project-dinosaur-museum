@@ -8,8 +8,6 @@
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
-// console.log(`dinosaur data`, exampleDinosaurData);
-
 /**
  * getLongestDinosaur()
  * ---------------------
@@ -25,9 +23,6 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  //> { Brachiosaurus: 98.43 }
  */
 
-function convertMetersToFeet (m){
-  return m * 3.281
-}
 
 function getLongestDinosaur(dinosaurs) {
   let maxLength = 0;
@@ -38,11 +33,9 @@ function getLongestDinosaur(dinosaurs) {
       maxDino = dino.name;
     }
   }
-  const maxLengthFeet = convertMetersToFeet(maxLength);
+  const maxLengthFeet = maxLength * 3.281; // convert meters to feet
   return (maxDino) ? { [maxDino]: maxLengthFeet } : {};
 }
-
-console.log(getLongestDinosaur(exampleDinosaurData));
 
 /**
  * getDinosaurDescription()
@@ -72,8 +65,6 @@ function getDinosaurDescription(dinosaurs, id) {
   }
   return `A dinosaur with an ID of '${id}' cannot be found.`
 }
-
-console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EYKN"));
 
 /**
  * getDinosaursAliveMya()
@@ -112,9 +103,6 @@ function getDinosaursAliveMya(dinosaurs, mya, key = 'dinosaurId') {
   }
   return res;
 }
-
-console.log(getDinosaursAliveMya(exampleDinosaurData, 66, 'incorrectKey'))
-
 
 module.exports = {
   getLongestDinosaur,
