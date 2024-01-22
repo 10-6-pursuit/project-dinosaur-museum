@@ -23,20 +23,24 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  //> { Brachiosaurus: 98.43 }
  */
 function getLongestDinosaur(dinosaurs) {
-  if (dinosaurs.length < 1) {
+  if (!dinosaurs.length) {
     return {};
   }
+  
   let max = -Infinity;
-  // let obj = {};
+  let obj = {};
   for (let i = 0; i < dinosaurs.length; i++) {
-    const dinoLength = dinosaurs[i].lengthInMeters;
     const dinoName = dinosaurs[i].name;
-    if (dinoLength > max) {
-      max = dinoLength;
+    const dinoLengthInFeet = dinosaurs[i].lengthInMeters * 3.281;
+    if (dinoLengthInFeet > max) {
+      max = dinoLengthInFeet;
+      maxName = dinoName;
     }
   }
-  return max;
+  obj[maxName] = max;
+  return obj;
 }
+//we need to have {Brachiosaurus: 98.43}
 
 /**
  * getDinosaurDescription()
@@ -104,7 +108,7 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   //return all dinos ids for current mya to an array
-  //array.push?
+  //array.push? //YES
   //if key provided: return the key values for all dinos in the current mya, instead of ids
   //if key does not have value, return ID's
   //if mya.length === 1
@@ -113,11 +117,11 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   let arr = [];
 
   for (let i = 0; i < dinosaurs.length; i++) {
-    const currentDino = dinosaurs[i]
+    const currentDino = dinosaurs[i];
     const currentDinoMya = dinosaurs[i].mya;
     const currentDinoId = dinosaurs[i].dinosaurId;
 
-    if(currentDinoMya.includes(mya) && currentDino[key]) {
+    if (currentDinoMya.includes(mya) && currentDino[key]) {
       arr.push(currentDino[key]);
     } else if (currentDinoMya.includes(mya) && !currentDino[key]) {
       arr.push(currentDinoId);
