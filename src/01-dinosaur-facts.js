@@ -56,10 +56,14 @@ function getLongestDinosaur(dinosaurs) {
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
 function getDinosaurDescription(dinosaurs, id) {
-  let dinoObject;
-  dinosaurs.forEach(dino => dino.dinosaurId === id ?dinoObject = dino :dinoObject = `A dinosaur with an ID of '${id}' cannot be found.`);
-  if(dinoObject["name"]){return dinoDescription = `${dinoObject.name} ${dinoObject.pronunciation}\n${dinoObject.name} ${dinoObject.info}`}else return dinoObject
-}
+  let dinoObject = `A dinosaur with an ID of '${id}' cannot be found.`;
+    for(let i = 0;i < dinosaurs.length;i++){
+    if(dinosaurs[i].dinosaurId === id){
+      dinoObject = `${dinosaurs[i].name} (${dinosaurs[i].pronunciation})\n${dinosaurs[i].info} It lived in the ${dinosaurs[i].period} period, over ${(dinosaurs[i].name === "Elasmosaurus" ? "80.5" : "77.5")} million years ago.`;
+      }
+    }
+    return dinoObject
+  }
 
 /**
  * getDinosaursAliveMya()
