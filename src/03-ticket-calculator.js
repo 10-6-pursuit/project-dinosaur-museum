@@ -155,8 +155,69 @@ const ticketInfo = {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
+  for (let ticket of purchases) {
+    if (checkTicketInfo(ticketData, ticket)) {
+      return checkTicketInfo(ticketData, ticket);
+    }
+  }
 
+  const tickets = [];
+  let purchasePriceInCents = 0; 
+  
+  // for each ticket entrantType, ticketType,:, priceInDollars, (extras)
+  for (let ticket of purchases) {
+    // console.log(`for loop`, calculateTicketPrice(ticketData, ticket));
+    const { entrantType, ticketType, extras } = ticket;
+    const ticketPriceInCents = calculateTicketPrice(ticketData, ticket);
+
+    // push ticket info to tickets array
+    tickets.push(`${entrantType} ${ticketType} Admission: $${String(ticketPriceInCents).slice(0,-2)}.${String(ticketPriceInCents).slice(-2)} (${extras.join(' ACCESS, ')})`);
+
+    // accumulate ticket pirices to purchasePriceInCents
+    purchasePriceInCents += ticketPriceInCents;
+  }
+
+  // console.log(`tickets`, tickets.join('\n'));
+
+  const greeting = 'Thank you for visiting the Dinosaur Museum!';
+  const horiRule = `\n${'-'.repeat(43)}\n`;
+  const purchaseTotal = `TOTAL: $${String(purchasePriceInCents).slice(0,-2)}.${String(purchasePriceInCents).slice(-2)}`;
+  
+  const receipt = 
+    greeting +
+    horiRule +
+    tickets.join('\n') +
+    horiRule +
+    purchaseTotal;
+
+  console.log(`purchase\n`, receipt);
+  return receipt;
 }
+
+purchases = [
+  {
+    ticketType: "general",
+    entrantType: "adult",
+    extras: ["movie", "terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "senior",
+    extras: ["terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"],
+  },
+];
+
+purchaseTickets(exampleTicketData, purchases);
 
 // Do not change anything below this line.
 module.exports = {
