@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const { TestWatcher } = require("jest");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,7 +23,17 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  let dinoName;
+  let dinoObj = {}
+  let largestDino = 0;
+  dinosaurs.forEach((dino) =>{if(dino.lengthInMeters > largestDino){
+    largestDino = dino.lengthInMeters;
+    dinoName = dino.name;
+  }})
+    dinoObj[dinoName] = largestDino*3.281;
+    return dinoObj
+  }
 
 /**
  * getDinosaurDescription()
@@ -44,7 +55,11 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  let dinoObject;
+  dinosaurs.forEach(dino => dino.dinosaurId === id ?dinoObject = dino :dinoObject = `A dinosaur with an ID of '${id}' cannot be found.`);
+  if(dinoObject["name"]){return dinoDescription = `${dinoObject.name} ${dinoObject.pronunciation}\n${dinoObject.name} ${dinoObject.info}`}else return dinoObject
+}
 
 /**
  * getDinosaursAliveMya()
