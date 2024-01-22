@@ -59,6 +59,7 @@ function getDinosaurDescription(dinosaurs, id) {
   if (!foundDinosaur) return `A dinosaur with an ID of '${id}' cannot be found.`;
 
   const description = `${foundDinosaur.name} (${foundDinosaur.pronunciation})\n${foundDinosaur.info} It lived in the ${foundDinosaur.period} period, over ${Math.min(...foundDinosaur.mya)} million years ago.`
+  
   return description;
 }
 
