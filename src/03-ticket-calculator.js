@@ -56,25 +56,23 @@ const exampleTicketData = require("../data/tickets");
  */
 
 // main function
-function calculateTicketPrice(ticketData, ticketInfo) {
-  const { ticketType, entrantType, extras } = ticketInfo;
-  
-  const ticketError = checkTicketInfo(ticketData, ticketType, entrantType, extras);
+function calculateTicketPrice(ticketData, ticketInfo) {  
+  const ticketError = checkTicketInfo(ticketData, ticketInfo);
   if (ticketError) return ticketError;
 
-  const admissionPrice = calculateAdmissionPrice(ticketData, ticketType, entrantType)
-  const addonsPrice = calculateAddonPrice(ticketData, extras, entrantType);
+  const admissionPrice = calculateAdmissionPrice(ticketData, ticketInfo)
+  const addonsPrice = calculateAddonPrice(ticketData, ticketInfo);
   return admissionPrice + addonsPrice;
 }
 
 // helper function
-function calculateAdmissionPrice(ticketData, ticketType, entrantType) {
+function calculateAdmissionPrice(ticketData, { ticketType, entrantType }) {
   const admissionPrice = ticketData[ticketType].priceInCents[entrantType];
   return admissionPrice;
 }
 
 // helper function
-function calculateAddonPrice(ticketData, extras, entrantType) {
+function calculateAddonPrice(ticketData, { extras, entrantType }) {
   let addonPrice = 0;
   for (let addon of extras) {
     addonPrice += ticketData.extras[addon].priceInCents[entrantType]
@@ -82,7 +80,7 @@ function calculateAddonPrice(ticketData, extras, entrantType) {
   return addonPrice;
 }
  // helper function
-function checkTicketInfo(ticketData, ticketType, entrantType, extras) {
+function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
   const validTicketTypes = Object.keys(ticketData);
   const validEntrants = Object.keys(ticketData.general.priceInCents);
   const validAddons = Object.keys(ticketData.extras);
