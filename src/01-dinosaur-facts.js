@@ -36,11 +36,11 @@ function getLongestDinosaur(dinosaurs) {
 
     if(dinosaur.lengthInMeters>longestDinosaurLength){
   
-        longestDinosaurLength=dinosaur.lengthInMeters
+        longestDinosaurLength=dinosaur.lengthInMeters;
       
-        dinosaurName=dinosaur.name
+        dinosaurName=dinosaur.name;
 
-        dinosaurLengthInFeet=longestDinosaurLength*3.28
+        dinosaurLengthInFeet=longestDinosaurLength*3.28;
   
     };
   };
@@ -109,7 +109,36 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  for (let dinosaur of dinosaurs){
+    console.log(dinosaur)
+    let dinosaurMyaRange=[];
+    if(dinosaur.mya.length===1){
+       if(dinosaur.mya[0]===mya){
+        if(dinosaur[key]){
+
+          return dinosaur[key]
+        }
+        else return dinosaur.dinosaurId
+       }
+
+    }
+    else{for(let j=dinosaur.mya.length-1;j<dinosaur.mya[0];j++){
+      dinosaurMyaRange.push(j)
+
+      if(dinosaurMyaRange.includes(mya)){
+
+       if(dinosaur[key]){
+
+         return dinosaur[key]
+       }
+       else return dinosaur.dinosaurId
+
+  }
+   }
+} 
+  }  
+}
 
 module.exports = {
   getLongestDinosaur,
