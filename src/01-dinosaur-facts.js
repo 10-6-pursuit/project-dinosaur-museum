@@ -31,7 +31,8 @@ function getLongestDinosaur(dinosaurs) {
     largestDino = dino.lengthInMeters;
     dinoName = dino.name;
   }})
-    dinoObj[dinoName] = largestDino*3.281;
+    dinoObj[dinoName] = largestDino*3.281
+    dinoObj[dinoName] ? dinoObj[dinoName] = largestDino*3.281 : dinoObj = {}
     return dinoObj
   }
 
