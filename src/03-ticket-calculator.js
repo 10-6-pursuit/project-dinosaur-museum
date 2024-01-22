@@ -57,21 +57,24 @@ const exampleTicketData = require("../data/tickets");
 
 // main function
 function calculateTicketPrice(ticketData, ticketInfo) {  
+  // check for ticket for invalid ticket info
   const ticketError = checkTicketInfo(ticketData, ticketInfo);
   if (ticketError) return ticketError;
 
+  // calculate price of admission and extras
   const admissionPrice = calculateAdmissionPrice(ticketData, ticketInfo)
   const addonsPrice = calculateAddonPrice(ticketData, ticketInfo);
+  
   return admissionPrice + addonsPrice;
 }
 
-// helper function
+// Helper function - Calculate admission price
 function calculateAdmissionPrice(ticketData, { ticketType, entrantType }) {
   const admissionPrice = ticketData[ticketType].priceInCents[entrantType];
   return admissionPrice;
 }
 
-// Helper function 
+// Helper function - Calculate price of extras on ticket
 function calculateAddonPrice(ticketData, { extras, entrantType }) {
   let addonPrice = 0;
   for (let addon of extras) {
@@ -81,10 +84,12 @@ function calculateAddonPrice(ticketData, { extras, entrantType }) {
 }
  // Helper function - check ticket info for invalid info
 function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
+  // get arrays of ticket valid ticket types, entrants, and extras
   const validTicketTypes = Object.keys(ticketData);
   const validEntrants = Object.keys(ticketData.general.priceInCents);
   const validAddons = Object.keys(ticketData.extras);
 
+  // Check if all ticket info is invalid. If invalid return appropriate error
   if (!validTicketTypes.includes(ticketType)) return `Ticket type '${ticketType}' cannot be found.`
   if (!validEntrants.includes(entrantType)) return `Entrant type '${entrantType}' cannot be found.`
   for (let addon of extras) {
@@ -92,14 +97,6 @@ function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
   }
   return false;
 }
-
-const ticketInfo = {
-  ticketType: "general",
-  entrantType: "child",
-  extras: ["movie", "education"],
-};
-
-// console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
 
 /**
  * purchaseTickets()
