@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const dinosaurs = require("../data/dinosaurs");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,8 +23,36 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
 
+//Pseudo Code
+//We need a variable to hold our dinosaur name. 
+//We have to create an obj to hold our return value.
+//We need to have a variable to store each dinosaurs length to compare it 
+//Next we have to use a for loop to iterate through our dinosaurs array.
+//We will need a second loop to iterate through each dinosaur obj.
+//We need to key in to the first desired obj location and assign it to our variable.
+//We have to compare our next target key with our stored variable to find the largest.
+//We convert our value from meters to feet.
+//Initialize our empObj to Dinosaur name and the value of our variable as a key.
+//Lastly return our empObj(use better name!). 
+function getLongestDinosaur(dinosaurs) {
+  const longestDino = {};
+  let dinoName = null; 
+  let dinoLength = 0;
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    for (let dino in dinosaurs) {
+      if (dino.lengthInMeters > dinoLength) {
+        dinoLength = dino.lengthInMeters * 3.281;
+        dinoName = dino.name;
+      }
+    }
+    longestDino.dinoName = dinoLength;
+  }
+  return longestDino;
+}
+
+// console.log(getLongestDinosaur(dinosaurs));
 /**
  * getDinosaurDescription()
  * ---------------------
