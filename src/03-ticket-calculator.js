@@ -171,8 +171,8 @@ function purchaseTickets(ticketData, purchases) {
 
     // Include destructure of ticket and extra descriptions
 
-    // map extras to add `access` for receipt
-    const access = extras.map(extra => `${capWord(extra)} Access`)
+    // map extras to add `extra description` for receipt
+    const access = extras.map(extra => ticketData.extras[extra].description);
 
     // get ticket admission and extra info
     const admissionDetails = `${capWord(entrantType)} ${ticketData[ticketType].description}: ${centsToDollars(ticketPriceInCents)}`
