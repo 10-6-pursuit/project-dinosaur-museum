@@ -1,3 +1,5 @@
+// shows the path and data type of the data involved in the project
+
 // dinosaurs.js
 dinosaurs: dinosaurs - array of objects - {object[]}
   dinosaur: dinosaur[i] - object representing a dinosaur - {}
