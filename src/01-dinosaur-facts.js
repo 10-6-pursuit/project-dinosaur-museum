@@ -25,7 +25,6 @@ const exampleDinosaurData = require("../data/dinosaurs");
 function getLongestDinosaur(dinosaurs) {
   if (!dinosaurs.length) return {};
   let longestDinosaur = dinosaurs[0];
-  // let longestDinosaur = {}; 
 
   for (let i = 0; i < dinosaurs.length; i++) {
     
@@ -67,7 +66,24 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].info === id) {
+      
+      
+      
+    }
+    
+  }
+   
+  
+}
+    
+    
+
+
 
 /**
  * getDinosaursAliveMya()
