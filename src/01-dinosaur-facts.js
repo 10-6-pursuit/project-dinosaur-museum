@@ -26,10 +26,7 @@ const exampleDinosaurData = require("../data/dinosaurs");
 
 //Pseudo Code
 //We need a variable to hold our dinosaur name. 
-//We have to create an obj to hold our return value.
-//We need to have a variable to store each dinosaurs length to compare it 
 //Next we have to use a for loop to iterate through our dinosaurs array.
-//We will need a second loop to iterate through each dinosaur obj.
 //We need to key in to the first desired obj location and assign it to our variable.
 //We have to compare our next target key with our stored variable to find the largest.
 //We convert our value from meters to feet.
@@ -73,11 +70,12 @@ function getLongestDinosaur(dinosaurs) {
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
 function getDinosaurDescription(dinosaurs, id) {
-  // for (let i = 0; i < dinosaurs.length; i++) {
-  // //   for (let dino of dinosaurs) {
-  // //     if (dino)
-  //   }
-  // }
+  for (let dino of dinosaurs) {
+    if (dino.dinosaurId === id) {
+      return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[1] || dino.mya[0]} million years ago.`
+    }
+  }
+  return `A dinosaur with an ID of '${[id]}' cannot be found.`
 }
 
 /**
