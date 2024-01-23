@@ -22,7 +22,18 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  if(!dinosaurs.length) return{};
+  
+  let longestDino = dinosaurs[0]
+
+  for(let currDino of dinosaurs){
+    if(currDino.lengthInMeters > longestDino.lengthInMeters){
+      longestDino = currDino;
+    }
+  }
+  return { [longestDino.name] : longestDino.lengthInMeters * 3.281}
+}
 
 /**
  * getDinosaurDescription()
@@ -35,7 +46,7 @@ function getLongestDinosaur(dinosaurs) {}
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @param {string} id - The unique identifier for the dinosaur.
- * @returns {string} A detailed description of the dinosaur.
+ * @return {string} A detailed description of the dinosaur.
  *
  * EXAMPLE:
  *  getDinosaurDescription(dinosaurs, "U9vuZmgKwUr");
