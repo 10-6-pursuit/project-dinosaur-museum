@@ -103,7 +103,7 @@ function getDinosaurDescription(dinosaurs, id) {
 function getDinosaursAliveMya(dinosaurs, mya, key) {
 	const dinosuarListByMya = dinosaurs.filter((ele) => {
 		return (
-			(mya < ele.mya[0] && mya > ele.mya[1]) ||
+			(mya <= ele.mya[0] && mya >= ele.mya[1]) ||
 			ele.mya[0] === mya ||
 			mya === (ele.mya[0] - 1)
 		);

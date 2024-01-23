@@ -60,6 +60,7 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     ]
  */
 function getConnectedRoomNamesById(rooms, id) {
+
 	const connectedRooms = rooms.filter((ele) =>
 		ele.connectsTo.some((ele) => ele === id)
 	);
