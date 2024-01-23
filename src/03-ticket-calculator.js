@@ -169,6 +169,8 @@ function purchaseTickets(ticketData, purchases) {
     const { entrantType, ticketType, extras } = ticket;
     const ticketPriceInCents = calculateTicketPrice(ticketData, ticket);
 
+    // Include destructure of ticket and extra descriptions
+
     // map extras to add `access` for receipt
     const access = extras.map(extra => `${capWord(extra)} Access`)
 
