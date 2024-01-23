@@ -55,7 +55,7 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 
-// main function
+// Main function
 function calculateTicketPrice(ticketData, ticketInfo) {  
   // check for ticket for invalid ticket info
   const ticketError = checkTicketInfo(ticketData, ticketInfo);
@@ -68,13 +68,13 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   return admissionPrice + addonsPrice;
 }
 
-// Helper function - Calculate admission price
+// Helper function - calculate admission price
 function calculateAdmissionPrice(ticketData, { ticketType, entrantType }) {
   const admissionPrice = ticketData[ticketType].priceInCents[entrantType];
   return admissionPrice;
 }
 
-// Helper function - Calculate price of extras on ticket
+// Helper function - calculate price of extras on ticket
 function calculateAddonPrice(ticketData, { extras, entrantType }) {
   let addonPrice = 0;
   for (let addon of extras) {
@@ -89,7 +89,8 @@ function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
   const validEntrants = Object.keys(ticketData.general.priceInCents);
   const validAddons = Object.keys(ticketData.extras);
 
-  // Check if all ticket info is invalid. If invalid return appropriate error
+  // check if all ticket info is invalid
+  //  if invalid return appropriate error
   if (!validTicketTypes.includes(ticketType)) return `Ticket type '${ticketType}' cannot be found.`
   if (!validEntrants.includes(entrantType)) return `Entrant type '${entrantType}' cannot be found.`
   for (let addon of extras) {
@@ -151,6 +152,8 @@ function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
+
+// Main function
 function purchaseTickets(ticketData, purchases) {
   // check tickets in purchases for errors
   for (let ticket of purchases) {
@@ -165,13 +168,11 @@ function purchaseTickets(ticketData, purchases) {
   
   // for each ticket entrantType, ticketType,:, priceInDollars, (extras)
   for (let ticket of purchases) {
-    // destructure each ticket in purchases
+    // destructure iterated ticket in purchases
     const { entrantType, ticketType, extras } = ticket;
     const ticketPriceInCents = calculateTicketPrice(ticketData, ticket);
 
-    // Include destructure of ticket and extra descriptions
-
-    // map extras to add `extra description` for receipt
+    // map `extras` to `access` to add `extras description` for receipt
     const access = extras.map(extra => ticketData.extras[extra].description);
 
     // get ticket admission and extra info
@@ -201,12 +202,12 @@ function purchaseTickets(ticketData, purchases) {
   return receipt;
 }
 
-// helper function - Capitalize word
+// Helper function - capitalize word
 function capWord(s) {
   return s[0].toUpperCase()+s.slice(1).toLowerCase()
 }
 
-// helper function - Cents to Dollars
+// Helper function - convert cents to dollars
 function centsToDollars(cents) {
   const strCents = String(cents);
   return `$${strCents.slice(0, -2)}.${strCents.slice(-2)}`
