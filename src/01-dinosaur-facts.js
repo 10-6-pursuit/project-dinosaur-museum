@@ -36,20 +36,26 @@ const exampleDinosaurData = require("../data/dinosaurs");
 //Initialize our empObj to Dinosaur name and the value of our variable as a key.
 //Lastly return our empObj(use better name!). 
 function getLongestDinosaur(dinosaurs) {
-  const longestDino = {};
-  let dinoName = null; 
-  let dinoLength = 0;
-
-  for (let i = 0; i < dinosaurs.length; i++) {
-    for (let dino in dinosaurs) {
-      if (dino.lengthInMeters > dinoLength) {
-        dinoLength = dino.lengthInMeters * 3.281;
-        dinoName = dino.name;
-      }
-    }
-    longestDino.dinoName = dinoLength;
+  if (!dinosaurs.length) {
+    return {};
   }
-  return longestDino;
+  let longestDino = dinosaurs[0];
+  // let dinoName = null; 
+  // let dinoLength = 0;
+
+  // for (let i = 1; i < dinosaurs.length; i++) {
+    for (let dino of dinosaurs) {
+      if (dino.lengthInMeters > longestDino.lengthInMeters) {
+        longestDino = dino;
+        // dinoLength = dino.lengthInMeters * 3.281;
+        // dinoName = dino.name;
+      }
+      // longestDino.dinoName = dino.dinoLength;
+    }
+  // }
+  return {
+    [longestDino.name]: longestDino.lengthInMeters * 3.281
+  };
 }
 
 // console.log(getLongestDinosaur(dinosaurs));
@@ -73,7 +79,13 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  // for (let i = 0; i < dinosaurs.length; i++) {
+  // //   for (let dino of dinosaurs) {
+  // //     if (dino)
+  //   }
+  // }
+}
 
 /**
  * getDinosaursAliveMya()
