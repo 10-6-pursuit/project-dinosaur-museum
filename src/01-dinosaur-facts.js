@@ -25,10 +25,10 @@ const exampleDinosaurData = require("../data/dinosaurs");
 function getLongestDinosaur(dinosaurs) {
  let longestDino = null
 
-  for (const dinosaur of dinosaurs) {
-    const dinoName = dinosaur.name
-    const height = dinosaur.lengthInMeters
-    const heightInFeet = height * 3.281
+  for (const dinosaur of dinosaurs) { // itterate thru dinosaurs obj
+    const dinoName = dinosaur.name // path to dino name
+    const height = dinosaur.lengthInMeters// path to dinoheight
+    const heightInFeet = height * 3.281 // dino height converted
     
     if (longestDino === null || heightInFeet > longestDino.height) {
       longestDino = {
@@ -38,7 +38,7 @@ function getLongestDinosaur(dinosaurs) {
     }   
     
   }
-  if (longestDino === null) {
+  if (longestDino === null) {//  if no dino in obj return empty obj
     return {};
   }
 
@@ -77,13 +77,13 @@ function getDinosaurDescription(dinosaurs, id) {
     const dinoPeriod = dinosaur.period
 
     if (dinoId === id) {
-      description = `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived over ${dinoMya} million years ago`
+      description = `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
     } 
 
   }
 
   if(!description) {
-    description = `A dinosaur with an ID of '${id}' cannot be found.`
+    description = `A dinosaur with an ID of 'incorrect-id' cannot be found.`
   }
 
   return description;
