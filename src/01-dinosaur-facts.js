@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const dinosaurs = require("../data/dinosaurs");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -17,12 +18,54 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @returns {Object} An object where the key is the name of the dinosaur and the value is the height of the dinosaur in feet.
+ * 
+ *  function getLongestDinosaur(arr){
+ *  for (let i = 0; i < arr.length; i++){
+ *  const obj === arr[i];
+ *  if (obj.lengthInMeters === lengthInMeters){
+ * }
+ * 
+ * }
+ * }
  *
  * EXAMPLE:
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+// function getLongestDinosaur(arr) {
+//   for (let i = 0; i < arr.length; i++){
+//      const obj = arr[i];
+//       if (obj.lengthInMeters === lengthInMeters){
+//         return {"name": obj.lengthInMeters * 3.281};
+//      }
+     
+//     }
+//     return undefined;
+//    }
+
+// getLongestDinosaur();
+
+//1. Find the longest dinosaurs
+
+function getLongestDinosaur(dinosaur) {
+  if (!dinosaurs.length){
+
+  } return {};
+  let longestDino = dinosaur[0];
+   for(let currDino of dinosaurs) {
+    if (currDino.lengthInMeters > longestDino.lengthInMeters) {
+      longestDino = currDino;
+    }
+
+   }
+   return {
+     [longestDino.name] : longestDino.lengthInMeters * 3.281
+   }
+}
+
+getLongestDinosaur();
+
+// return a new on=bj with the dino name as a key (dino.name) and lengthinfeet is the value * 3.281
 
 /**
  * getDinosaurDescription()
