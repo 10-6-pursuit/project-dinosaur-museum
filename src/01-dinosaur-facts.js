@@ -45,6 +45,12 @@ function getLongestDinosaur(dinosaurs) {
   return {[longestDino.name]: longestDino.height}
 }
 
+
+function getLongestDino( dinosaurs) {
+  let longestDino = [0];
+
+  
+}
 /**
  * getDinosaurDescription()
  * ---------------------
@@ -73,8 +79,12 @@ function getDinosaurDescription(dinosaurs, id) {
     const dinoName = dinosaur.name;
     const dinoInfo = dinosaur.info;
     const dinoPronunciation = dinosaur.pronunciation;
-    const dinoMya = dinosaur.mya
+    let dinoMya = dinosaur.mya[0]
     const dinoPeriod = dinosaur.period
+
+      if (dinoPeriod.includes("Early")) {
+        dinoMya = dinosaur.mya[1]
+      }
 
     if (dinoId === id) {
       description = `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
