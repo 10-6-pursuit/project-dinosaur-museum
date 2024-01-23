@@ -175,7 +175,7 @@ function purchaseTickets(ticketData, purchases) {
     const access = extras.map(extra => `${capWord(extra)} Access`)
 
     // get ticket admission and extra info
-    const admissionDetails = `${capWord(entrantType)} ${capWord(ticketType)} Admission: ${centsToDollars(ticketPriceInCents)}`
+    const admissionDetails = `${capWord(entrantType)} ${ticketData[ticketType].description}: ${centsToDollars(ticketPriceInCents)}`
     const extrasDetails = access.length ? ' ('+access.join(', ')+')' : '';
 
     // push ticket admission or admission + extras info
