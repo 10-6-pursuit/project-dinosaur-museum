@@ -95,16 +95,17 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   const dinoExistedMya = []
   for(let dino of dinosaurs){
   let dinoArray = dino.mya;
-  for(let i = 0;i < dinoArray.length;i++){
-    if(dinoArray[i] > mya  && dinoArray[i] < mya+10){
+    if(dinoArray.length === 1 && (mya === dinoArray[0]-1 || dinoArray[0] === mya)){
+      dinoExistedMya.push(dino.dinosaurId)
+    }
+    if(dinoArray[0] >= mya  && dinoArray[1] <= mya){
       if(key){
-        dinoExistedMya.push(dino[key])
+        dinoExistedMya.push(dino["dinosaurId"])
       }else dinoExistedMya.push(dino.dinosaurId)
     }
    }
-  }
     return dinoExistedMya;
-}
+  }
 
 module.exports = {
   getLongestDinosaur,
