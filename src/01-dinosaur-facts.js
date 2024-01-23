@@ -23,7 +23,6 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  //> { Brachiosaurus: 98.43 }
  */
 
-
 function getLongestDinosaur(dinosaurs) {
   let maxLength = 0;
   let maxDino;
@@ -57,6 +56,7 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
+
 function getDinosaurDescription(dinosaurs, id) {
   for (let dino of dinosaurs) {
     if (dino.dinosaurId === id) {
@@ -114,7 +114,7 @@ function getNumberOfDinosaurs(dinosaurs) {
 }
 
 function printNumOfDinoMess() {
-  console.log(`The Museum has ${getNumberOfDinosaurs(exampleDinosaurData)} life size dinosaurs on exhibit!`);
+  console.log(`The Dinosaur Museum has ${getNumberOfDinosaurs(exampleDinosaurData)} life size dinosaurs on exhibit!`);
 }
 
 printNumOfDinoMess();
