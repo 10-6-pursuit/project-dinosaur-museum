@@ -40,19 +40,12 @@ function getLongestDinosaur(dinosaurs) {
     return {};
   }
   let longestDino = dinosaurs[0];
-  // let dinoName = null; 
-  // let dinoLength = 0;
 
-  // for (let i = 1; i < dinosaurs.length; i++) {
     for (let dino of dinosaurs) {
       if (dino.lengthInMeters > longestDino.lengthInMeters) {
         longestDino = dino;
-        // dinoLength = dino.lengthInMeters * 3.281;
-        // dinoName = dino.name;
       }
-      // longestDino.dinoName = dino.dinoLength;
     }
-  // }
   return {
     [longestDino.name]: longestDino.lengthInMeters * 3.281
   };
