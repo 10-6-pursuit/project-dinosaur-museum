@@ -103,7 +103,19 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  const dinoValues = [];
+
+  for (let dino of dinosaurs) {
+    if (dino[key] === key && dino[mya] === mya) {
+      dinoValues.push(dino.key);
+
+    } else if (dino.mya[1] || dino.mya[1-1] === mya) {
+      dinoValues.push(dino.dinosaurId);
+    }
+  }
+  return dinoValues;
+}
 
 module.exports = {
   getLongestDinosaur,
