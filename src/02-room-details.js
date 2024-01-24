@@ -104,12 +104,12 @@ function getConnectedRoomNamesById(rooms, id) {
 
   // iterate through the list of rooms connected to target room
   for (let connectedRoomId of connectedRoomsById) {
-    // If the connectedRoomId is found in roomsById save the location
+    // if the connectedRoomId is found in roomsById save the location
     let connectedRoomIndex = roomsById.indexOf(connectedRoomId)
     if (connectedRoomIndex > -1) { // check if the roomId was found in roomsById
-      // Using the element at the same location in roomsByName;
+      // use the element at the same location in roomsByName;
       connectedRoomsByName.push(roomsByName[connectedRoomIndex]);
-    } else {
+    } else { // the connected room ID is incorrect.
       return `Room with ID of '${connectedRoomId}' could not be found.`
     }
   }
