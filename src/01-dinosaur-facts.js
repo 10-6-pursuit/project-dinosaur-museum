@@ -69,9 +69,9 @@ function getDinosaurDescription(dinosaurs, id) {
     const pronunciation = dinosaurs[i].pronunciation;
     const info = dinosaurs[i].info;
     const period = dinosaurs[i].period;
-    let mya = dinosaurs[i].mya
-    
-    if(mya.length > 1) {
+    let mya = dinosaurs[i].mya;
+
+    if (mya.length > 1) {
       mya = dinosaurs[i].mya[1];
     } else {
       mya = dinosaurs[i].mya;
@@ -109,25 +109,33 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
+
+// ------Fixed the range. Now add the arr.length ==== 1 mya || mya + 1
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-  //return all dinos ids for current mya to an array
-  //array.push? //YES
-  //if key provided: return the key values for all dinos in the current mya, instead of ids
-  //if key does not have value, return ID's
-  //if mya.length === 1
-  //return empty array if mya does not match
-
-  let arr = [];
-
+  const arr = [];
   for (let i = 0; i < dinosaurs.length; i++) {
     const currentDino = dinosaurs[i];
-    const currentDinoMya = dinosaurs[i].mya;
-    const currentDinoId = dinosaurs[i].dinosaurId;
+    const dinosaurId = dinosaurs[i].dinosaurId;
+    const dinosaurMya = dinosaurs[i].mya;
 
-    if (currentDinoMya.includes(mya) && currentDino[key]) {
-      arr.push(currentDino[key]);
-    } else if (currentDinoMya.includes(mya) && !currentDino[key]) {
-      arr.push(currentDinoId);
+    if (currentDino[key] && dinosaurMya.length > 1) {
+      if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
+        arr.push(currentDino[key]);
+      }
+    } else if (currentDino[key] && dinosaurMya.length === 1) {
+      if (mya === dinosaurMya || mya === dinosaurMya - 1) {
+        arr.push(currentDino[key]);
+      }
+    }
+
+    if (!currentDino[key] && dinosaurMya.length > 1) {
+      if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
+        arr.push(dinosaurId);
+      }
+    } else if (!currentDino[key] && dinosaurMya.length === 1) {
+      if (mya === dinosaurMya || mya === dinosaurMya - 1) {
+        arr.push(dinosaurId);
+      }
     }
   }
   return arr;

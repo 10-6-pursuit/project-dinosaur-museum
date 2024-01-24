@@ -25,7 +25,37 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+
+//What do we want to match between both object?
+//If given a dinosaur name, output the room that it's in
+//We do this by: going to the dinosaurs object (list), look for the dinosaur by name:
+//if(dinoName === dinosaurName)
+//If it does find it, then get it's dinoId.
+//match that dinoId with rooms[j].dinosaurs, and return the dinosaurs[j].room
+
+//We then want to
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  for (let i = 0; i < dinosaurs.length; i++) {
+    const dinoName = dinosaurs[i].name;
+    const dinoId = dinosaurs[i].dinosaurId;
+
+    for (let j = 0; j < rooms.length; j++) {
+      const dinosInRoom = rooms[j].dinosaurs;
+      const dinoRoomName = rooms[j].name;
+
+      for (let k = 0; k < dinosInRoom.length; k++) {
+        const specificDinoId = dinosInRoom[k];
+
+        if (dinoName === dinosaurName) {
+          if (dinoId === specificDinoId) {
+            return dinoRoomName;
+          }
+        }
+      }
+    }
+  }
+  return `Dinosaur with name '${dinosaurName}' cannot be found.`;
+}
 
 /**
  * getConnectedRoomNamesById()
@@ -49,7 +79,8 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+function getConnectedRoomNamesById(rooms, id) {
+  }
 
 module.exports = {
   getRoomByDinosaurName,
