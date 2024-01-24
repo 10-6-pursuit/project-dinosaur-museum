@@ -23,22 +23,21 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  //> { Brachiosaurus: 98.43 }
  */
 function getLongestDinosaur(dinosaurs) {
-  let longestDinosaur = null;
-    let maxLength = 0;
+  if (dinosaurs.length === 0){
+    return {};
+  }
 
-    dinosaurs.forEach(dino => {
-        if (dino.length > maxLength) {
-            maxLength = dino.length;
-            longestDinosaur = dino;
-        }
-    });
-
-    if (longestDinosaur) {
-        // Convert length from meters to feet
-        longestDinosaur.length = longestDinosaur.length * 3.28084;
+  let longestDinosaur = dinosaurs[0];
+  for (let i = 1; i < dinosaurs.length; i++){
+    if(dinosaurs[i].lengthInMeters > longestDinosaur.lengthInMeters) {
+      longestDinosaur = dinosaurs[i];
     }
+  }
+  const lengthInFeet = longestDinosaur.lengthInMeters * 3.281;
+  const result = {};
+  result[longestDinosaur.name] = parseFloat(lengthInFeet.toFixed(2));
 
-    return longestDinosaur;
+  return result;
 }
 
 /**
@@ -61,7 +60,15 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+let result = null;
+
+  dinosaurs.forEach(dino => {
+    if (dinosaurs.name === dinosaurName) {
+      result = {id: dinosaur.id, description: dinosaur.description };
+    }
+  });
+}
 
 /**
  * getDinosaursAliveMya()
