@@ -26,16 +26,16 @@ function getLongestDinosaur(dinosaurs) {
   if(!dinosaurs.length){
     return {}
   } 
-  let longest = -Infinity;
+  let longestLength = -Infinity;
   for (let i = 0; i < dinosaurs.length; i++) {
-    if (dinosaurs[i].lengthInMeters > longest) {
-      longest = dinosaurs[i].lengthInMeters
+    if (dinosaurs[i].lengthInMeters > longestLength) {
+      longestLength = dinosaurs[i].lengthInMeters
     }
   }
   let longestDinoObj = {}
-  let first = dinosaurs.find(dino => dino.lengthInMeters === longest)
+  let first = dinosaurs.find(dino => dino.lengthInMeters === longestLength)
   
-  longestDinoObj[first.name] = longest * 3.281
+  longestDinoObj[first.name] = longestLength * 3.281
 
   return longestDinoObj
 }
