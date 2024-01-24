@@ -67,7 +67,8 @@ function getDinosaurDescription(dinosaurs, id) {
 
   for (let i = 0; i < dinosaurs.length; i++){
       if (dinosaurs[i].dinosaurId === id){
-    string = `${dinosaurs[i].name} (${dinosaurs[i].pronunciation})\n${dinosaurs[i].info} It lived in the ${dinosaurs[i].period} period, over ${dinosaurs[i].mya[dinosaurs[i].mya.length - 1]} million years ago.`
+        const dino = dinosaurs[i]
+    string = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`
   }
 }
   if (id === "incorrect-id"){
