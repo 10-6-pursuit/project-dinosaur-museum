@@ -64,6 +64,7 @@ function getLongestDinosaur(dinosaurs) {
 function getDinosaurDescription(dinosaurs, id) {
   
   let dinoDescription;
+  const errorMsg = `A dinosaur with an ID of '${id}' cannot be found.`
 
   for (let i = 0; i < dinosaurs.length; i++){
     if (dinosaurs[i].dinosaurId === id){
@@ -72,7 +73,7 @@ function getDinosaurDescription(dinosaurs, id) {
         return dinoDescription
     }
   }
-  return `A dinosaur with an ID of '${id}' cannot be found.`
+  return errorMsg
 }
 
 /**
@@ -102,20 +103,20 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
 
-  let aliveArray = [];
+  let aliveDinoArray = [];
 
   for (let dinoInfo of dinosaurs) {
     if (mya <= dinoInfo.mya[0] && mya >= dinoInfo.mya[1] || mya === dinoInfo.mya[0] || mya === dinoInfo.mya[0] - 1){
       if (key === "incorrectKey") {
-        aliveArray.push(dinoInfo["dinosaurId"])
+        aliveDinoArray.push(dinoInfo.dinosaurId)
       } else if (key){
-        aliveArray.push(dinoInfo[key])
+        aliveDinoArray.push(dinoInfo[key])
       } else if (!key) {
-        aliveArray.push(dinoInfo["dinosaurId"])
+        aliveDinoArray.push(dinoInfo.dinosaurId)
       }
     }
   }
-  return aliveArray
+  return aliveDinoArray
 }
 
 module.exports = {
