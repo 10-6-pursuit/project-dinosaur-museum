@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const dinosaurs = require("../data/dinosaurs");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,7 +23,25 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  if (!dinosaurs.length) return {};
+  
+  let dino = dinosaurs[0];
+  let bigBoy = {
+    [dino.name]: dino['lengthInMeters'], 
+  };
+
+  let comp = dinosaurs[0].lengthInMeters;
+
+  for (let i of dinosaurs) {
+    if (i.lengthInMeters > comp) {
+      comp = i.lengthInMeters;
+      bigBoy = {[i.name]: i.lengthInMeters * 3.281}
+    }
+  }
+
+  return bigBoy;
+}
 
 /**
  * getDinosaurDescription()
@@ -44,7 +63,16 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  let dino = dinosaurs.find((dino) => dino.dinosaurId === id);
+  if (!dino) return `A dinosaur with an ID of '${id}' cannot be found.`;
+
+  if (dino.mya.length > 1) {
+    return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[1]} million years ago.`;
+  } else {
+    return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[0]} million years ago.`;
+  }
+}
 
 /**
  * getDinosaursAliveMya()
