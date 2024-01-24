@@ -42,7 +42,6 @@
 | - - - senior     | tickets.general.priceInCents.senior | {number}     | 2500 |
 
 ### tickets.membership
-
 | Element / Key    | Path                                   | Type         | Value / Description                         | Reference |
 |------------------|----------------------------------------|--------------|---------------------------------------------|-----------|
 | tickets          | tickets                                | {<object{}>} | object of objects representing ticket types | 
