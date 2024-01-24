@@ -32,12 +32,12 @@ function getLongestDinosaur(dinosaurs) {
       longest = dinosaurs[i].lengthInMeters
     }
   }
-  let result = {}
-  let first = dinosaurs.find(ele => ele.lengthInMeters === longest)
+  let longestDinoObj = {}
+  let first = dinosaurs.find(dino => dino.lengthInMeters === longest)
   
-  result[first.name] = longest * 3.281
+  longestDinoObj[first.name] = longest * 3.281
 
-  return result
+  return longestDinoObj
 }
 
 
@@ -63,19 +63,16 @@ function getLongestDinosaur(dinosaurs) {
  */
 function getDinosaurDescription(dinosaurs, id) {
   
-  let string;
+  let dinoDescription;
 
   for (let i = 0; i < dinosaurs.length; i++){
-      if (dinosaurs[i].dinosaurId === id){
+    if (dinosaurs[i].dinosaurId === id){
         const dino = dinosaurs[i]
-    string = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`
+        dinoDescription = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`
+        return dinoDescription
+    }
   }
-}
-  if (id === "incorrect-id"){
-    return "A dinosaur with an ID of 'incorrect-id' cannot be found."
-  } else {
-  return string
-  }
+  return `A dinosaur with an ID of '${id}' cannot be found.`
 }
 
 /**
