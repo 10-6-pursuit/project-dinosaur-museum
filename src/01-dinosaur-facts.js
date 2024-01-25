@@ -34,7 +34,7 @@ function getLongestDinosaur(dinosaurs) {
     if(dinosaurs[i].lengthInMeters > dinoLength) {
       dinoLength = dinosaurs[i].lengthInMeters;
       dinoName = dinosaurs[i].name;
-    };
+    }
   }
   return {[dinoName] : (dinoLength * 3.281)};
 }
@@ -61,7 +61,9 @@ console.log(getLongestDinosaur(exampleDinosaurData));
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+}
+
 
 /**
  * getDinosaursAliveMya()
