@@ -99,7 +99,17 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, time, key) {
+  const dinos = [];
+
+  for (let index of dinosaurs) {
+    if (time <= index.mya[0] && time >= index.mya[1] || time === index.mya[0] || time === index.mya[0] - 1) {
+      dinos.push(index[key] || index.dinosaurId);
+    }
+  }
+
+  return dinos;
+}
 
 module.exports = {
   getLongestDinosaur,
