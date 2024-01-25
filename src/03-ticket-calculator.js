@@ -132,7 +132,57 @@ function calculateTicketPrice(ticketData, ticketInfo, ticketType = ticketInfo.ti
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+
+//--------------------------------------- HELPER FUNCTIONS ----------------------------------------------------------------
+
+const isTicketValid = (arr) => arr.ticketType === "general" || arr.ticketType === "membership";
+const isEntrantValid = (arr) => arr.entrantType === "adult" || arr.entrantType === "child" || arr.entrantType === "senior";
+const isExtraValid = (arr) => arr.extras.every((elem) => elem === "movie" || elem === "terrace" || elem === "education");
+const sumOfExtras = (arr,ticketData) => arr.extras.reduce((sum, currentVal) => (currentVal === "movie" || currentVal === "education" || currentVal === "terrace") ? (sum + ticketData.extras[currentVal]["priceInCents"][arr.entrantType]) : sum + 0, 0);
+const firstLetterCap = string => {
+  let array = string.split("");
+  array[0] = array[0].toUpperCase();
+  return array.join(""); 
+}
+
+const extrasStringFormation = (array) => {
+  let resultString = ` (`;
+  if (array.length === 0) return "";
+
+  for (let elem of array) {
+    elem = firstLetterCap(elem);
+    resultString += `${elem} Access, `;
+  }
+  if (resultString.length > 0) {
+    let newResultString = resultString.split("");
+    newResultString.splice(newResultString.length-2, 2, ")");
+    resultString = newResultString.join("");
+  }
+  return resultString;
+}
+
+//-------------------------------------------------------------------------------------------------------------------------
+
+function purchaseTickets(ticketData, purchases) {
+  let finalReceipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n`;
+  let ticketSum;
+  let finalTicketSum = 0
+  let extraSum;
+  for (let purchase of purchases) {
+    if (isTicketValid(purchase) && isEntrantValid(purchase)) {
+      if (!isExtraValid(purchase) && purchase.extras.length > 0) return `Extra type '${purchase.extras[0]}' cannot be found.`
+      extraSum = sumOfExtras(purchase,ticketData);
+      ticketSum = (ticketData[purchase.ticketType]["priceInCents"][purchase.entrantType] + extraSum) / 100;
+      finalTicketSum += ticketSum;
+      finalReceipt += `${firstLetterCap(purchase.entrantType)} ${firstLetterCap(purchase.ticketType)} Admission: $${ticketSum}.00${extrasStringFormation(purchase.extras)}\n`;
+    } else {
+      if (!isTicketValid(purchase)) return `Ticket type '${purchase.ticketType}' cannot be found.`;
+      if (!isEntrantValid(purchase)) return `Entrant type '${purchase.entrantType}' cannot be found.`
+    }
+  }
+  finalReceipt += `-------------------------------------------\nTOTAL: $${finalTicketSum}.00`;
+  return finalReceipt;
+}
 
 // Do not change anything below this line.
 module.exports = {
