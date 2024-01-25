@@ -30,26 +30,32 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
 
   for(let dino of dinosaurs){
     if(dino.name === dinosaurName){
-      tempId = dino.dinosaurId
-      continue;
-    } else {
-      roomName = `Dinosaur with name '${dinosaurName}' cannot be found.`
+      tempId = dino.dinosaurId;
+      break;
     }
   }
+  if (!tempId) roomName = `Dinosaur with name '${dinosaurName}' cannot be found.`;
+  // if (roomName.length) return roomName;
 
   for(let room of rooms){
     for(let dinoId of room.dinosaurs){
       if(tempId === dinoId){
         roomName = room.name;
-        continue;
+        break;
       } 
     }
   }
+
+  let errorMessage = `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+  if(roomName.length < 1){
+    roomName = errorMessage;
+  } 
+
   return roomName;
 }
 
 
- console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, "Tyrannosaurus"));
+console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, "Tyrannosaurus"));
 
 /**
  * getConnectedRoomNamesById()
@@ -102,10 +108,12 @@ function getConnectedRoomNamesById(rooms, id) {
     }
   }
 
+
+
   return connectedRooms;
 }
 
-console.log(getConnectedRoomNamesById(exampleRoomData, "Y707HL8pp uP9"));
+//console.log(getConnectedRoomNamesById(exampleRoomData, "Y707HL8pp uP9"));
 
 module.exports = {
   getRoomByDinosaurName,
