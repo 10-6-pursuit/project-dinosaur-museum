@@ -81,14 +81,14 @@ function getDinosaurDescription(dinosaurs, id) {
   }
 
   if (dinoID) {
-    return `${dinoName} ${dinoPronunciation}\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
+    return `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
   } else {
-    return `A dinosaur with an ID of ${id} cannot be found.`
+    return `A dinosaur with an ID of '${id}' cannot be found.`
   }
 
 }
 
-console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EYKN"));
+console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EN"));
 
 
 /**
