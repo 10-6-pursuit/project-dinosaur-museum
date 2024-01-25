@@ -98,6 +98,24 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 
 function getDinosaursAliveMya(dinosaurs, mya, key) {
+  let arr = [];
+
+  for (let dino of dinosaurs) {
+    let maxMya = dino.mya[0];
+    let minMya = dino.mya[1];
+  
+
+    if (maxMya && minMya) {
+      if (mya >= minMya && mya <= maxMya) {
+        arr.push(dino[key] || dino.dinosaurId);
+      }
+    } else {
+      if ( mya <= maxMya && mya >= (maxMya -1)  ){
+        arr.push(dino[key] || dino.dinosaurId);
+      }
+    } 
+  }
+  return arr;
 }
 
 module.exports = {
