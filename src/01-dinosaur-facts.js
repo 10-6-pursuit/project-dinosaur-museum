@@ -33,22 +33,29 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-// function getLongestDinosaur(arr) {
-//   for (let i = 0; i < arr.length; i++){
-//      const obj = arr[i];
-//       if (obj.lengthInMeters === lengthInMeters){
-//         return {"name": obj.lengthInMeters * 3.281};
-//      }
-     
-//     }
-//     return undefined;
-//    }
+function getLongestDinosaur(dinosaurs) {
+  let longestDino = dinosaurs[0];
+    if (!longestDino) return {};
+    
 
+  for (let i = 1; i< dinosaurs.length; i++) {
+    if (longestDino.lengthInMeters < dinosaurs[i].lengthInMeters) {
+      longestDino = dinosaurs[i];
+      
+    }
+        
+  } 
+  const answer = { 
+    [longestDino.name]: longestDino.lengthInMeters * 3.281
+  }
+  return answer;
+}
+//[longestDino.name]: longestDino.lengthInMeters * 3.281
 // getLongestDinosaur();
 
-//1. Find the longest dinosaurs
+// 1. Find the longest dinosaurs
 
-// function getLongestDinosaur(dinosaur) {
+// // function getLongestDinosaur(dinosaur) {
 //   if (!dinosaurs.length){
 
 //   } return {};
@@ -131,10 +138,18 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-// function getDinosaursAliveMya(dinosaurs, mya, key) {}
+ function getDinosaursAliveMya(dinosaurs, mya, key) {
+  const objArr= [];
+  let dino;
+   for (let i = 0; i < dinosaurs.length; i++) {
 
-// module.exports = {
-//   getLongestDinosaur,
-//   getDinosaurDescription,
-//   getDinosaursAliveMya,
-// };
+   }
+
+  return objArr;
+}
+
+module.exports = {
+  getLongestDinosaur,
+  getDinosaurDescription,
+  getDinosaursAliveMya,
+};
