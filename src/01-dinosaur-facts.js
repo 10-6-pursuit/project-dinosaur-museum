@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const dinosaurs = require("../data/dinosaurs");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,7 +23,21 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+
+function getLongestDinosaur(dinosaurs) {
+  if (!dinosaurs.length) {
+    return {};
+  }
+  let longestDino = dinosaurs[0];
+  for (let i = 1; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].lengthInMeters > longestDino.lengthInMeters) {
+      longestDino = dinosaurs[i];
+    }
+  }
+  return {
+    [longestDino.name]: longestDino.lengthInMeters * 3.281
+  };
+}
 
 /**
  * getDinosaurDescription()
@@ -44,7 +59,10 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+
+function getDinosaurDescription(dinosaurs, id) {
+}
+
 
 /**
  * getDinosaursAliveMya()
@@ -71,7 +89,9 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+}
 
 module.exports = {
   getLongestDinosaur,
