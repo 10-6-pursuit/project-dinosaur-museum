@@ -61,6 +61,13 @@ function getLongestDinosaur(dinosaurs) {
  */
 
 function getDinosaurDescription(dinosaurs, id) {
+  for (let i = 0; i < dinosaurs.length; i++) {
+    let dino = dinosaurs[i];
+    if (id === dino.dinosaurId) {
+      return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`;
+    }
+  } 
+  return "A dinosaur with an ID of '" + id + "' cannot be found.";
 }
 
 
