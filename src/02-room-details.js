@@ -39,6 +39,7 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     const dinoName = dinosaurs[i].name;
     const dinoId = dinosaurs[i].dinosaurId;
 
+    //rooms is just the parameter, should apply to input as well.
     for (let j = 0; j < rooms.length; j++) {
       const dinosInRoom = rooms[j].dinosaurs;
       const dinoRoomName = rooms[j].name;
@@ -46,10 +47,8 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
       for (let k = 0; k < dinosInRoom.length; k++) {
         const specificDinoId = dinosInRoom[k];
 
-        if (dinoName === dinosaurName) {
-          if (dinoId === specificDinoId) {
-            return dinoRoomName;
-          }
+        if (dinoName === dinosaurName && dinoId === specificDinoId) {
+          return dinoRoomName;
         }
       }
     }
@@ -80,7 +79,34 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     ]
  */
 function getConnectedRoomNamesById(rooms, id) {
+  const arrIds = [];
+  const nameArr = [];
+
+  for (let i = 0; i < rooms.length; i++) {
+    const roomId = rooms[i].roomId;
+    const connectsTo = rooms[i].connectsTo;
+    const name = rooms[i].name;
+
+    for (let j = 0; j < connectsTo.length; j++) {
+      const connectRoomById = connectsTo[j];
+      if (id === roomId) {
+        arrIds.push(connectRoomById);
+      }
+    }
   }
+  for (let uniqIds of arrIds) {
+    for (let room of rooms) {
+      if (uniqIds === room.roomId) {
+        nameArr.push(room.name);
+      }
+    }
+  }
+  if (nameArr.length === 0) {
+    return `Room with ID of '${id}' could not be found.`;
+  } else {
+    return nameArr;
+  }
+}
 
 module.exports = {
   getRoomByDinosaurName,

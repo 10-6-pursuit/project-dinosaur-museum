@@ -40,7 +40,6 @@ function getLongestDinosaur(dinosaurs) {
   obj[maxName] = max;
   return obj;
 }
-//we need to have {Brachiosaurus: 98.43}
 
 /**
  * getDinosaurDescription()
@@ -110,30 +109,31 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 
-// ------Fixed the range. Now add the arr.length ==== 1 mya || mya + 1
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   const arr = [];
   for (let i = 0; i < dinosaurs.length; i++) {
     const currentDino = dinosaurs[i];
-    const dinosaurId = dinosaurs[i].dinosaurId;
-    const dinosaurMya = dinosaurs[i].mya;
+    const dinosaurId = currentDino.dinosaurId;
+    let dinosaurMya = currentDino.mya;
 
     if (currentDino[key] && dinosaurMya.length > 1) {
       if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
         arr.push(currentDino[key]);
       }
-    } else if (currentDino[key] && dinosaurMya.length === 1) {
-      if (mya === dinosaurMya || mya === dinosaurMya - 1) {
+    };
+
+    if (currentDino[key] && dinosaurMya.length === 1) {
+      if (mya === dinosaurMya[0] || mya === (dinosaurMya[0] - 1)) {
         arr.push(currentDino[key]);
       }
-    }
+    };
 
     if (!currentDino[key] && dinosaurMya.length > 1) {
       if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
         arr.push(dinosaurId);
       }
     } else if (!currentDino[key] && dinosaurMya.length === 1) {
-      if (mya === dinosaurMya || mya === dinosaurMya - 1) {
+      if (mya === dinosaurMya[0] || mya === (dinosaurMya[0] - 1)) {
         arr.push(dinosaurId);
       }
     }
