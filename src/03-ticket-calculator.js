@@ -57,15 +57,21 @@ const exampleTicketData = require("../data/tickets");
 function calculateTicketPrice(ticketData, ticketInfo) {
   let totalPrice = 0;
 
-  for(let i = 0; i < ticketData.length; i++){
-    if(ticketInfo.ticketType === ticketData[i]){
-      for(let j = 0; j < ticketData[i].length; j++){
-        if(ticketInfo.entrantType === ticketData[i][j]){
-          totalPrice = ticketData[i][j]
-        }
-      }
+  for(let tier in ticketData){
+    if(tier === ticketInfo.ticketType){
+      
     }
   }
+
+  // for(let tier in ticketData){
+  //   if(ticketData[tier] === ticketInfo.ticketType){
+  //     for(let price in tier.priceInCents){
+  //       if(tier.priceInCents[price] === ticketInfo.entrantType){
+  //         totalPrice = tier.priceInCents["price"];
+  //       }
+  //     }
+  //   }
+  // }
   return totalPrice;
 }
 
