@@ -55,30 +55,52 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
-	if (!ticketData[ticketInfo.ticketType]) {
-		return `Ticket type '${ticketInfo.ticketType}' cannot be found.`;
+	const validation = isTicketValid(ticketData, ticketInfo);
+	if (!validation.isValid) return validation.error;
+
+	const membershipCost = calcMembershipCost(ticketData, ticketInfo);
+	const extrasCost = calcExtrasCost(ticketData, ticketInfo);
+
+	return membershipCost + extrasCost;
+}
+
+function calcMembershipCost(ticketData, ticket) {
+	return ticketData[ticket.ticketType].priceInCents[ticket.entrantType];
+}
+function calcExtrasCost(ticketData, ticket) {
+	return ticket.extras.reduce((acc, curr) => {
+		acc += ticketData.extras[curr].priceInCents[ticket.entrantType];
+		return acc;
+	}, 0);
+}
+
+function isTicketValid(ticketData, ticket) {
+	if (!ticketData[ticket.ticketType]) {
+		return {
+			isValid: false,
+			error: `Ticket type '${ticket.ticketType}' cannot be found.`,
+		};
 	}
 
-	if (!ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]) {
-		return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+	if (!ticketData[ticket.ticketType].priceInCents[ticket.entrantType]) {
+		return {
+			isValid: false,
+			error: `Entrant type '${ticket.entrantType}' cannot be found.`,
+		};
 	}
 
-	let incorrectExtra = ticketInfo.extras.find((ele) => {
+	let incorrectExtra = ticket.extras.find((ele) => {
 		if (!ticketData.extras[ele]) {
 			return ele;
 		}
 	});
 	if (incorrectExtra) {
-		return `Extra type '${incorrectExtra}' cannot be found.`;
+		return {
+			isValid: false,
+			error: `Extra type '${incorrectExtra}' cannot be found.`,
+		};
 	}
-
-	const ticketCost =
-		ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType];
-	const extrasCost = ticketInfo.extras.reduce((acc, curr) => {
-		acc += ticketData.extras[curr].priceInCents[ticketInfo.entrantType];
-		return acc;
-	}, 0);
-	return ticketCost + extrasCost;
+	return { isValid: true, error: null };
 }
 
 /**
@@ -135,67 +157,66 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
-	purchases.forEach((ele) => {
-		if (!ele.ticketType) {
-			return `Ticket type '${ele.ticketType}' cannot be found.`;
-		}
+	for (ticket of purchases) {
+		const validation = isTicketValid(ticketData, ticket);
 
-		if (!ele.entrantType) {
-			return `Entrant type '${ele.entrantType}' cannot be found.`;
+		if (!validation.isValid) {
+			return validation.error;
 		}
+	}
 
-		let incorrectExtra = ele.extras.find((item) => {
-			if (!item) {
-				return item;
-			}
-		});
-		if (incorrectExtra) {
-			return `Extra type '${incorrectExtra}' cannot be found.`;
-		}
-	});
-
-	let partialTicket = "";
+	let purchaseDetails = "";
 	let total = 0;
-	purchases.forEach((ele) => {
-		const extrasList = [];
-		let subTotal = 0;
-		const extrasCost = ele.extras.reduce((acc, curr) => {
-			extrasList.push(ticketData.extras[curr].description);
-			acc += ticketData.extras[curr].priceInCents[ele.entrantType];
-			return acc;
-		}, 0);
 
-		const membershipCost =
-			ticketData[ele.ticketType].priceInCents[ele.entrantType];
-
-		subTotal = extrasCost + membershipCost;
-		total += subTotal;
-		const entrantType = capitalizeWord(ele.entrantType);
-		const ticketType = capitalizeWord(ele.ticketType);
-
-		let ticketLine =
-			extrasList.length > 0
-				? `${entrantType} ${ticketType} Admission: ${formatCentsToDollarsCurrency(
-						subTotal
-				  )} (${extrasList.join(", ")})`
-				: `${entrantType} ${ticketType} Admission: ${formatCentsToDollarsCurrency(
-						subTotal
-				  )}`;
-
-		partialTicket += "\n" + ticketLine;
+	purchases.forEach((ticket) => {
+		const purchaseDetail = createPurchaseDetail(ticketData, ticket);
+		purchaseDetails += purchaseDetail.purchaseDetail;
+		total += purchaseDetail.subTotal;
 	});
 
-	const finalTicket = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------${partialTicket}\n-------------------------------------------\nTOTAL: ${formatCentsToDollarsCurrency(
-		total
-	)}`;
-	return finalTicket;
+	const receipt = createReciept(purchaseDetails, total);
+
+	return receipt;
+}
+
+function createPurchaseDetail(ticketData, ticket) {
+	const membershipCost = calcMembershipCost(ticketData, ticket);
+	const extrasCost = calcExtrasCost(ticketData, ticket);
+	const subTotal = extrasCost + membershipCost;
+	const entrantType = capitalizeWord(ticket.entrantType);
+	const ticketType = capitalizeWord(ticket.ticketType);
+	const extrasDescription = getExtrasDescription(ticketData, ticket);
+	const subTotalFormatted = formatCentsToDollarsCurrency(subTotal);
+
+	const purchaseDetail = extrasDescription
+		? `${entrantType} ${ticketType} Admission: ${subTotalFormatted} ${extrasDescription}`
+		: `${entrantType} ${ticketType} Admission: ${subTotalFormatted}`;
+
+	return { purchaseDetail: "\n" + purchaseDetail, subTotal };
+}
+
+function getExtrasDescription(ticketData, ticket) {
+	if (ticket.extras.length > 0) {
+		const extrasList = ticket.extras.map(
+			(item) => ticketData.extras[item].description
+		);
+		return `(${extrasList.join(", ")})`;
+	}
 }
 
 function capitalizeWord(word) {
 	return word[0].toUpperCase() + word.slice(1);
 }
+
 function formatCentsToDollarsCurrency(cents) {
 	return `$${(cents / 100).toFixed(2)}`;
+}
+
+function createReciept(purchaseDetails, total) {
+	const totalFormatted = formatCentsToDollarsCurrency(total);
+	const receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------${purchaseDetails}\n-------------------------------------------\nTOTAL: ${totalFormatted}`;
+
+	return receipt;
 }
 
 // Do not change anything below this line.
