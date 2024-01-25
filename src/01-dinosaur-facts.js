@@ -62,7 +62,33 @@ console.log(getLongestDinosaur(exampleDinosaurData));
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
 function getDinosaurDescription(dinosaurs, id) {
+  let dinoID = "";
+  let dinoName = "";
+  let dinoPronunciation = "";
+  let dinoInfo = "";
+  let dinoPeriod = "";
+  let dinoMya = 0;
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if(dinosaurs[i].dinosaurId === id) {
+      dinoID = dinosaurs[i].dinosaurId;
+      dinoName = dinosaurs[i].name;
+      dinoPronunciation = dinosaurs[i].pronunciation;
+      dinoInfo = dinosaurs[i].info;
+      dinoPeriod = dinosaurs[i].period;
+      dinoMya = dinosaurs[i].mya[dinosaurs[i].mya.length - 1];
+    }
+  }
+
+  if (dinoID) {
+    return `${dinoName} ${dinoPronunciation}\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
+  } else {
+    return `A dinosaur with an ID of ${id} cannot be found.`
+  }
+
 }
+
+console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EYKN"));
 
 
 /**
