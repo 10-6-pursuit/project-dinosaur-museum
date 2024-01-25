@@ -31,7 +31,7 @@ function getLongestDinosaur(dinosaurs) {
   }
 
   for (let i = 0; i < dinosaurs.length; i++) {
-    if(dinosaurs[i].lengthInMeters > dinoLength) {
+    if (dinosaurs[i].lengthInMeters > dinoLength) {
       dinoLength = dinosaurs[i].lengthInMeters;
       dinoName = dinosaurs[i].name;
     }
@@ -70,7 +70,7 @@ function getDinosaurDescription(dinosaurs, id) {
   let dinoMya = 0;
 
   for (let i = 0; i < dinosaurs.length; i++) {
-    if(dinosaurs[i].dinosaurId === id) {
+    if (dinosaurs[i].dinosaurId === id) {
       dinoID = dinosaurs[i].dinosaurId;
       dinoName = dinosaurs[i].name;
       dinoPronunciation = dinosaurs[i].pronunciation;
@@ -116,7 +116,33 @@ console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EN"));
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  const dinoArray = [];
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].mya.length === 1) {
+      if (mya <= dinosaurs[i].mya[0] && mya >= (dinosaurs[i].mya[0] - 1)) {
+        if (dinosaurs[i][key]) {
+          dinoArray.push(dinosaurs[i][key]);
+        } else {
+          dinoArray.push(dinosaurs[i].dinosaurId);
+        }
+      }
+    } else {
+      if (mya <= dinosaurs[i].mya[0] && mya >= dinosaurs[i].mya[1]) {
+        if (dinosaurs[i][key]) {
+          dinoArray.push(dinosaurs[i][key]);
+        } else {
+          dinoArray.push(dinosaurs[i].dinosaurId);
+        }
+      }
+    }
+  }
+  return dinoArray;
+}
+
+console.log(getDinosaursAliveMya(exampleDinosaurData, 150, "name"));
+
 
 module.exports = {
   getLongestDinosaur,
