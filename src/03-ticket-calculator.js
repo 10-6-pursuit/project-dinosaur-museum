@@ -192,7 +192,7 @@ function purchaseTickets(ticketData, purchases) {
     "",
   );
 
-  let ExtraReceiptString = extraPurchasesArray.reduce(
+  let extraReceiptString = extraPurchasesArray.reduce(
     (a, b) =>
       a +
       `${b.entrantType[0].toUpperCase() + b.entrantType.slice(1)} ${
@@ -204,7 +204,7 @@ function purchaseTickets(ticketData, purchases) {
   
   let receiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${noExtraReceiptString}-------------------------------------------\nTOTAL: $${ticketTotal / 100}.00`
 
-  let extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${ExtraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`
+  let extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`
 
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length === 0 && humanType.includes(purchases[0].entrantType)) {
     return receiptMsg
