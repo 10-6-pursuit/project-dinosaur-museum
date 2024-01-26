@@ -156,7 +156,90 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  let sum = 0;
+  let totalSum = 0;
+  const totalForEach = [];
+  const messageArr = [];
+
+  for (let i = 0; i < purchases.length; i++) {
+    const ticketType = purchases[i].ticketType;
+    const entrantType = purchases[i].entrantType;
+    let str = "";
+
+    for (let extra of purchases[i].extras) {
+      if (purchases[i]["extras"].length === 1) {
+        eachExtra = extra.charAt(0).toUpperCase() + extra.slice(1) + " Access";
+        str += eachExtra;
+      } else {
+        eachExtra =
+          extra.charAt(0).toUpperCase() + extra.slice(1) + " Access, ";
+        str += eachExtra;
+      }
+      if (extra !== "education" && extra !== "movie" && extra !== "terrace") {
+        return `Extra type '${extra}' cannot be found.`;
+      }
+    }
+    if (ticketType !== "general" && ticketType !== "membership") {
+      return `Ticket type '${ticketType}' cannot be found.`;
+    }
+    if (
+      entrantType !== "adult" &&
+      entrantType !== "child" &&
+      entrantType !== "senior"
+    ) {
+      return `Entrant type '${entrantType}' cannot be found.`;
+    }
+    // start our comparison of ticketData with purchases
+    // Remember to compare each purchases[i] and get the sum for each
+    //How to get sum for each seperately? Push to an arr
+    for (const key in ticketData) {
+      if (key === ticketType) {
+        let obj = ticketData[key];
+        let type = obj.priceInCents;
+        for (const key in type) {
+          if (key === entrantType) {
+            let price = type[key];
+            sum += price;
+          }
+        }
+      }
+    }
+    for (let extra of purchases[i].extras) {
+      for (const key in ticketData["extras"]) {
+        if (key === extra) {
+          let extraObj = ticketData["extras"][key];
+          let extraPrice = extraObj.priceInCents;
+          for (const key in extraPrice) {
+            if (key === entrantType) {
+              let pricing = extraPrice[key];
+              sum += pricing;
+            }
+          }
+        }
+      }
+    }
+    let entrantTypeUpper =
+      entrantType.charAt(0).toUpperCase() + entrantType.slice(1);
+    let ticketTypeUpper =
+      ticketType.charAt(0).toUpperCase() + ticketType.slice(1);
+    if (purchases[i]["extras"].length > 1) {
+      str = str.slice(0, -2);
+    }
+    let message = purchases[i]["extras"].length > 0 ? 
+    `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${sum / 100}.00 (${str})`
+    : `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${sum / 100}.00`;
+    messageArr.push(message);
+    totalForEach.push(sum / 100);
+    sum = 0;
+  }
+  for (let sumsOfEach of totalForEach) {
+    totalSum += sumsOfEach;
+  }
+  const startingMessage = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------`;
+  const endOfMessage = `\n-------------------------------------------\nTOTAL: $${totalSum}.00`;
+  return startingMessage + messageArr.join("") + endOfMessage;
+}
 
 // Do not change anything below this line.
 module.exports = {
