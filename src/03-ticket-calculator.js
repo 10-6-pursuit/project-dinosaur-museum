@@ -56,22 +56,24 @@ const exampleTicketData = require("../data/tickets");
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
 
-  let humanType = ["child", "adult", "senior"]
-  let ticketType = ["general", "membership", "extras"]
-  let extras = ["movie", "education", "terrace"]
+  let typeOfHuman = ["child", "adult", "senior"]
+  let typeOfTicket = ["general", "membership", "extras"]
+  let typeOfExtras = ["movie", "education", "terrace"]
 
-      if (!ticketType.includes(ticketInfo.ticketType)) {
-        return `Ticket type '${ticketInfo.ticketType}' cannot be found.`
-      } else if (ticketInfo.extras.length >= 1 && !(extras.includes(ticketInfo.extras[0]))){
-        return `Extra type '${ticketInfo.extras}' cannot be found.`
-      } else if (ticketType.includes(ticketInfo.ticketType) && !humanType.includes(ticketInfo.entrantType)){
-        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
-      } else if (ticketType.includes(ticketInfo.ticketType) && ticketInfo.extras.length === 0 && humanType.includes(ticketInfo.entrantType)){
-        return ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType];
-      } else if (ticketType.includes(ticketInfo.ticketType) && ticketInfo.extras.length >= 1 && humanType.includes(ticketInfo.entrantType)){
-        let originalPrice = ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]
-        for (let i = 0; i < ticketInfo.extras.length; i++){
-          originalPrice += ticketData.extras[ticketInfo.extras[i]].priceInCents[ticketInfo.entrantType]
+  const { ticketType, entrantType, extras } = ticketInfo
+
+      if (!typeOfTicket.includes(ticketType)) {
+        return `Ticket type '${ticketType}' cannot be found.`
+      } else if (extras.length >= 1 && !(typeOfExtras.includes(extras[0]))){
+        return `Extra type '${extras}' cannot be found.`
+      } else if (typeOfTicket.includes(ticketType) && !typeOfHuman.includes(entrantType)){
+        return `Entrant type '${entrantType}' cannot be found.`
+      } else if (typeOfTicket.includes(ticketType) && extras.length === 0 && typeOfHuman.includes(entrantType)){
+        return ticketData[ticketType].priceInCents[entrantType];
+      } else if (typeOfTicket.includes(ticketType) && extras.length >= 1 && typeOfHuman.includes(entrantType)){
+        let originalPrice = ticketData[ticketType].priceInCents[entrantType]
+        for (let i = 0; i < extras.length; i++){
+          originalPrice += ticketData.extras[extras[i]].priceInCents[entrantType]
         }
         return originalPrice
       }
