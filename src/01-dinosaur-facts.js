@@ -107,10 +107,17 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   const dinoValues = [];
 
   for (let dino of dinosaurs) {
-    
-  }
+   if (dino[key]) {
+    dinoValues.push(dino[key]);
+   } else {
+    dinoValues.push(dino.dinosaurId);
+    } if (dino.mya.length === 1) {
+      mya === dino.mya[0] || mya === dino.mya[0] - 1 
+    }
+    }
   return dinoValues;
-}
+  }
+
 
 module.exports = {
   getLongestDinosaur,
