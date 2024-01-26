@@ -78,7 +78,42 @@ console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, "Zephyro
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+function getConnectedRoomNamesById(rooms, id) {
+  const connectedRoomIDArray = [];
+  const roomNameArray = [];
+  const roomIDs = [];
+
+  for (let i = 0; i < rooms.length; i++) {
+    roomIDs.push(rooms[i].roomId)
+    if (rooms[i].roomId === id) {
+      connectedRoomIDArray.push(...rooms[i].connectsTo);
+    } 
+  }
+
+ for (let j = 0; j < connectedRoomIDArray.length; j++) {
+  if(!roomIDs.includes(connectedRoomIDArray[j])) {
+    return `Room with ID of '${connectedRoomIDArray[j]}' could not be found.`;
+  }
+ }
+
+  if (connectedRoomIDArray.length) {
+    for (let k = 0; k < rooms.length; k++) {
+      for (let l = 0; l < connectedRoomIDArray.length; l++) {
+        if(connectedRoomIDArray[l] === rooms[k].roomId) {
+         roomNameArray.push(rooms[k].name);
+        }
+      }
+    } 
+  } else {
+      return `Room with ID of '${id}' could not be found.`;
+    }
+
+
+return roomNameArray;
+
+}
+
+console.log(getConnectedRoomNamesById(exampleRoomData, "A6QaYdyKra"));
 
 module.exports = {
   getRoomByDinosaurName,
