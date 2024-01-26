@@ -104,18 +104,15 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-  const dinoValues = [];
+    const dinoValues = [];
 
-  for (let dino of dinosaurs) {
-   if (dino[key]) {
-    dinoValues.push(dino[key]);
-   } else {
-    dinoValues.push(dino.dinosaurId);
-    } if (dino.mya.length === 1) {
-      mya === dino.mya[0] || mya === dino.mya[0] - 1 
+    for (let dino of dinosaurs) {
+      if (dino.mya.length === 1) {
+        mya === dino.mya[0] || mya === dino.mya[0] - 1;
+      }
+      (dino[key]) ? dinoValues.push(dino[key]) : dinoValues.push(dino.dinosaurId);
     }
-    }
-  return dinoValues;
+    return dinoValues;
   }
 
 
