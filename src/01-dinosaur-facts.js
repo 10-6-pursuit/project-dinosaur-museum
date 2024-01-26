@@ -24,20 +24,20 @@ const exampleDinosaurData = require("../data/dinosaurs");
  */
 function getLongestDinosaur(dinosaurs) {
   if(!dinosaurs.length){
-    return {}
+    return {};
   } 
   let longestLength = -Infinity;
-  for (let i = 0; i < dinosaurs.length; i++) {
-    if (dinosaurs[i].lengthInMeters > longestLength) {
-      longestLength = dinosaurs[i].lengthInMeters
+  for (let dinoObj of dinosaurs) {
+    if (dinoObj.lengthInMeters > longestLength) {
+      longestLength = dinoObj.lengthInMeters;
     }
   }
-  let longestDinoObj = {}
-  let first = dinosaurs.find(dino => dino.lengthInMeters === longestLength)
+  let longestDinoObj = {};
+  let first = dinosaurs.find(dinoObj => dinoObj.lengthInMeters === longestLength);
   
-  longestDinoObj[first.name] = longestLength * 3.281
+  longestDinoObj[first.name] = longestLength * 3.281;
 
-  return longestDinoObj
+  return longestDinoObj;
 }
 
 
@@ -66,9 +66,9 @@ function getDinosaurDescription(dinosaurs, id) {
   let dinoDescription;
   const errorMsg = `A dinosaur with an ID of '${id}' cannot be found.`
 
-  for (let i = 0; i < dinosaurs.length; i++){
-    if (dinosaurs[i].dinosaurId === id){
-        const dino = dinosaurs[i]
+  for (let dinoObj of dinosaurs){
+    if (dinoObj.dinosaurId === id){
+        const dino = dinoObj
         dinoDescription = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`
         return dinoDescription
     }
