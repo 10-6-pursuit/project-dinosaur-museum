@@ -69,7 +69,6 @@ function getDinosaurDescription(dinosaurs, id) {
    return fullInfo;
 }
 
-console.log(getDinosaurDescription(dinosaurs, "GKl035EYKN"))
 
 /**
  * getDinosaursAliveMya()
@@ -99,29 +98,26 @@ console.log(getDinosaurDescription(dinosaurs, "GKl035EYKN"))
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   let newArr = [];
   for(let dinosaur of dinosaurs){
-    if(dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya){
-      if(key){
-         newArr.push(dinosaur[key]);
-      } else {
-        newArr.push(dinosaur.dinosaurId);
-      }
-    } else if(!dinosaur.mya[1]){
-      if(key){
-        dinosaur.mya = Math.floor(mya);
-         newArr.push(dinosaur[key] === undefined ? dinosaur.dinosaurId : dinosaur.dinosaurId);
-        break;
-      } else {
-        dinosaur.mya = Math.floor(mya);
+    /*if(dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya){
+      if(dinosaur[key]){
+         newArr.push(dinosaur.name);
+     } else {
          newArr.push(dinosaur.dinosaurId);
-         break;
-      }
-    }
-  }
-  
+       }
+     } else */ if(dinosaur.mya.length === 1){
+       if(dinosaur[key]){
+        dinosaur.mya = Math.floor(mya);
+          newArr.push(dinosaur.name);
+       } else {
+         dinosaur.mya = Math.floor(mya);
+         newArr.push(dinosaur.dinosaurId);
+       }
+     }
+   }
   return newArr;
 }
 
-console.log(getDinosaursAliveMya(exampleDinosaurData, 65))
+console.log(getDinosaursAliveMya(exampleDinosaurData, 65, "name"))
 
 module.exports = {
   getLongestDinosaur,
