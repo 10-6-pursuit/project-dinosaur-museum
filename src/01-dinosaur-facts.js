@@ -110,9 +110,12 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
       if (dino.mya.length === 1) {
         mya === dino.mya[0] || mya === dino.mya[0] - 1;
       }
-      (dino[key]) ? dinoValues.push(dino[key]) : dinoValues.push(dino.dinosaurId);
+      if (key) {
+        dinoValues.push(dino[key])
+      } else {
+        dinoValues.push(dino.dinosaurId);
+      }
     }
-    return dinoValues;
   }
 
 
