@@ -95,6 +95,7 @@ function getDinosaurDescription(dinosaurs, id) {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
+
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   let newArr = [];
 
@@ -117,8 +118,6 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   }
   return newArr;
 }
-
-console.log(getDinosaursAliveMya(exampleDinosaurData, 66, "name"));
 
 module.exports = {
   getLongestDinosaur,
