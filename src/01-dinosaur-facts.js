@@ -97,27 +97,28 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   let newArr = [];
+
   for(let dinosaur of dinosaurs){
-    /*if(dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya){
+    if(dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya){
       if(dinosaur[key]){
          newArr.push(dinosaur.name);
-     } else {
-         newArr.push(dinosaur.dinosaurId);
-       }
-     } else */ if(dinosaur.mya.length === 1){
-       if(dinosaur[key]){
-        dinosaur.mya = Math.floor(mya);
-          newArr.push(dinosaur.name);
-       } else {
-         dinosaur.mya = Math.floor(mya);
+        } else {
          newArr.push(dinosaur.dinosaurId);
        }
      }
-   }
+
+    if(dinosaur.mya.length === 1 && Math.floor(dinosaur.mya) === mya || Math.floor(dinosaur.mya) - 1 === mya){
+      if(dinosaur[key]){
+        newArr.push(dinosaur.name);
+      } else {
+        newArr.push(dinosaur.dinosaurId);
+      }
+    }
+  }
   return newArr;
 }
 
-console.log(getDinosaursAliveMya(exampleDinosaurData, 65, "name"))
+console.log(getDinosaursAliveMya(exampleDinosaurData, 66, "name"));
 
 module.exports = {
   getLongestDinosaur,
