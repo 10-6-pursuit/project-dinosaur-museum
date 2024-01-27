@@ -120,6 +120,8 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
       } else {
         dinoValues.push(dino.dinosaurId);
       }
+    } else {
+      mya >= dino.mya[1] && mya <= dino.mya[0];
     }
   }
    return dinoValues;
