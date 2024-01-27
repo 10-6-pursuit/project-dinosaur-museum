@@ -100,25 +100,18 @@ function getConnectedRoomNamesById(rooms, id) {
     }
   }
 
-// let allValidIds = []
-//  allValidIds.push(rooms.map(room => room.roomId));
-//   for(let id of connectedId){
-//     if(!allValidIds.includes(id)){
-//        return `Room with ID of '${id}' could not be found.`
-//     }
-//   }
+let allValidIds = []
+ allValidIds = rooms.map(room => room.roomId);
+  for(let id of connectedId){
+    if(!allValidIds.includes(id)){
+       return `Room with ID of '${id}' could not be found.`
+    }
+  }
 
   if(connectedId.length > 0){
     for(let id of connectedId){
       tempName = roomIdToName(rooms, id);
       connectedRooms.push(tempName);
-    }
-  }
-
-  for(let room of connectedRooms){
-    if(!room){
-      room = "incorrect-id"
-      connectedRooms = `Room with ID of '${room}' could not be found.`
     }
   }
 
