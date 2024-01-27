@@ -39,7 +39,7 @@ function getLongestDinosaur(dinosaurs) {
   return {[dinoName] : (dinoLength * 3.281)};
 }
 
-console.log(getLongestDinosaur(exampleDinosaurData));
+
 
 /**
  * getDinosaurDescription()
@@ -88,7 +88,7 @@ function getDinosaurDescription(dinosaurs, id) {
 
 }
 
-console.log(getDinosaurDescription(exampleDinosaurData, "GKl035EN"));
+
 
 
 /**
@@ -141,7 +141,7 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   return dinoArray;
 }
 
-console.log(getDinosaursAliveMya(exampleDinosaurData, 150, "name"));
+
 
 
 module.exports = {

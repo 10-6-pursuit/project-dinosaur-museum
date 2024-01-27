@@ -41,8 +41,8 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     } 
   }
 
-  if(dinoID) {
-    if(room) {
+  if (dinoID) {
+    if (room) {
       return room;
     } else {
       return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
@@ -53,7 +53,7 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
 
 }
 
-console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, "Zephyrosaurus"));
+
 
 
 /**
@@ -89,17 +89,17 @@ function getConnectedRoomNamesById(rooms, id) {
       connectedRoomIDArray.push(...rooms[i].connectsTo);
     } 
   }
-
- for (let j = 0; j < connectedRoomIDArray.length; j++) {
-  if(!roomIDs.includes(connectedRoomIDArray[j])) {
-    return `Room with ID of '${connectedRoomIDArray[j]}' could not be found.`;
+  
+  for (let j = 0; j < connectedRoomIDArray.length; j++) {
+    if (!roomIDs.includes(connectedRoomIDArray[j])) {
+      return `Room with ID of '${connectedRoomIDArray[j]}' could not be found.`;
+    }
   }
- }
 
   if (connectedRoomIDArray.length) {
     for (let k = 0; k < rooms.length; k++) {
       for (let l = 0; l < connectedRoomIDArray.length; l++) {
-        if(connectedRoomIDArray[l] === rooms[k].roomId) {
+        if (connectedRoomIDArray[l] === rooms[k].roomId) {
          roomNameArray.push(rooms[k].name);
         }
       }
@@ -108,12 +108,11 @@ function getConnectedRoomNamesById(rooms, id) {
       return `Room with ID of '${id}' could not be found.`;
     }
 
-
 return roomNameArray;
 
 }
 
-console.log(getConnectedRoomNamesById(exampleRoomData, "A6QaYdyKra"));
+
 
 module.exports = {
   getRoomByDinosaurName,
