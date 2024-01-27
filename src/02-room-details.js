@@ -74,8 +74,10 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
 
 function getConnectedRoomNamesById(rooms, id) {
   // find room by id
+    // if initial room id doesn't exist error
   // get connectTo array of roomIds
   // for each room id get room name
+    // if connected room doesn't exist error
   
   const roomsById = [];
   const roomsByName = [];
@@ -95,7 +97,7 @@ function getConnectedRoomNamesById(rooms, id) {
       initialRoomIndex = i;
       connectedRoomsById = rooms[i].connectsTo;
     }
-  }
+  } 
   
   // if target room id is not found return error
   if (initialRoomIndex === null) {
