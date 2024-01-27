@@ -102,28 +102,48 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   let dinosAlive = [];
   let alive;
 
-  for (let dino of dinosaurs) {
-    alive = false;
-    let myaValues = dino.mya;
-
-    for (let value of myaValues) {
-      if (value >= mya && value - 1 <= mya) {
-        alive = true;
-        break;
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].mya.length === 1) {
+      if (dinosaurs[i].mya[0] >= mya && dinosaurs[i].mya[0] - 1 <= mya) {
+        if (dinosaurs[i][key]) {
+          dinosAlive.push(dinosaurs[i][key]);
+        } else {
+          dinosAlive.push(dinosaurs[i].dinosaurId);
+        }
+      }
+    } else {
+      if (dinosaurs[i].mya[0] >= mya && dinosaurs[i].mya[1] <= mya) {
+        if (dinosaurs[i][key]) {
+          dinosAlive.push(dinosaurs[i][key]);
+        } else {
+          dinosAlive.push(dinosaurs[i].dinosaurId);
+        }
       }
     }
-    if (alive) {
-      dinosAlive.push(dino);
-    }  
-  }
-  for (let dino of dinosAlive) {
-    if (key && dino.hasOwnProperty(key)) {
-      result.push(dino[key]);
-    } else {
-      result.push(dino.dinosaurId);
-    }
-  }
-  return result;
+  } 
+
+  // for (let dino of dinosaurs) {
+  //   alive = false;
+  //   let myaValues = dino.mya;
+
+  //   for (let i = 0; i < myaValues.length; i++) {
+  //     if (myaValues[i] >= mya && myaValues[i] - 1 <= mya) {
+  //       alive = true;
+  //       break;
+  //     }
+  //   }
+  //   if (alive) {
+  //     dinosAlive.push(dino);
+  //   }  
+  // }
+  // for (let dino of dinosAlive) {
+  //   if (key && dino.hasOwnProperty(key)) {
+  //     result.push(dino[key]);
+  //   } else {
+  //     result.push(dino.dinosaurId);
+  //   }
+  // }
+  return dinosAlive;
 }
 
 module.exports = {
