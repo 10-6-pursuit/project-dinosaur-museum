@@ -55,46 +55,41 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
-  if (
-    ticketInfo.ticketType !== "general" &&
-    ticketInfo.ticketType !== "membership"
-  ) {
+  const ticketType = ["general", "membership"];
+  const entrantType = ["adult", "child", "senior"];
+  const extras = ["movie", "education", "terrace"];
+
+  if (!ticketType.includes(ticketInfo.ticketType)) {
     return `Ticket type '${ticketInfo["ticketType"]}' cannot be found.`;
   }
-  if (
-    ticketInfo.entrantType !== "adult" &&
-    ticketInfo.entrantType !== "child" &&
-    ticketInfo.entrantType !== "senior"
-  ) {
+  if (!entrantType.includes(ticketInfo.entrantType)) {
     return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
   }
   for (let extra of ticketInfo.extras) {
-    if (extra !== "movie" && extra !== "education" && extra !== "terrace") {
+    if (!extras.includes(extra)) {
       return `Extra type '${extra}' cannot be found.`;
     }
   }
+
   let sum = 0;
   for (const key in ticketData) {
     if (key === ticketInfo["ticketType"]) {
-      let obj = ticketData[key];
-      let type = obj.priceInCents;
-      for (const key in type) {
+      let priceInCents = ticketData[key].priceInCents;
+      for (const key in priceInCents) {
         if (key === ticketInfo["entrantType"]) {
-          let price = type[key];
-          sum += price;
+          sum += priceInCents[key];
         }
       }
     }
   }
   for (let i = 0; i < ticketInfo["extras"].length; i++) {
+    const category = ticketInfo["extras"][i];
     for (const key in ticketData["extras"]) {
-      if (key === ticketInfo["extras"][i]) {
-        let extraObj = ticketData["extras"][key];
-        let extraPrice = extraObj.priceInCents;
-        for (const key in extraPrice) {
+      if (category === key) {
+        let extraPriceInCents = ticketData["extras"][category].priceInCents;
+        for (const key in extraPriceInCents) {
           if (key === ticketInfo["entrantType"]) {
-            let pricing = extraPrice[key];
-            sum += pricing;
+            sum += extraPriceInCents[key];
           }
         }
       }
@@ -183,10 +178,7 @@ function purchaseTickets(ticketData, purchases) {
     if (ticketType !== "general" && ticketType !== "membership") {
       return `Ticket type '${ticketType}' cannot be found.`;
     }
-    if (
-      entrantType !== "adult" &&
-      entrantType !== "child" &&
-      entrantType !== "senior"
+    if ( entrantType !== "adult" && entrantType !== "child" && entrantType !== "senior"
     ) {
       return `Entrant type '${entrantType}' cannot be found.`;
     }
@@ -226,9 +218,14 @@ function purchaseTickets(ticketData, purchases) {
     if (purchases[i]["extras"].length > 1) {
       str = str.slice(0, -2);
     }
-    let message = purchases[i]["extras"].length > 0 ? 
-    `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${sum / 100}.00 (${str})`
-    : `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${sum / 100}.00`;
+    let message =
+      purchases[i]["extras"].length > 0
+        ? `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${
+            sum / 100
+          }.00 (${str})`
+        : `\n${entrantTypeUpper} ${ticketTypeUpper} Admission: $${
+            sum / 100
+          }.00`;
     messageArr.push(message);
     totalForEach.push(sum / 100);
     sum = 0;

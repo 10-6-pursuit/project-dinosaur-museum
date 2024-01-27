@@ -70,7 +70,7 @@ function getDinosaurDescription(dinosaurs, id) {
     const period = dinosaurs[i].period;
     let mya = dinosaurs[i].mya;
 
-    let chosenMya = (mya.length > 1) ? dinosaurs[i].mya[1] : dinosaurs[i].mya;
+    let chosenMya = mya.length > 1 ? dinosaurs[i].mya[1] : dinosaurs[i].mya;
 
     if (id === dinoID) {
       return `${name} (${pronunciation})\n${info} It lived in the ${period} period, over ${chosenMya} million years ago.`;
@@ -116,20 +116,21 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
       if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
         arr.push(currentDino[key]);
       }
-    };
+    }
 
     if (currentDino[key] && dinosaurMya.length === 1) {
-      if (mya === dinosaurMya[0] || mya === (dinosaurMya[0] - 1)) {
+      if (mya === dinosaurMya[0] || mya === dinosaurMya[0] - 1) {
         arr.push(currentDino[key]);
       }
-    };
+    }
 
     if (!currentDino[key] && dinosaurMya.length > 1) {
       if (mya <= dinosaurMya[0] && mya >= dinosaurMya[1]) {
         arr.push(dinosaurId);
       }
-    } else if (!currentDino[key] && dinosaurMya.length === 1) {
-      if (mya === dinosaurMya[0] || mya === (dinosaurMya[0] - 1)) {
+    }
+    if (!currentDino[key] && dinosaurMya.length === 1) {
+      if (mya === dinosaurMya[0] || mya === dinosaurMya[0] - 1) {
         arr.push(dinosaurId);
       }
     }
