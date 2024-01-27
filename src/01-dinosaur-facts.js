@@ -61,16 +61,33 @@ function convertMeterToFeet(meter) {
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
 function getDinosaurDescription(dinosaurs, id) {
-	const foundDinosaur = dinosaurs.find((ele) => ele.dinosaurId === id);
+	const validation = validateId(dinosaurs, id);
+	if (!validation.isExist) {
+		return validation.error;
+	}
+	const description = createDescription(dinosaurs, id);
 
-	if (!foundDinosaur)
-		return `A dinosaur with an ID of '${id}' cannot be found.`;
+	return description;
+}
 
-	const description = `${foundDinosaur.name} (${
-		foundDinosaur.pronunciation
-	})\n${foundDinosaur.info} It lived in the ${
-		foundDinosaur.period
-	} period, over ${Math.min(...foundDinosaur.mya)} million years ago.`;
+function validateId(dinosaurs, id) {
+	const isExist = dinosaurs.some((ele) => ele.dinosaurId === id);
+	return {
+		isExist,
+		error: !isExist
+			? `A dinosaur with an ID of '${id}' cannot be found.`
+			: null,
+	};
+}
+
+function createDescription(dinosaurs, id) {
+	const dinosaur = dinosaurs.find((ele) => ele.dinosaurId === id);
+
+	const description = `${dinosaur.name} (${dinosaur.pronunciation})\n${
+		dinosaur.info
+	} It lived in the ${dinosaur.period} period, over ${Math.min(
+		...dinosaur.mya
+	)} million years ago.`;
 
 	return description;
 }
@@ -101,18 +118,23 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-	const dinosuarListByMya = dinosaurs.filter((ele) => {
+	const dinosaursListByMya = getDinosaursByMya(dinosaurs, mya);
+
+	const dinosaursAliveMya = dinosaursListByMya.map((ele) => {
+		return ele[key] ? ele[key] : ele.dinosaurId;
+	});
+
+	return dinosaursAliveMya;
+}
+
+function getDinosaursByMya(dinosaurs, mya) {
+	return dinosaurs.filter((ele) => {
 		return (
 			(mya <= ele.mya[0] && mya >= ele.mya[1]) ||
 			ele.mya[0] === mya ||
-			mya === (ele.mya[0] - 1)
+			mya === ele.mya[0] - 1
 		);
 	});
-
-	const dinosaursAliveMya = dinosuarListByMya.map((ele) => {
-		return ele[key] ? ele[key] : ele.dinosaurId;
-	});
-	return dinosaursAliveMya;
 }
 
 module.exports = {

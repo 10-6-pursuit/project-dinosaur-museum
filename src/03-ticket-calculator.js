@@ -64,6 +64,7 @@ function calculateTicketPrice(ticketData, ticketInfo) {
 	return membershipCost + extrasCost;
 }
 
+
 function calcMembershipCost(ticketData, ticket) {
 	return ticketData[ticket.ticketType].priceInCents[ticket.entrantType];
 }
@@ -180,6 +181,7 @@ function purchaseTickets(ticketData, purchases) {
 }
 
 function createPurchaseDetail(ticketData, ticket) {
+
 	const membershipCost = calcMembershipCost(ticketData, ticket);
 	const extrasCost = calcExtrasCost(ticketData, ticket);
 	const subTotal = extrasCost + membershipCost;
