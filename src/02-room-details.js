@@ -27,11 +27,11 @@ const exampleRoomData = require("../data/rooms");
  */
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
 
-  for (let i = 0; i < dinosaurs.length; i++) {
-    for (let j = 0; j < rooms.length; j++){
-      for (let k = 0; k < rooms[j].dinosaurs.length; k++){
-      if (dinosaurs[i].name === dinosaurName && rooms[j].dinosaurs[k] === dinosaurs[i].dinosaurId) {
-        return rooms[j].name
+  for (let dino of dinosaurs) {
+    for (let room of rooms){
+      for (let dinoId of room.dinosaurs){
+      if (dino.name === dinosaurName && dinoId === dino.dinosaurId) {
+        return room.name
       }
     }
   }
@@ -77,11 +77,11 @@ function getConnectedRoomNamesById(rooms, id) {
       connectingRooms = room.connectsTo
     }
   }
-  for (let i = 0; i < connectingRooms.length; i++) {
-    for (let j = 0; j < rooms.length; j++) {
-      if (connectingRooms[i] === rooms[j].roomId) {
-        roomNames.push(rooms[j].name)
-      } else if (connectingRooms[i] === "incorrect-id"){
+  for (let connectedRoom of connectingRooms) {
+    for (let room of rooms) {
+      if (connectedRoom === room.roomId) {
+        roomNames.push(room.name)
+      } else if (connectedRoom === "incorrect-id"){
         return "Room with ID of 'incorrect-id' could not be found."
       }
     }
