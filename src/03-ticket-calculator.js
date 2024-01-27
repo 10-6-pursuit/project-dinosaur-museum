@@ -58,8 +58,7 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   let obj = ticketData[ticketInfo.ticketType];
 
   if (!obj) return `Ticket type '${ticketInfo.ticketType}' cannot be found.`;
-
-  if (ticketInfo.entrantType === 'incorrect-entrant') return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+  if (ticketInfo.entrantType === 'incorrect-entrant') return `Entrant type '${ticketInfo.entrantType}' cannot be found.`; 
   if (ticketInfo.extras[0] === 'incorrect-extra') return `Extra type '${ticketInfo.extras[0]}' cannot be found.`;
 
   let price = obj['priceInCents'][ticketInfo.entrantType];
