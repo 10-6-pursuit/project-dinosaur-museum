@@ -145,9 +145,9 @@ function purchaseTickets(ticketData, purchases) {
     itemPurchase = calculateTicketPrice(ticketData, ticket);
     totalPurchase += itemPurchase;
     if(ticket.extras.length){
-    receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)} (${ticket.extras})\n`
+    receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)} (${capFirstLetter(ticket.extras[0]+ " Access")}${ticket.extras[1] ? ", " + capFirstLetter(ticket.extras[1]) + " Access" : ""}${ticket.extras[2] ? ", " + capFirstLetter(ticket.extras[2]) + " Access" : ""})\n`
     } else {
-      receipt += `${ticket.entrantType} ${ticketData[ticket.ticketType].description}: ${itemPurchase}`
+      receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)}\n`
     }
   }
 
