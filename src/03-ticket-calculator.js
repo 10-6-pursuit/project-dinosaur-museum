@@ -147,8 +147,8 @@ return ticketPrice;
 
 }
 
-const ticketInfo = {ticketType: "general", entrantType: "kid", extras: ["movie"]};
-console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
+const ticketInformation = {ticketType: "general", entrantType: "kid", extras: ["movie"]};
+console.log(calculateTicketPrice(exampleTicketData, ticketInformation));
 /**
  * purchaseTickets()
  * ---------------------
@@ -202,7 +202,67 @@ console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  const ticketPriceArray = [];
+  const ticketString = [];
+  const entrantType = [];
+  const extraTypes = [];
+  const ticketType = [];
+  let receiptString = "";
+  
+
+
+  for (let i = 0; i < purchases.length; i++) {
+    if (typeof calculateTicketPrice(ticketData, purchases[i]) === "string") {
+      return calculateTicketPrice(ticketData, purchases[i]);
+    }
+    ticketPriceArray.push(calculateTicketPrice(ticketData, purchases[i]));
+    if (purchases[i].extras.length === 0) {
+      ticketString.push(`${purchases[i].entrantType.slice(0,1).toUpperCase()}${purchases[i].entrantType.slice(1)} ${purchases[i].ticketType.slice(0,1).toUpperCase()}${purchases[i].ticketType.slice(1)} Admission: $${(calculateTicketPrice(ticketData, purchases[i])/100)}.00`);
+
+    } else {
+      ticketString.push(`${purchases[i].entrantType.slice(0,1).toUpperCase()}${purchases[i].entrantType.slice(1)} ${purchases[i].ticketType.slice(0,1).toUpperCase()}${purchases[i].ticketType.slice(1)} Admission: $${(calculateTicketPrice(ticketData, purchases[i])/100)}.00 (${purchases[i].extras[0].slice(0,1).toUpperCase()}${purchases[i].extras[0].slice(1)} ${purchases[i].extras.length === 1 ? "Access" : "Access,"}${purchases[i].extras.slice(1).map((x) => x = " " + x.slice(0,1).toUpperCase() + x.slice(1) + " Access")})`);
+    }
+    ticketType.push(purchases[i].ticketType);
+    entrantType.push(purchases[i].entrantType);
+    extraTypes.push(purchases[i].extras);
+  }
+
+  let sum = ticketPriceArray.reduce((acc, elem) => acc += elem)/100;
+
+  for (let j = 0; j < ticketString.length; j++) {
+    receiptString += `${ticketString[j]}\n`;
+  }
+
+
+
+  // return receiptString;
+  return `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${receiptString}-------------------------------------------\nTOTAL: $${sum}.00`
+}
+
+const purchasesInfo = [
+  {
+    ticketType: "general",
+    entrantType: "adult",
+    extras: ["movie", "terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "senior",
+    extras: ["terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"],
+  },
+  {
+    ticketType: "general",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"],
+  },
+];
+console.log(purchaseTickets(exampleTicketData, purchasesInfo));
 
 // Do not change anything below this line.
 module.exports = {
