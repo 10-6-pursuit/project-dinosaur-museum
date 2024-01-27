@@ -80,7 +80,6 @@ function getConnectedRoomNamesById(rooms, id) {
 
   if (!roomIds.length) return `Room with ID of '${id}' could not be found.`;
 
-
   for (i of roomIds) {
     switch (i) {
       case "A6QaYdyKra": result.push('Ticket Center'); break;
