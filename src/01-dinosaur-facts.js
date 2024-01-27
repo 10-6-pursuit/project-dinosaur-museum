@@ -42,7 +42,6 @@ function getLongestDinosaur(dinosaurs) {
   return objTallest;
 }
 
-console.log(getLongestDinosaur(exampleDinosaurData));
 /**
  * getDinosaurDescription()
  * ---------------------
@@ -78,7 +77,6 @@ function getDinosaurDescription(dinosaurs, id) {
   return `A dinosaur with an ID of '${id}' cannot be found.`;
 }
 
-console.log(getDinosaurDescription(exampleDinosaurData,"U9vuZmgKwUr"));
 
 /**
  * getDinosaursAliveMya()
@@ -128,8 +126,6 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   }
   return listOfValidDinos;
 }
-
-//console.log(getDinosaursAliveMya(exampleDinosaurData,65,"unkown"));
 
 module.exports = {
   getLongestDinosaur,
