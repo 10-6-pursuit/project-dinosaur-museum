@@ -54,7 +54,34 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+function calculateTicketPrice(ticketData, ticketInfo) {
+  if (!ticketData.hasOwnProperty(ticketInfo.ticketType)) {
+    return `Ticket type 'incorrect-type' cannot be found.`;
+  }
+
+  const ticketTypeData = ticketData[ticketInfo.ticketType];
+
+  if (!ticketTypeData.priceInCents.hasOwnProperty(ticketInfo.entrantType)) {
+    return "Entrant type 'incorrect-entrant' cannot be found.";
+  }
+
+  let extrasPrice = 0;
+
+  for (let i = 0; i < ticketInfo.extras.length; i++) {
+    const extra = ticketInfo.extras[i];
+
+    if (!ticketData.extras.hasOwnProperty(extra)) {
+      return `Extra type '${extra}' cannot be found.`;
+    }
+
+    const extraData = ticketData.extras[extra];
+    extrasPrice += extraData.priceInCents[ticketInfo.entrantType];
+  }
+
+  const ticketPrice = ticketTypeData.priceInCents[ticketInfo.entrantType] + extrasPrice;
+
+  return ticketPrice;
+}
 
 /**
  * purchaseTickets()
