@@ -144,45 +144,45 @@ function purchaseTickets(ticketData, purchases) {
   let ticketType = ["general", "membership", "extras"]
   let extras = ["movie", "education", "terrace"]
   
-  for (let i = 0; i < purchases.length; i++){
-    if (!ticketType.includes(purchases[i].ticketType)) {
-    return `Ticket type '${purchases[i].ticketType}' cannot be found.`
-  } else if (purchases[i].extras.length >= 1 && !(extras.includes(purchases[i].extras[0]))){
-    return `Extra type '${purchases[i].extras}' cannot be found.`
-  } else if (ticketType.includes(purchases[i].ticketType) && !humanType.includes(purchases[i].entrantType)){
-    return `Entrant type '${purchases[i].entrantType}' cannot be found.`
+  for (let ticket of purchases){
+    if (!ticketType.includes(ticket.ticketType)) {
+    return `Ticket type '${ticket.ticketType}' cannot be found.`
+  } else if (ticket.extras.length >= 1 && !(extras.includes(ticket.extras[0]))){
+    return `Extra type '${ticket.extras}' cannot be found.`
+  } else if (ticketType.includes(ticket.ticketType) && !humanType.includes(ticket.entrantType)){
+    return `Entrant type '${ticket.entrantType}' cannot be found.`
   } 
 }
   
   newPurchasesArray.map(obj => {
-    if (!obj["ticketPrice"]){
-      obj["ticketPrice"] = ticketData[obj.ticketType].priceInCents[obj.entrantType]
+    if (!obj.ticketPrice){
+      obj.ticketPrice = ticketData[obj.ticketType].priceInCents[obj.entrantType]
     } })
 
   extraPurchasesArray.map(obj => {
-      if (!obj["extraTicketPrice"]){
+      if (!obj.extraTicketPrice){
         let extraCost = ticketData[obj.ticketType].priceInCents[obj.entrantType]
-        for (let k = 0; k < obj.extras.length; k++){
-          extraCost += ticketData.extras[obj.extras[k]].priceInCents[obj.entrantType]
+        for (let extra of obj.extras){
+          extraCost += ticketData.extras[extra].priceInCents[obj.entrantType]
         }
-        obj["extraTicketPrice"] = extraCost
+        obj.extraTicketPrice = extraCost
       } 
-      if (!obj["access"]){
+      if (!obj.access){
         let extraAccess = "";
-        for (let m = 0; m < obj.extras.length; m++){
-          extraAccess += ` ${ticketData.extras[obj.extras[m]].description},`
+        for (let extra of obj.extras){
+          extraAccess += ` ${ticketData.extras[extra].description},`
         }
-        obj["access"] = extraAccess.slice(1, extraAccess.length - 1)
+        obj.access = extraAccess.slice(1, extraAccess.length - 1)
       }})
 
   let ticketTotal = 0;
-  for (let j = 0; j < newPurchasesArray.length; j++) {
-    ticketTotal += newPurchasesArray[j].ticketPrice
+  for (let ticket of newPurchasesArray) {
+    ticketTotal += ticket.ticketPrice
   }
 
   let extraTicketTotal = 0;
-  for (let l = 0; l < extraPurchasesArray.length; l++) {
-    extraTicketTotal += extraPurchasesArray[l].extraTicketPrice
+  for (let ticket of extraPurchasesArray) {
+    extraTicketTotal += ticket.extraTicketPrice
   }
   
   let noExtraReceiptString = newPurchasesArray.reduce(
