@@ -70,17 +70,13 @@ function getDinosaurDescription(dinosaurs, id) {
     const period = dinosaurs[i].period;
     let mya = dinosaurs[i].mya;
 
-    if (mya.length > 1) {
-      mya = dinosaurs[i].mya[1];
-    } else {
-      mya = dinosaurs[i].mya;
-    }
+    let chosenMya = (mya.length > 1) ? dinosaurs[i].mya[1] : dinosaurs[i].mya;
 
     if (id === dinoID) {
-      return `${name} (${pronunciation})\n${info} It lived in the ${period} period, over ${mya} million years ago.`;
+      return `${name} (${pronunciation})\n${info} It lived in the ${period} period, over ${chosenMya} million years ago.`;
     }
   }
-  return `A dinosaur with an ID of 'incorrect-id' cannot be found.`;
+  return `A dinosaur with an ID of '${id}' cannot be found.`;
 }
 
 /**

@@ -35,25 +35,29 @@ const exampleRoomData = require("../data/rooms");
 
 //We then want to
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  let id = null;
+  let result = null;
   for (let i = 0; i < dinosaurs.length; i++) {
     const dinoName = dinosaurs[i].name;
     const dinoId = dinosaurs[i].dinosaurId;
-
-    //rooms is just the parameter, should apply to input as well.
-    for (let j = 0; j < rooms.length; j++) {
-      const dinosInRoom = rooms[j].dinosaurs;
-      const dinoRoomName = rooms[j].name;
-
-      for (let k = 0; k < dinosInRoom.length; k++) {
-        const specificDinoId = dinosInRoom[k];
-
-        if (dinoName === dinosaurName && dinoId === specificDinoId) {
-          return dinoRoomName;
-        }
-      }
+    if (dinosaurName === dinoName) {
+      id = dinoId;
     }
   }
-  return `Dinosaur with name '${dinosaurName}' cannot be found.`;
+  for (let j = 0; j < rooms.length; j++) {
+    const dinosInRoom = rooms[j].dinosaurs;
+    const roomName = rooms[j].name;
+    if (dinosInRoom.includes(id)) {
+      result = roomName;
+    }
+  }
+  if (id === null) {
+    return `Dinosaur with name '${dinosaurName}' cannot be found.`;
+  }
+  if (result === null) {
+    return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
+  }
+  return result;
 }
 
 /**
