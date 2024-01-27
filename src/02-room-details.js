@@ -83,33 +83,31 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     ]
  */
 function getConnectedRoomNamesById(rooms, id) {
-  const arrIds = [];
-  const nameArr = [];
-
+  let gotRoom = null;
+  const connectedIDS = [];
+  const roomNames = [];
   for (let i = 0; i < rooms.length; i++) {
     const roomId = rooms[i].roomId;
     const connectsTo = rooms[i].connectsTo;
-    const name = rooms[i].name;
-
-    for (let j = 0; j < connectsTo.length; j++) {
-      const connectRoomById = connectsTo[j];
-      if (id === roomId) {
-        arrIds.push(connectRoomById);
+    if (id === roomId) {
+      gotRoom = roomId;
+      connectedIDS.push(...connectsTo);
+    }
+  }
+  for (let i = 0; i < connectedIDS.length; i++) {
+    for (let j = 0; j < rooms.length; j++) {
+      if (connectedIDS[i] === rooms[j].roomId) {
+        roomNames.push(rooms[j].name);
       }
     }
   }
-  for (let uniqIds of arrIds) {
-    for (let room of rooms) {
-      if (uniqIds === room.roomId) {
-        nameArr.push(room.name);
-      }
-    }
-  }
-  if (nameArr.length === 0) {
+  if (gotRoom === null) {
     return `Room with ID of '${id}' could not be found.`;
-  } else {
-    return nameArr;
   }
+  if (connectedIDS.length !== roomNames.length) {
+    return `Room with ID of 'incorrect-id' could not be found.`;
+  }
+  return roomNames;
 }
 
 module.exports = {
