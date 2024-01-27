@@ -66,11 +66,11 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     }
    }
 
-   let temp;
-   if(ticketInfo.extras.length){
+   
+   if(ticketInfo.extras){
       for(let type in ticketData.extras){
-        for(let perk of ticketInfo.extras){
-          if(type === perk){
+        for(let extra of ticketInfo.extras){
+          if(type === extra){
             totalPrice += ticketData.extras[type].priceInCents[ticketInfo.entrantType];
           }
         }
@@ -79,12 +79,7 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   return totalPrice;
 }
 
-const ticketInfo = {
-  ticketType: "general",
-  entrantType: "adult",
-  extras: ["terrace", "movie", "education"]
-};
-console.log(calculateTicketPrice(exampleTicketData, ticketInfo))
+
 /**
  * purchaseTickets()
  * ---------------------
@@ -138,7 +133,44 @@ console.log(calculateTicketPrice(exampleTicketData, ticketInfo))
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  let totalMessage, totalPurchase = 0, itemPurchase, receipt = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
+  
+  function  capFirstLetter(string){
+  let capWord = string[0].toUpperCase() + string.slice(1);
+  return capWord
+}
+
+  for(let ticket of purchases){
+    itemPurchase = calculateTicketPrice(ticketData, ticket);
+    totalPurchase += itemPurchase;
+    if(ticket.extras.length){
+    receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)} (${ticket.extras})\n`
+    } else {
+      receipt += `${ticket.entrantType} ${ticketData[ticket.ticketType].description}: ${itemPurchase}`
+    }
+  }
+
+  totalMessage = `-------------------------------------------\nTOTAL: $${(totalPurchase/100).toFixed(2)}`;
+
+  return receipt + totalMessage;
+
+}
+
+const purchases = [
+  {
+    ticketType: "general",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"]
+  },
+  {
+    ticketType: "membership",
+    entrantType: "adult",
+    extras: ["education", "terrace"]
+  }
+]
+
+console.log(purchaseTickets(exampleTicketData, purchases));
 
 // Do not change anything below this line.
 module.exports = {
