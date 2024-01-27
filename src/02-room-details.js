@@ -96,11 +96,10 @@ function getConnectedRoomNamesById(rooms, id) {
       case "1FMoeqQxFk": result.push('Blackwell Amphitheater'); break;
       case "qi5e4IFDby": result.push('Bryan Decker Hall'); break;
       case "nt85di9a1V": result.push('Owen Family Room'); break;
+      default: return `Room with ID of 'incorrect-id' could not be found.`;
     }
   }
   
-  if (!result.length) return `Room with ID of 'incorrect-id' could not be found.`;
-
   return result;
 }
 
