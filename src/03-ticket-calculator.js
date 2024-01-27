@@ -72,8 +72,8 @@ function calculateTicketPrice(ticketData, ticketInfo) {
         return ticketData[ticketType].priceInCents[entrantType];
       } else if (typeOfTicket.includes(ticketType) && extras.length >= 1 && typeOfHuman.includes(entrantType)){
         let originalPrice = ticketData[ticketType].priceInCents[entrantType]
-        for (let i = 0; i < extras.length; i++){
-          originalPrice += ticketData.extras[extras[i]].priceInCents[entrantType]
+        for (let extra of extras){
+          originalPrice += ticketData.extras[extra].priceInCents[entrantType]
         }
         return originalPrice
       }
@@ -215,7 +215,7 @@ function purchaseTickets(ticketData, purchases) {
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length >= 1 && humanType.includes(purchases[0].entrantType)){
     return extraReceiptMsg
   }
-  
+
 }
 
 
