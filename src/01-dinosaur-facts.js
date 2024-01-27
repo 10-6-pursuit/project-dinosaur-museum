@@ -13,7 +13,7 @@ const exampleDinosaurData = require("../data/dinosaurs");
  * ---------------------
  * Returns an object with the longest dinosaur from the list. Converts from meters to feet.
  *
- * NOTE: To convert from meters to feet, multiply the meters by `3.281`.
+ * NOTE: To convert from meters to feet, multiply the meters by `3.281`. //(lengthInMeters)
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @returns {Object} An object where the key is the name of the dinosaur and the value is the height of the dinosaur in feet.
@@ -29,7 +29,9 @@ function getLongestDinosaur(dinosaurs) {
 
   let longestDino = dinosaurs[0];
 
-  for (let currDino of dinosaurs) {
+  //iterating through an array through let of loop.
+
+  for (let currDino of dinosaurs) { 
     if (currDino.lengthInMeters > longestDino.lengthInMeters) {
       longestDino = currDino;
     }
@@ -42,8 +44,8 @@ function getLongestDinosaur(dinosaurs) {
 
 
 
-const result = getLongestDinosaur(exampleDinosaurData);
-console.log(result);
+//const result = getLongestDinosaur(exampleDinosaurData);
+//console.log(result);
 
 
 
@@ -67,7 +69,25 @@ console.log(result);
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+ 
+ for (let i = 0; i < dinosaurs.length; i++) {
+  let dino = dinosaurs[i];
+  if (dinosaurs[i].dinosaurId === id) {
+    return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya.slice(-1)} million years ago.`;    
+    } 
+  }
+   return "A dinosaur with an ID of 'incorrect-id' cannot be found.";
+}
+
+
+//pseudocode:
+// How do we know what dino to look for: access dinosaur iD
+//if that dino id cannot be found, return error message: conditional statement ... if (!dinosaurId) {return error message}
+// if id can be found, return description : conditional statement and then return
+
+
+
 
 /**
  * getDinosaursAliveMya()
