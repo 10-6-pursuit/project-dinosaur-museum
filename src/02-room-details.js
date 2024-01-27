@@ -35,17 +35,19 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     if (dinosaurName === dinos.name) {
       id = dinos.dinosaurId;
       break;
-    } else {
-      result = "Dinosaur with name '" + dinosaurName + "' cannot be found."
     }
   }
 
+  if (!id.length) {
+   return "Dinosaur with name '" + dinosaurName + "' cannot be found."
+  }
+  
   for (let room of rooms) {
     if (room.dinosaurs.includes(id)){
       result = room.name;
       break;
     } else {
-      result = "Dinosaur with name '" + dinosaurName + "' cannot be found."
+      result = "Dinosaur with name '" + dinosaurName + "' cannot be found in any rooms."
     }
   }
   
@@ -82,10 +84,12 @@ function getConnectedRoomNamesById(rooms, id) {
   for (let room of rooms) { 
     if (id === room.roomId) {
       roomIds = [...room.connectsTo];
-    } else {
-      return "Room with ID of 'incorrect-id' could not be found."
-    }
+    } 
   }
+
+  if(!roomIds.length) {
+    return `Room with ID of '${id}' could not be found.`;
+    }
   
   for (let id of roomIds) {
     for (let room of rooms) {
@@ -95,7 +99,13 @@ function getConnectedRoomNamesById(rooms, id) {
     }
   }
 
-  return roomNames;
+  if (!roomNames.length) {
+   return `Room with ID of '${id}' could not be found.`
+  } else {
+    return roomNames;
+  }
+
+  
 
 }
 
