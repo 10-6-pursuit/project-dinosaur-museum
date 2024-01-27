@@ -137,8 +137,8 @@ function calculateTicketPrice(ticketData, ticketInfo) {
  */
 function purchaseTickets(ticketData, purchases) {
 
-  const newPurchasesArray = [...purchases];
-  const extraPurchasesArray = [...newPurchasesArray];
+  const newPurchasesArray = purchases.map(obj => ({...obj}));
+  const extraPurchasesArray = purchases.map(obj => ({...obj}));
 
   let humanType = ["child", "adult", "senior"]
   let ticketType = ["general", "membership", "extras"]
@@ -215,7 +215,7 @@ function purchaseTickets(ticketData, purchases) {
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length >= 1 && humanType.includes(purchases[0].entrantType)){
     return extraReceiptMsg
   }
-
+  
 }
 
 
