@@ -55,30 +55,34 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
-  let totalPrice = 0;
-
-  for(let tier in ticketData){
+  let totalPrice = 0, typeOfTicket;
+   for(let tier in ticketData){
     if(tier === ticketInfo.ticketType){
-      
+      for(let price in ticketData[tier].priceInCents){
+        if(price === ticketInfo.entrantType){
+          totalPrice = ticketData[tier].priceInCents[price];
+        }
+      }
     }
-  }
+   }
 
-  // for(let tier in ticketData){
-  //   if(ticketData[tier] === ticketInfo.ticketType){
-  //     for(let price in tier.priceInCents){
-  //       if(tier.priceInCents[price] === ticketInfo.entrantType){
-  //         totalPrice = tier.priceInCents["price"];
-  //       }
-  //     }
-  //   }
-  // }
+   let temp;
+   if(ticketInfo.extras.length){
+      for(let type in ticketData.extras){
+        for(let perk of ticketInfo.extras){
+          if(type === perk){
+            totalPrice += ticketData.extras[type].priceInCents[ticketInfo.entrantType];
+          }
+        }
+      }
+   }
   return totalPrice;
 }
 
 const ticketInfo = {
   ticketType: "general",
   entrantType: "adult",
-  extras: ["movie"]
+  extras: ["terrace", "movie", "education"]
 };
 console.log(calculateTicketPrice(exampleTicketData, ticketInfo))
 /**
