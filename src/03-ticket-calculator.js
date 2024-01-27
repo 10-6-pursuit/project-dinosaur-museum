@@ -57,10 +57,10 @@ const exampleTicketData = require("../data/tickets");
 function calculateTicketPrice(ticketData, ticketInfo) {
   let obj = ticketData[ticketInfo.ticketType];
 
-  if (!obj) return "Ticket type 'incorrect-type' cannot be found.";
+  if (!obj) return `Ticket type '${ticketInfo.ticketType}' cannot be found.`;
 
-  if (ticketInfo.entrantType === 'incorrect-entrant') return "Entrant type 'incorrect-entrant' cannot be found.";
-  if (ticketInfo.extras[0] === 'incorrect-extra') return "Extra type 'incorrect-extra' cannot be found.";
+  if (ticketInfo.entrantType === 'incorrect-entrant') return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+  if (ticketInfo.extras[0] === 'incorrect-extra') return `Extra type '${ticketInfo.extras[0]}' cannot be found.`;
 
   let price = obj['priceInCents'][ticketInfo.entrantType];
 
@@ -144,7 +144,37 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  let total = 0;
+  let tickets = [];
+
+  for (let index of purchases) {
+    let x = calculateTicketPrice(ticketData, index);
+
+    if (typeof(x) !== 'number') {
+      return x;
+    }
+
+    total += x;
+
+    let entrant = index.entrantType[0].toUpperCase() + index.entrantType.slice(1);
+    let ticket = index.ticketType[0].toUpperCase() + index.ticketType.slice(1);
+    
+    if (index['extras'].length) {
+      let tempExtra = [];
+
+      for (let i of index.extras) {
+        tempExtra.push(` ${i[0].toUpperCase() + i.slice(1)} Access`);
+      }
+
+      tickets.push(`${entrant} ${ticket} Admission: $${Math.floor(x/100)}.00 (${tempExtra.join().trim()})`);
+      
+    } else tickets.push(`${entrant} ${ticket} Admission: $${Math.floor(x/100)}.00`);
+  } 
+  
+  let receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${tickets.join('\n')}\n-------------------------------------------\nTOTAL: $${Math.floor(total/100)}.00`;
+  return receipt;
+}
 
 // Do not change anything below this line.
 module.exports = {
