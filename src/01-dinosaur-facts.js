@@ -36,7 +36,8 @@ function getLongestDinosaur(dinosaurs) {
   for (let i of dinosaurs) {
     if (i.lengthInMeters > comp) {
       comp = i.lengthInMeters;
-      bigBoy = {[i.name]: i.lengthInMeters * 3.281}
+      bigBoy = {[i.name]: i.lengthInMeters * 3.281};
+      
     }
   }
 
