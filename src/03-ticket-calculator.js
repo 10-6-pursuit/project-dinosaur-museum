@@ -56,44 +56,28 @@ const exampleTicketData = require("../data/tickets");
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
 
+  const basePriceCalc = (ticketSpecs, ticketGuide) => ticketGuide[ticketSpecs.ticketType].priceInCents[ticketSpecs.entrantType];
   let basePrice = 0;
-  let addOns = 0;
 
-  if (ticketInfo.ticketType === "general") {
-    basePrice = ticketInfo.entrantType === "child" ? basePrice + 2000
-    : ticketInfo.entrantType === "adult" ? basePrice + 3000
-    : ticketInfo.entrantType === "senior" ? basePrice + 2500
-    : "Entrant type '" + ticketInfo.entrantType + "' cannot be found.";
-  } else if (ticketInfo.ticketType === "membership") {
-    basePrice = ticketInfo.entrantType === "child" ? basePrice + 1500
-    : ticketInfo.entrantType === "adult" ? basePrice + 2800
-    : ticketInfo.entrantType === "senior" ? basePrice + 2300
-    : "Entrant type '" + ticketInfo.entrantType + "' cannot be found.";
+  if (ticketInfo.ticketType === "general" || ticketInfo.ticketType === "membership") {
+    basePrice = basePriceCalc(ticketInfo, ticketData);
   } else {
     return "Ticket type '" + ticketInfo.ticketType + "' cannot be found.";
   }
 
-  if (ticketInfo.extras.length > 0) {
-    for (let extra of ticketInfo.extras) {
-      if ( extra === ticketData.extras["movie"]){
-      addOns += 1000;
-      } else if ( extra === ticketData.extras["education"] ) {
-        addOns = ticketInfo.entrantType === "child" ? addOns + 1000
-      : ticketInfo.entrantType === "adult" ? addOns + 1200
-      : ticketInfo.entrantType === "senior" ? addOns + 1200
-      : addOns;
-      } else if ( extra === ticketData.extras["terrace"]) {
-        addOns = ticketInfo.entrantType === "child" ? addOns + 500
-      : ticketInfo.entrantType === "adult" ? addOns + 1000
-      : ticketInfo.entrantType === "senior" ? addOns + 1000
-      : addOns;
-      } else {
-        return "Extra type '" + extra + "' cannot be found.";
-      }
-    }
+  if (!basePrice) {
+    return "Entrant type '" + ticketInfo.entrantType + "' cannot be found."; 
   }
 
-  return basePrice + addOns;
+  if(!ticketInfo.extras.length) {
+    return basePrice;
+  }
+
+  const addOnPrices = (ticketSpecs) => ticketSpecs.extras.map(ele => ticketData.extras[ele]?.priceInCents[ticketSpecs.entrantType]);
+  let addOns = addOnPrices(ticketInfo, ticketData).reduce((sum, price) => sum + price, 0);
+
+  return !addOns ? "Extra type '" + "incorrect-extra" + "' cannot be found." : basePrice + addOns;
+
 }
 
 /**
@@ -149,7 +133,10 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+
+
+}
 
 // Do not change anything below this line.
 module.exports = {
