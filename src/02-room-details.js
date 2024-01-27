@@ -68,7 +68,7 @@ return `Dinosaur with name '${dinosaurName}' cannot be found.`
  */
 function getConnectedRoomNamesById(rooms, id) {
   let connectingRooms;
-  let roomNames = []  
+  const roomNames = []  
   if (id === "incorrect-id") {
     return `Room with ID of '${id}' could not be found.`
   }

@@ -32,8 +32,8 @@ function getLongestDinosaur(dinosaurs) {
       longestLength = dinoObj.lengthInMeters;
     }
   }
-  let longestDinoObj = {};
-  let first = dinosaurs.find(dinoObj => dinoObj.lengthInMeters === longestLength);
+  const longestDinoObj = {};
+  const first = dinosaurs.find(dinoObj => dinoObj.lengthInMeters === longestLength);
   
   longestDinoObj[first.name] = longestLength * 3.281;
 
@@ -103,7 +103,7 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
 
-  let aliveDinoArray = [];
+  const aliveDinoArray = [];
 
   for (let dinoInfo of dinosaurs) {
     if (mya <= dinoInfo.mya[0] && mya >= dinoInfo.mya[1] || mya === dinoInfo.mya[0] || mya === dinoInfo.mya[0] - 1){

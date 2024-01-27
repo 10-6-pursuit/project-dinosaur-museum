@@ -56,9 +56,9 @@ const exampleTicketData = require("../data/tickets");
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
 
-  let typeOfHuman = ["child", "adult", "senior"]
-  let typeOfTicket = ["general", "membership", "extras"]
-  let typeOfExtras = ["movie", "education", "terrace"]
+  const typeOfHuman = ["child", "adult", "senior"]
+  const typeOfTicket = ["general", "membership", "extras"]
+  const typeOfExtras = ["movie", "education", "terrace"]
 
   const { ticketType, entrantType, extras } = ticketInfo
 
@@ -140,9 +140,9 @@ function purchaseTickets(ticketData, purchases) {
   const newPurchasesArray = purchases.map(obj => ({...obj}));
   const extraPurchasesArray = purchases.map(obj => ({...obj}));
 
-  let humanType = ["child", "adult", "senior"]
-  let ticketType = ["general", "membership", "extras"]
-  let extras = ["movie", "education", "terrace"]
+  const humanType = ["child", "adult", "senior"]
+  const ticketType = ["general", "membership", "extras"]
+  const extras = ["movie", "education", "terrace"]
   
   for (let ticket of purchases){
     if (!ticketType.includes(ticket.ticketType)) {
@@ -185,7 +185,7 @@ function purchaseTickets(ticketData, purchases) {
     extraTicketTotal += ticket.extraTicketPrice
   }
   
-  let noExtraReceiptString = newPurchasesArray.reduce(
+  const noExtraReceiptString = newPurchasesArray.reduce(
     (a, b) =>
       a +
       `${b.entrantType[0].toUpperCase() + b.entrantType.slice(1)} ${
@@ -194,7 +194,7 @@ function purchaseTickets(ticketData, purchases) {
     "",
   );
 
-  let extraReceiptString = extraPurchasesArray.reduce(
+  const extraReceiptString = extraPurchasesArray.reduce(
     (a, b) =>
       a +
       `${b.entrantType[0].toUpperCase() + b.entrantType.slice(1)} ${
@@ -204,9 +204,9 @@ function purchaseTickets(ticketData, purchases) {
   );
 
   
-  let receiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${noExtraReceiptString}-------------------------------------------\nTOTAL: $${ticketTotal / 100}.00`
+  const receiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${noExtraReceiptString}-------------------------------------------\nTOTAL: $${ticketTotal / 100}.00`
 
-  let extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`
+  const extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`
 
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length === 0 && humanType.includes(purchases[0].entrantType)) {
     return receiptMsg
