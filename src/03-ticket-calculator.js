@@ -54,7 +54,69 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+    function calculateTicketPrice(ticketData, ticketInfo) {
+      let ticketPrice=0;
+      let wasTicketFound=false;
+      let thereIsEntrantType=false;
+      for(let ticketType in ticketData){
+        // console.log(ticketType)
+        if(ticketType===ticketInfo.ticketType){
+          wasTicketFound = true;
+         for(let key in ticketData[ticketType]){
+           
+             // console.log(key)
+           for(let ke in ticketData[ticketType][key]){
+             if(ke===ticketInfo.entrantType){
+              thereIsEntrantType=true;
+               ticketPrice+=ticketData[ticketType][key][ke]
+              
+               
+             } 
+             
+           }
+         }
+        }
+        
+
+        if(ticketInfo.extras.length!==0){
+          
+          for(let extra of ticketInfo.extras){
+          let extraIsNotEmpty=false;
+          for (let key in ticketData[ticketType]){
+           if(key===extra){
+            extraIsNotEmpty=true;
+             for(let ke in ticketData[ticketType][key]){
+             
+               for(let k in ticketData[ticketType][key][ke]){
+                 
+                 if(k===ticketInfo.entrantType){
+                   
+                   ticketPrice+=ticketData[ticketType][key][ke][k]
+     
+     
+                 }      
+               }
+     
+             }   }
+           
+          }
+          // if (!extraIsNotEmpty) return "Extra type 'incorrect-extra' cannot be found.";
+         }}
+        }
+
+        
+        if(!wasTicketFound){
+        return "Ticket type 'incorrect-type' cannot be found."
+
+       }
+       else if(!thereIsEntrantType){
+        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
+       }
+       
+       else return ticketPrice
+        
+     
+       }
 
 /**
  * purchaseTickets()
@@ -109,7 +171,37 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+    ;
+function purchaseTickets(ticketData, purchases) {
+  function  capitalize(string){
+
+     let str=string[0].toUpperCase()+string.slice(1)
+
+    return str
+
+    }
+
+
+let str1=``;
+  let sum=0;
+  for(let purchase of purchases){
+  
+    let price=calculateTicketPrice(ticketData,purchase) ;
+    sum+=price
+  let stringExtras=``  
+    for(let extra of purchase.extras){
+      stringExtras+=capitalize(extra)+` Access, `
+      }
+      str1+=`\n-------------------------------------------\n${capitalize(purchase.entrantType)} ${capitalize(purchase.ticketType)} Admission: $${price/100}.00`;
+    if (purchase.extras.length!==0){str1+= ` (${stringExtras.slice(0,-2)})`}
+    
+    }
+    return "Thank you for visiting the Dinosaur Museum!"+str1+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`
+    
+   
+
+   
+}
 
 // Do not change anything below this line.
 module.exports = {

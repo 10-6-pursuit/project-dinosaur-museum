@@ -111,34 +111,72 @@ function getDinosaurDescription(dinosaurs, id) {
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   for (let dinosaur of dinosaurs){
-    console.log(dinosaur)
-    let dinosaurMyaRange=[];
+    let dinosaur1MyaRange=[];
+    let dinosaur2MyaRange=[];
     if(dinosaur.mya.length===1){
-       if(dinosaur.mya[0]===mya){
+       if(dinosaur.mya[0]===mya||dinosaur.mya[0]===mya+1){
         if(dinosaur[key]){
-
-          return dinosaur[key]
+          dinosaur1MyaRange.push(dinosaur[key])
+          
         }
-        else return dinosaur.dinosaurId
+        else {
+          dinosaur1MyaRange.push(dinosaur.dinosaurId)
+          
+
+        }
+        return dinosaur1MyaRange
+
        }
 
     }
-    else{for(let j=dinosaur.mya.length-1;j<dinosaur.mya[0];j++){
-      dinosaurMyaRange.push(j)
+    
+    if(dinosaur.mya.length===2){
+      function range(start,end) {
+        let rangeArray = [];
+         // console.log(Math.floor(dinosaur.mya[dinosaur.mya.length-1]))
+          for (let i = Math.floor(start); i <= Math.ceil(end); i++) {
+              rangeArray.push(i);
+          }
+          return rangeArray;
+        
+      }
+      for(r of range(dinosaur.mya[dinosaur.mya.length-1],dinosaur.mya[0])){
+        if(r===mya){
+          dinosaur2MyaRange.push(dinosaur.dinosaurId)
+          
+        }
+      }
+      return dinosaur2MyaRange
+      // if(!range(dinosaur.mya[dinosaur.mya.length-1],dinosaur.mya[0]).includes(mya)){
+      //   console.log(dinosaur)
+      //   if(dinosaur[key]){
 
-      if(dinosaurMyaRange.includes(mya)){
-
-       if(dinosaur[key]){
-
-         return dinosaur[key]
-       }
-       else return dinosaur.dinosaurId
-
-  }
-   }
-} 
-  }  
+      //     return dinosaur[key]
+      //   }
+      //   else return dinosaur.dinosaurId
+      // }
+  // }  }
 }
+    
+//     if(dinosaur.mya.length===2){for(let j=dinosaur.mya[dinosaur.mya.length-1];j<=dinosaur.mya[0];j++){
+//       console.log(dinosaur)
+//       dinosaurMyaRange.push(j)
+//       // console.log(dinosaurMyaRange)
+
+//       if(dinosaurMyaRange.includes(mya)){
+//         // console.log(dinosaur)
+//        if(dinosaur[key]){
+
+//          return dinosaur[key]
+//        }
+//        else return dinosaur.dinosaurId
+
+//   }
+   
+} 
+  // }  }
+}
+
 
 module.exports = {
   getLongestDinosaur,
