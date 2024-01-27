@@ -73,17 +73,20 @@ function getConnectedRoomNamesById(rooms, id) {
   const result = [];
   const obj = {};
 
+  // for (let i of rooms) {
+    
+  // }
+
+  
   for (let i of rooms) {
+    obj[i.roomId] = i.name;
     if (i.roomId === id) {
       roomIds.push(...i.connectsTo);
     }
-  }
+  };
 
   if (!roomIds.length) return `Room with ID of '${id}' could not be found.`;
 
-  for (let i of rooms) {
-    obj[i.roomId] = i.name;
-  };
 
   for (let i of roomIds) {
     if (!obj[i]) {
