@@ -60,20 +60,21 @@ function getLongestDinosaur(dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {
-let result = null;
-
-  dinosaurs.forEach(dino => {
-    if (dinosaurs.name === dinosaurName) {
-      result = {id: dinosaur.id, description: dinosaur.description };
+const getDinosaurDescription = (dinosaurs, id) => {
+  for (const dinosaur of dinosaurs) {
+    if (dinosaur.dinosaurId === id) {
+      const description = `${dinosaur.name} (${dinosaur.pronunciation})\n${dinosaur.info} It lived in the ${dinosaur.period} period, over ${Math.min(...dinosaur.mya)} million years ago.`;
+      return description;
     }
-  });
-}
+  }
+
+  return `A dinosaur with an ID of '${id}' cannot be found.`;
+};
 
 /**
  * getDinosaursAliveMya()
  * ---------------------
- * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID.
+ * Returns an array of   dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID.
  *
  * If the dinosaur only has a single value for `mya`, allows for the `mya` value to be equal to the given value or one less. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
  *
@@ -95,7 +96,30 @@ let result = null;
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  const aliveDinosaurs = dinosaurs.filter(dinosaur => {
+    const [startMya, endMya] = dinosaur.mya;
+
+    if (dinosaur.mya.length === 1) {
+      // Check for single value mya with +/- 1 year
+      return mya === startMya || mya === startMya - 1;
+    }
+
+    // Check for range
+    return mya <= startMya && mya >= endMya;
+  });
+
+  return aliveDinosaurs.map(dinosaur => {
+    // Check if key is provided and exists in the dinosaur object
+    if (key && key in dinosaur) {
+      return dinosaur[key];
+    }
+
+    // Default to returning dinosaur ID
+    return dinosaur.dinosaurId;
+  });
+}
+
 
 module.exports = {
   getLongestDinosaur,
