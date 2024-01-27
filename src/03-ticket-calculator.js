@@ -54,7 +54,55 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+function calculateTicketPrice(ticketData, ticketInfo) {
+	const validation = isTicketValid(ticketData, ticketInfo);
+	if (!validation.isValid) return validation.error;
+
+	const membershipCost = calcMembershipCost(ticketData, ticketInfo);
+	const extrasCost = calcExtrasCost(ticketData, ticketInfo);
+
+	return membershipCost + extrasCost;
+}
+
+
+function calcMembershipCost(ticketData, ticket) {
+	return ticketData[ticket.ticketType].priceInCents[ticket.entrantType];
+}
+function calcExtrasCost(ticketData, ticket) {
+	return ticket.extras.reduce((acc, curr) => {
+		acc += ticketData.extras[curr].priceInCents[ticket.entrantType];
+		return acc;
+	}, 0);
+}
+
+function isTicketValid(ticketData, ticket) {
+	if (!ticketData[ticket.ticketType]) {
+		return {
+			isValid: false,
+			error: `Ticket type '${ticket.ticketType}' cannot be found.`,
+		};
+	}
+
+	if (!ticketData[ticket.ticketType].priceInCents[ticket.entrantType]) {
+		return {
+			isValid: false,
+			error: `Entrant type '${ticket.entrantType}' cannot be found.`,
+		};
+	}
+
+	let incorrectExtra = ticket.extras.find((extra) => {
+		if (!ticketData.extras[extra]) {
+			return extra;
+		}
+	});
+	if (incorrectExtra) {
+		return {
+			isValid: false,
+			error: `Extra type '${incorrectExtra}' cannot be found.`,
+		};
+	}
+	return { isValid: true, error: null };
+}
 
 /**
  * purchaseTickets()
@@ -109,10 +157,72 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+	for (ticket of purchases) {
+		const validation = isTicketValid(ticketData, ticket);
+
+		if (!validation.isValid) {
+			return validation.error;
+		}
+	}
+
+	let purchaseDetails = "";
+	let total = 0;
+
+	purchases.forEach((ticket) => {
+		const purchaseDetail = createPurchaseDetail(ticketData, ticket);
+		purchaseDetails += purchaseDetail.purchaseDetail;
+		total += purchaseDetail.subTotal;
+	});
+
+	const receipt = createReciept(purchaseDetails, total);
+
+	return receipt;
+}
+
+function createPurchaseDetail(ticketData, ticket) {
+
+	const membershipCost = calcMembershipCost(ticketData, ticket);
+	const extrasCost = calcExtrasCost(ticketData, ticket);
+	const subTotal = extrasCost + membershipCost;
+	const entrantType = capitalizeWord(ticket.entrantType);
+	const ticketType = capitalizeWord(ticket.ticketType);
+	const extrasDescription = getExtrasDescription(ticketData, ticket);
+	const subTotalFormatted = formatCentsToDollarsCurrency(subTotal);
+
+	const purchaseDetail = extrasDescription
+		? `${entrantType} ${ticketType} Admission: ${subTotalFormatted} ${extrasDescription}`
+		: `${entrantType} ${ticketType} Admission: ${subTotalFormatted}`;
+
+	return { purchaseDetail: "\n" + purchaseDetail, subTotal };
+}
+
+function getExtrasDescription(ticketData, ticket) {
+	if (ticket.extras.length > 0) {
+		const extrasList = ticket.extras.map(
+			(item) => ticketData.extras[item].description
+		);
+		return `(${extrasList.join(", ")})`;
+	}
+}
+
+function capitalizeWord(word) {
+	return word[0].toUpperCase() + word.slice(1);
+}
+
+function formatCentsToDollarsCurrency(cents) {
+	return `$${(cents / 100).toFixed(2)}`;
+}
+
+function createReciept(purchaseDetails, total) {
+	const totalFormatted = formatCentsToDollarsCurrency(total);
+	const receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------${purchaseDetails}\n-------------------------------------------\nTOTAL: ${totalFormatted}`;
+
+	return receipt;
+}
 
 // Do not change anything below this line.
 module.exports = {
-  calculateTicketPrice,
-  purchaseTickets,
+	calculateTicketPrice,
+	purchaseTickets,
 };
