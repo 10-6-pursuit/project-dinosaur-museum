@@ -96,23 +96,19 @@ function getLongestDinosaur(dinosaurs) {
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
 function getDinosaurDescription(dinosaurs, id) {
-   let str;
-   let dino;
-   for (let i = 0; i < dinosaurs.length; i++) {
-     if (dinosaurs[i].dinosaurId === id) {
-       dino = dinosaurs[i];
-      str = `${dino.name} ${dino.pronunciation} \n ${dino.info}.. It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length-1]} million years ago.`;
-        return str;
-     }
-   }
-     
-   return `A dinosaur with an ID of ${id} cannot be found.`;
+  let str;
+  let dinoName = dinosaurs[0];
+  for(let i = 0; i< dinosaurs.length; i++) {
+     if (dinosaurs[i].dinosaurId  === id) {
 
+     }
   }
+  return str;
+}
        
  
   
- console.log(getDinosaurDescription(dinosaurs,"BFjjLjea-O"));
+ //console.log(getDinosaurDescription(dinosaurs,"BFjjLjea-O"));
 /**
  * getDinosaursAliveMya()
  * ---------------------
@@ -139,15 +135,40 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
  function getDinosaursAliveMya(dinosaurs, mya, key) {
-  const objArr= [];
-  let dino;
+  const arr= [];
+  let dinoMya;
    for (let i = 0; i < dinosaurs.length; i++) {
+    dinoMya= dinosaurs[i].mya;
+    if (dinosaurs[i].mya.length === 2) {
+      if (dinoMya[1] <= mya && mya <= dinoMya[0]) {
+        if (dinosaurs[i][key]) {
+            arr.push(dinosaurs[i][key]);
+        } else {
+            arr.push(dinosaurs[i].dinosaurId);
+        }
+      }
+    } else if (dinoMya.length === 1) {
+        if (dinoMya[0] === mya || dinoMya[0] === (mya + 1)) {
+          if (dinosaurs[i][key]) {
+            arr.push(dinosaurs[i][key]);
+          } else {
+            arr.push(dinosaurs[i].dinosaurId);
+          }
+        }
+      //return arr;    
+    }
+  }
+  return arr;
+};
+    
 
-   }
+console.log(getDinosaursAliveMya(exampleDinosaurData, 65));
 
-  return objArr;
-}
 
+     
+          
+
+   
 module.exports = {
   getLongestDinosaur,
   getDinosaurDescription,
