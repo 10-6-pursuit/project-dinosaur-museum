@@ -24,11 +24,12 @@ const exampleDinosaurData = require("../data/dinosaurs");
  */
 function getLongestDinosaur(dinosaurs) {
   let object = {};
+  let getLongestDinosaur = null;
+  let longestHeightInFeet = 0;
+  
   if (dinosaurs.length === 0) {
     return object;
   }
-  let getLongestDinosaur = null;
-  let longestHeightInFeet = 0;
 
   for (let dino of dinosaurs) {
     let heightInFeet = dino.lengthInMeters * 3.281;
@@ -98,9 +99,7 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-  let result = [];
   let dinosAlive = [];
-  let alive;
 
   for (let i = 0; i < dinosaurs.length; i++) {
     if (dinosaurs[i].mya.length === 1) {
@@ -121,28 +120,6 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
       }
     }
   } 
-
-  // for (let dino of dinosaurs) {
-  //   alive = false;
-  //   let myaValues = dino.mya;
-
-  //   for (let i = 0; i < myaValues.length; i++) {
-  //     if (myaValues[i] >= mya && myaValues[i] - 1 <= mya) {
-  //       alive = true;
-  //       break;
-  //     }
-  //   }
-  //   if (alive) {
-  //     dinosAlive.push(dino);
-  //   }  
-  // }
-  // for (let dino of dinosAlive) {
-  //   if (key && dino.hasOwnProperty(key)) {
-  //     result.push(dino[key]);
-  //   } else {
-  //     result.push(dino.dinosaurId);
-  //   }
-  // }
   return dinosAlive;
 }
 
