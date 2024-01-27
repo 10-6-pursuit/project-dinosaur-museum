@@ -126,13 +126,14 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   for (let dinosaur of dinosaurs) {
     if (dinosaur.mya.length === 1) {
       if (dinosaur.mya[0] === mya || dinosaur.mya[0] === mya - 1) {
-        dinosAlive.push(dinsaur[key]);
+        dinosAlive.push(dinosaur[key]);
       }
     } else if (dinosaur.mya.length === 2) {
       if (dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya) {
         dinosAlive.push(dinosaur[key]);
       }
     }
+  }
   return dinosAlive;
 
 }
