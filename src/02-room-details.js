@@ -66,17 +66,17 @@ function getConnectedRoomNamesById(rooms, id) {
 		return validation.error;
 	}
 
-	const connectedRooms = rooms.filter((ele) =>
-		ele.connectsTo.some((ele) => ele === id)
+	const connectedRooms = rooms.filter((room) =>
+		room.connectsTo.some((room) => room === id)
 	);
 
-	return connectedRooms.map((ele) => ele.name);
+	return connectedRooms.map((room) => room.name);
 }
 
 
 function validateInput(rooms,id) {
-	const connectedRooms = rooms.flatMap((ele) => ele.connectsTo);
-	const existingRooms = new Set(rooms.map(ele => ele.roomId))
+	const connectedRooms = rooms.flatMap((room) => room.connectsTo);
+	const existingRooms = new Set(rooms.map(room => room.roomId))
 
 	if (!existingRooms.has(id)) {
 		return {

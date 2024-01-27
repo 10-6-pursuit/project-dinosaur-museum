@@ -25,8 +25,8 @@ const exampleDinosaurData = require("../data/dinosaurs");
 function getLongestDinosaur(dinosaurs) {
 	if (dinosaurs.length === 0) return {};
 
-	const allLengths = dinosaurs.map((ele) => ele.lengthInMeters);
-	const greatestLength = Math.max(...allLengths);
+	const dinosaursLengthList = dinosaurs.map((ele) => ele.lengthInMeters);
+	const greatestLength = Math.max(...dinosaursLengthList);
 	const longestDinosaur = dinosaurs.find(
 		(ele) => ele.lengthInMeters === greatestLength
 	);
@@ -71,7 +71,7 @@ function getDinosaurDescription(dinosaurs, id) {
 }
 
 function validateId(dinosaurs, id) {
-	const isExist = dinosaurs.some((ele) => ele.dinosaurId === id);
+	const isExist = dinosaurs.some((dinosaur) => dinosaur.dinosaurId === id);
 	return {
 		isExist,
 		error: !isExist
@@ -81,7 +81,7 @@ function validateId(dinosaurs, id) {
 }
 
 function createDescription(dinosaurs, id) {
-	const dinosaur = dinosaurs.find((ele) => ele.dinosaurId === id);
+	const dinosaur = dinosaurs.find((dinosaur) => dinosaur.dinosaurId === id);
 
 	const description = `${dinosaur.name} (${dinosaur.pronunciation})\n${
 		dinosaur.info
@@ -120,19 +120,19 @@ function createDescription(dinosaurs, id) {
 function getDinosaursAliveMya(dinosaurs, mya, key) {
 	const dinosaursListByMya = getDinosaursByMya(dinosaurs, mya);
 
-	const dinosaursAliveMya = dinosaursListByMya.map((ele) => {
-		return ele[key] ? ele[key] : ele.dinosaurId;
+	const dinosaursAliveMya = dinosaursListByMya.map((dinosaur) => {
+		return dinosaur[key] ? dinosaur[key] : dinosaur.dinosaurId;
 	});
 
 	return dinosaursAliveMya;
 }
 
 function getDinosaursByMya(dinosaurs, mya) {
-	return dinosaurs.filter((ele) => {
+	return dinosaurs.filter((dinosaur) => {
 		return (
-			(mya <= ele.mya[0] && mya >= ele.mya[1]) ||
-			ele.mya[0] === mya ||
-			mya === ele.mya[0] - 1
+			(mya <= dinosaur.mya[0] && mya >= dinosaur.mya[1]) ||
+			dinosaur.mya[0] === mya ||
+			mya === dinosaur.mya[0] - 1
 		);
 	});
 }

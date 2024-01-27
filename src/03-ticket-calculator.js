@@ -90,9 +90,9 @@ function isTicketValid(ticketData, ticket) {
 		};
 	}
 
-	let incorrectExtra = ticket.extras.find((ele) => {
-		if (!ticketData.extras[ele]) {
-			return ele;
+	let incorrectExtra = ticket.extras.find((extra) => {
+		if (!ticketData.extras[extra]) {
+			return extra;
 		}
 	});
 	if (incorrectExtra) {
