@@ -94,7 +94,35 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+    let dinoArr = [];
+    function isDinoAlive(dino, mya) {
+      if (dino.mya.length === 1) {
+          if (dino.mya[0] === mya || dino.mya[0] -1 === mya) {
+              return true;
+          }
+      } else {
+          if (mya > dino.mya[1] && mya <= dino.mya[0]) {
+            return true;
+          }
+      }
+      return false;
+    }
+     // console.log(isDinoAlive(dino, mya));
+
+  for (let dino of dinosaurs) {
+    let shouldPush = isDinoAlive(dino, mya); // hold true or false
+      if (shouldPush) {
+        dinoArr.push(dino[key] || dino.dinosaurId);
+      }
+  }
+  return dinoArr;
+} 
+
+//if that element passes the helper function.. if true for mya param, then return 
+
+//console.log(function isDinoAlive(dino, mya));
+
 
 module.exports = {
   getLongestDinosaur,
