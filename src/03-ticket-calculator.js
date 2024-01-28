@@ -77,11 +77,9 @@ const exampleTicketData = require("../data/tickets");
           
         for(let extra of ticketInfo.extras){
 
-          let extraIsNotEmpty=false;
 
           if(Object.hasOwn(ticketData.extras,extra)){
 
-             extraIsNotEmpty=true;
 
              ticketPrice+=ticketData.extras[extra].priceInCents[ticketInfo.entrantType];
            
