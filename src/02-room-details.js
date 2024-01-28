@@ -11,6 +11,9 @@ const exampleRoomData = require("../data/rooms");
  * getRoomByDinosaurName()
  * ---------------------
  * Return the name of the room where the given dinosaur can be found. If the dinosaur does not exist in the `dinosaurs` list or cannot be found in any room, return an error message that says so.
+ * //1. loop thru og dino data match dino name to id
+ * //2.loop thru room data 
+ * //3. return room name aka  " "
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @param {Object[]} rooms - An array of room objects. See the `data/rooms.js` file for an example of the input.
@@ -25,7 +28,32 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  let dinoId = null;
+  for (let i = 0; i < dinosaurs.length; i++){
+    if (dinosaurs[i].name === dinosaurName){
+      dinoId = dinosaurs[i].dinosaurId
+    }
+  }
+  if (!dinoId) {
+    return `Dinosaur with name '${dinosaurName}' cannot be found.`
+  }
+
+  for (let i = 0; i < rooms.length; i++){
+    let room = rooms[i]
+    if(room.dinosaurs.includes(dinoId)){
+      return room.name
+    }
+  }
+
+
+
+
+
+
+
+  return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+}
 
 /**
  * getConnectedRoomNamesById()
@@ -49,7 +77,48 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+    // 1_ Loop through ALL rooms to build an object
+      // the keys in the object should be the roomID, the values should be the room name
+      // guide = { A6QaYdyKra : Ticket Center, }
+    // for (let i = 0; i < rooms.length; i++){
+      // guide[rooms[i].roomId] = 
+
+    // 2) go to the room with your id param, pull the connectsTo key to get the array of ids,
+      // map the connectsTo array 
+
+        //[
+    //   "zwfsfPU5u", // Entrance Room
+    //   "aIA6tevTne", // Coat Check Room
+    //   "dpQnu5wgaN", // Ellis Family Hall
+    //   "L72moIRcrX", // Kit Hopkins Education Wing
+    // ].map ( room => guide[room])
+function getConnectedRoomNamesById(rooms, id) {
+  let obj = {};
+  for (let room of rooms) {
+    obj[room.roomId] = room.name;
+  }
+
+  let arr = [];
+  for (let room of rooms) {
+    if(id === room.roomId) {
+      arr = room.connectsTo;
+    }
+  }
+
+  if (!arr.length) return `Room with ID of '${id}' could not be found.`;
+
+  let result = [];
+
+  for (let index of arr) {
+    if (!obj[index]) {
+      return `Room with ID of 'incorrect-id' could not be found.`;
+    } else{ 
+      result.push(obj[index]);
+    }
+  }
+
+  return result;
+}
 
 module.exports = {
   getRoomByDinosaurName,
