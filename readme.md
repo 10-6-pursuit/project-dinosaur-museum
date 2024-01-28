@@ -65,7 +65,7 @@ Complete the steps below to get the project to run.
 ### Getting started
 
 1. Fork and clone this repository.
-
+``
 1. Navigate to the cloned repository's directory on your command line. Then, run the following command:
 
    ```

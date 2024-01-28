@@ -54,7 +54,60 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+    function calculateTicketPrice(ticketData, ticketInfo) {
+      let ticketPrice=0;
+      let isTicketFound=false;
+      let isEntrantTypeFound=false;
+
+      if (Object.hasOwn(ticketData, ticketInfo.ticketType)) {
+
+        isTicketFound = true;
+
+        if(Object.hasOwn(ticketData[ticketInfo.ticketType].priceInCents,ticketInfo.entrantType)){
+          
+          ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType];
+
+          isEntrantTypeFound=true;
+
+        };
+
+      };
+
+      if(ticketInfo.extras.length!==0){
+          
+        for(let extra of ticketInfo.extras){
+
+
+          if(Object.hasOwn(ticketData.extras,extra)){
+
+
+             ticketPrice+=ticketData.extras[extra].priceInCents[ticketInfo.entrantType];
+           
+          } else {
+
+            return "Extra type 'incorrect-extra' cannot be found.";
+
+          };
+    
+        };
+
+      };
+       
+      if(!isTicketFound){
+
+        return "Ticket type 'incorrect-type' cannot be found.";
+
+      }
+      
+      else if(!isEntrantTypeFound){
+
+        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+
+      }
+       
+      else return ticketPrice;
+      
+    };
 
 /**
  * purchaseTickets()
@@ -109,7 +162,53 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+    ;
+function purchaseTickets(ticketData, purchases) {
+
+  function  camelCasing(string){
+
+    let camelCasedString =string[0].toUpperCase()+string.slice(1)
+
+    return camelCasedString;
+
+  };
+
+  let ticketTypeString=``;
+
+  let sum=0;
+
+  for(let purchase of purchases){
+    
+    let price=calculateTicketPrice(ticketData,purchase) ;
+    typeof price===`number`?sum+=price:sum=price;
+
+    let extrasString=``  
+
+    for(let extra of purchase.extras){
+
+      extrasString+=camelCasing(extra)+` Access, `;
+
+    }
+
+    ticketTypeString+=`\n${camelCasing(purchase.entrantType)} ${camelCasing(purchase.ticketType)} Admission: $${price/100}.00`;
+
+    if (purchase.extras.length!==0){
+
+      ticketTypeString+= ` (${extrasString.slice(0,-2)})`;
+      
+    }
+    
+  };
+
+  if(typeof sum===`string`){
+    
+    return sum;
+
+  }
+
+  else return "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------"+ticketTypeString+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`;
+    
+}
 
 // Do not change anything below this line.
 module.exports = {
