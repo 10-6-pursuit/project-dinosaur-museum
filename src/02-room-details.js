@@ -25,7 +25,18 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  const dinosaur = dinosaurs.find((dino) => dino.name === dinosaurName);
+  if (!dinosaur){
+    return `Dinosaur with name '${dinosaurName}' cannot be found.`
+  }
+const room = rooms.find((room)=> room.dinosaurs.some(id => id === dinosaur.dinosaurId))
+
+ return room ? room.name : `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
+
+
+
+}
 
 /**
  * getConnectedRoomNamesById()
@@ -49,7 +60,34 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+  function getConnectedRoomNamesById(rooms, id) {
+    const validation = validateInput(rooms,id);
+    
+    if(!validation.isValid) return validation.error;
+
+    const connectedRooms = rooms.filter(room => room.connectsTo.some(roomId => roomId === id));
+
+    return connectedRooms.map(room => room.name);
+  }
+  
+  function validateInput(rooms,id){
+    const connectedRooms = rooms.flatMap((room) => room.connectsTo);
+    const existingId = new Set(rooms.map(item => item.roomId));
+
+  
+    if(!existingId.has(id)){
+      return {isValid:false, error:`Room with ID of '${id}' could not be found.`}
+    }
+
+
+   for(let room of connectedRooms){
+    if(!existingId.has(room)){
+      return {isValid:false, error:`Room with ID of '${room}' could not be found.`}
+    }
+   }
+   return {isValid: true, error:null}
+
+  }
 
 module.exports = {
   getRoomByDinosaurName,
