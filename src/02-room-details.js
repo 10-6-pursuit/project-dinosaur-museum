@@ -25,7 +25,36 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  let dinoID = "";
+  let room = "";
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurName === dinosaurs[i].name) {
+      dinoID = dinosaurs[i].dinosaurId;
+    } 
+  }
+
+  for (let j = 0; j < rooms.length; j++) {
+    if (rooms[j].dinosaurs.indexOf(dinoID) !== -1) {
+      room = rooms[j].name;
+    } 
+  }
+
+  if (dinoID) {
+    if (room) {
+      return room;
+    } else {
+      return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
+    }
+  } else {
+    return `Dinosaur with name '${dinosaurName}' cannot be found.`;
+  }
+
+}
+
+
+
 
 /**
  * getConnectedRoomNamesById()
@@ -49,7 +78,41 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+function getConnectedRoomNamesById(rooms, id) {
+  const connectedRoomIDArray = [];
+  const roomNameArray = [];
+  const roomIDs = [];
+
+  for (let i = 0; i < rooms.length; i++) {
+    roomIDs.push(rooms[i].roomId)
+    if (rooms[i].roomId === id) {
+      connectedRoomIDArray.push(...rooms[i].connectsTo);
+    } 
+  }
+  
+  for (let j = 0; j < connectedRoomIDArray.length; j++) {
+    if (!roomIDs.includes(connectedRoomIDArray[j])) {
+      return `Room with ID of '${connectedRoomIDArray[j]}' could not be found.`;
+    }
+  }
+
+  if (connectedRoomIDArray.length) {
+    for (let k = 0; k < rooms.length; k++) {
+      for (let l = 0; l < connectedRoomIDArray.length; l++) {
+        if (connectedRoomIDArray[l] === rooms[k].roomId) {
+         roomNameArray.push(rooms[k].name);
+        }
+      }
+    } 
+  } else {
+      return `Room with ID of '${id}' could not be found.`;
+    }
+
+return roomNameArray;
+
+}
+
+
 
 module.exports = {
   getRoomByDinosaurName,
