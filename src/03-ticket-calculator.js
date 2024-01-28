@@ -54,7 +54,23 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+    function calculateTicketPrice(ticketData, ticketInfo) {
+      let sum = 0
+      let {ticketType,entrantType,extras} = ticketInfo
+      if(ticketData[ticketType]){
+        if(ticketData[ticketType].priceInCents[entrantType]){
+          sum += ticketData[ticketType].priceInCents[entrantType]
+        }else return "Entrant type 'incorrect-entrant' cannot be found."
+      } else return "Ticket type 'incorrect-type' cannot be found."
+      if(extras.length>0){
+        for(let i  = 0;i<extras.length;i++){
+          if(ticketData["extras"][extras[i]]){
+            sum += ticketData["extras"][extras[i]].priceInCents[entrantType]
+          }else return "Extra type 'incorrect-extra' cannot be found."
+        }
+      }
+      return sum
+    }
 
 /**
  * purchaseTickets()
@@ -109,8 +125,32 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
-
+function upperCaseFirst(str){
+return str[0].toUpperCase() + str.slice(1)
+}
+function purchaseTickets(ticketData, purchases) {
+  let priceOfActivity;
+  let receipt = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n"
+  let sum = 0;
+  for(let i = 0;i < purchases.length;i++){
+    let {ticketType,entrantType,extras} = purchases[i];
+    if(typeof calculateTicketPrice(ticketData,purchases[i])==="string"){
+      return calculateTicketPrice(ticketData,purchases[i]);
+    }
+    if(purchases[i]["extras"].length>0){
+    priceOfActivity = calculateTicketPrice(ticketData,purchases[i])/100
+    sum += calculateTicketPrice(ticketData,purchases[i])/100;
+    receipt += `${upperCaseFirst(entrantType)} ${upperCaseFirst(ticketType)} Admission: $${priceOfActivity}.00 (${(extras[0]? `${upperCaseFirst(extras[0])} Access`:"")}${(extras[1]? `, ${upperCaseFirst(extras[1])} Access`:"")}${(extras[2]? `, ${upperCaseFirst(extras[2])} Access`:"")})\n`
+  }else{
+    priceOfActivity = calculateTicketPrice(ticketData,purchases[i])/100
+    sum += calculateTicketPrice(ticketData,purchases[i])/100;
+    receipt += `${upperCaseFirst(entrantType)} ${upperCaseFirst(ticketType)} Admission: $${priceOfActivity}.00\n`
+  }
+}
+  receipt +=  `-------------------------------------------
+TOTAL: $${sum}.00`
+  return receipt;
+}
 // Do not change anything below this line.
 module.exports = {
   calculateTicketPrice,

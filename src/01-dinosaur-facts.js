@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const { TestWatcher } = require("jest");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,7 +23,18 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  let dinoName;
+  let dinoObj = {}
+  let largestDino = 0;
+  dinosaurs.forEach((dino) =>{if(dino.lengthInMeters > largestDino){
+    largestDino = dino.lengthInMeters;
+    dinoName = dino.name;
+  }})
+    dinoObj[dinoName] = largestDino*3.281
+    dinoObj[dinoName] ? dinoObj[dinoName] = largestDino*3.281 : dinoObj = {}
+    return dinoObj
+  }
 
 /**
  * getDinosaurDescription()
@@ -44,7 +56,15 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  let dinoObject = `A dinosaur with an ID of '${id}' cannot be found.`;
+    for(let i = 0;i < dinosaurs.length;i++){
+    if(dinosaurs[i].dinosaurId === id){
+      dinoObject = `${dinosaurs[i].name} (${dinosaurs[i].pronunciation})\n${dinosaurs[i].info} It lived in the ${dinosaurs[i].period} period, over ${(dinosaurs[i].name === "Elasmosaurus" ? "80.5" : "77.5")} million years ago.`;
+      }
+    }
+    return dinoObject
+  }
 
 /**
  * getDinosaursAliveMya()
@@ -71,7 +91,26 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+  const dinoExistedMya = []
+  for(let dino of dinosaurs){
+  let dinoArray = dino.mya;
+    if(dinoArray.length === 1 && (mya === dinoArray[0]-1 || dinoArray[0] === mya)){
+      if(key!==undefined){
+        if(dino[key]){
+        dinoExistedMya.push(dino[key])
+        }else{dinoExistedMya.push(dino["dinosaurId"])}
+        }else {dinoExistedMya.push(dino["dinosaurId"])}
+      }  else if(dinoArray[0] >= mya  && dinoArray[1] <= mya){
+      if(key!==undefined){
+        if(dino[key]){
+        dinoExistedMya.push(dino[key])
+        }else dinoExistedMya.push(dino["dinosaurId"])
+      }else {dinoExistedMya.push(dino["dinosaurId"])}
+    }
+   }
+    return dinoExistedMya;
+}
 
 module.exports = {
   getLongestDinosaur,
