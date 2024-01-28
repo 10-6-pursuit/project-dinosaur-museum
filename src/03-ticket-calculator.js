@@ -56,26 +56,26 @@ const exampleTicketData = require("../data/tickets");
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
 
-  const typeOfHuman = ["child", "adult", "senior"]
-  const typeOfTicket = ["general", "membership", "extras"]
-  const typeOfExtras = ["movie", "education", "terrace"]
+  const typeOfHuman = ["child", "adult", "senior"];
+  const typeOfTicket = ["general", "membership", "extras"];
+  const typeOfExtras = ["movie", "education", "terrace"];
 
-  const { ticketType, entrantType, extras } = ticketInfo
+  const { ticketType, entrantType, extras } = ticketInfo;
 
-      if (!typeOfTicket.includes(ticketType)) {
-        return `Ticket type '${ticketType}' cannot be found.`
-      } else if (extras.length >= 1 && !(typeOfExtras.includes(extras[0]))){
-        return `Extra type '${extras}' cannot be found.`
-      } else if (typeOfTicket.includes(ticketType) && !typeOfHuman.includes(entrantType)){
-        return `Entrant type '${entrantType}' cannot be found.`
-      } else if (typeOfTicket.includes(ticketType) && extras.length === 0 && typeOfHuman.includes(entrantType)){
+    if (!typeOfTicket.includes(ticketType)) {
+        return `Ticket type '${ticketType}' cannot be found.`;
+      } else if (extras.length >= 1 && !(typeOfExtras.includes(extras[0]))) {
+        return `Extra type '${extras}' cannot be found.`;
+      } else if (typeOfTicket.includes(ticketType) && !typeOfHuman.includes(entrantType)) {
+        return `Entrant type '${entrantType}' cannot be found.`;
+      } else if (typeOfTicket.includes(ticketType) && extras.length === 0 && typeOfHuman.includes(entrantType)) {
         return ticketData[ticketType].priceInCents[entrantType];
-      } else if (typeOfTicket.includes(ticketType) && extras.length >= 1 && typeOfHuman.includes(entrantType)){
-        let originalPrice = ticketData[ticketType].priceInCents[entrantType]
-        for (let extra of extras){
-          originalPrice += ticketData.extras[extra].priceInCents[entrantType]
+      } else if (typeOfTicket.includes(ticketType) && extras.length >= 1 && typeOfHuman.includes(entrantType)) {
+        let originalPrice = ticketData[ticketType].priceInCents[entrantType];
+        for (let extra of extras) {
+          originalPrice += ticketData.extras[extra].priceInCents[entrantType];
         }
-        return originalPrice
+        return originalPrice;
       }
 }
     
@@ -140,49 +140,49 @@ function purchaseTickets(ticketData, purchases) {
   const newPurchasesArray = purchases.map(obj => ({...obj}));
   const extraPurchasesArray = purchases.map(obj => ({...obj}));
 
-  const humanType = ["child", "adult", "senior"]
-  const ticketType = ["general", "membership", "extras"]
-  const extras = ["movie", "education", "terrace"]
+  const humanType = ["child", "adult", "senior"];
+  const ticketType = ["general", "membership", "extras"];
+  const extras = ["movie", "education", "terrace"];
   
-  for (let ticket of purchases){
+  for (let ticket of purchases) {
     if (!ticketType.includes(ticket.ticketType)) {
-    return `Ticket type '${ticket.ticketType}' cannot be found.`
-  } else if (ticket.extras.length >= 1 && !(extras.includes(ticket.extras[0]))){
-    return `Extra type '${ticket.extras}' cannot be found.`
-  } else if (ticketType.includes(ticket.ticketType) && !humanType.includes(ticket.entrantType)){
-    return `Entrant type '${ticket.entrantType}' cannot be found.`
+    return `Ticket type '${ticket.ticketType}' cannot be found.`;
+  } else if (ticket.extras.length >= 1 && !(extras.includes(ticket.extras[0]))) {
+    return `Extra type '${ticket.extras}' cannot be found.`;
+  } else if (ticketType.includes(ticket.ticketType) && !humanType.includes(ticket.entrantType)) {
+    return `Entrant type '${ticket.entrantType}' cannot be found.`;
   } 
 }
   
   newPurchasesArray.map(obj => {
-    if (!obj.ticketPrice){
-      obj.ticketPrice = ticketData[obj.ticketType].priceInCents[obj.entrantType]
+    if (!obj.ticketPrice) {
+      obj.ticketPrice = ticketData[obj.ticketType].priceInCents[obj.entrantType];
     } })
 
   extraPurchasesArray.map(obj => {
-      if (!obj.extraTicketPrice){
-        let extraCost = ticketData[obj.ticketType].priceInCents[obj.entrantType]
-        for (let extra of obj.extras){
-          extraCost += ticketData.extras[extra].priceInCents[obj.entrantType]
+      if (!obj.extraTicketPrice) {
+        let extraCost = ticketData[obj.ticketType].priceInCents[obj.entrantType];
+        for (let extra of obj.extras) {
+          extraCost += ticketData.extras[extra].priceInCents[obj.entrantType];
         }
-        obj.extraTicketPrice = extraCost
+        obj.extraTicketPrice = extraCost;
       } 
-      if (!obj.access){
+      if (!obj.access) {
         let extraAccess = "";
-        for (let extra of obj.extras){
-          extraAccess += ` ${ticketData.extras[extra].description},`
+        for (let extra of obj.extras) {
+          extraAccess += ` ${ticketData.extras[extra].description},`;
         }
-        obj.access = extraAccess.slice(1, extraAccess.length - 1)
+        obj.access = extraAccess.slice(1, extraAccess.length - 1);
       }})
 
   let ticketTotal = 0;
   for (let ticket of newPurchasesArray) {
-    ticketTotal += ticket.ticketPrice
+    ticketTotal += ticket.ticketPrice;
   }
 
   let extraTicketTotal = 0;
   for (let ticket of extraPurchasesArray) {
-    extraTicketTotal += ticket.extraTicketPrice
+    extraTicketTotal += ticket.extraTicketPrice;
   }
   
   const noExtraReceiptString = newPurchasesArray.reduce(
@@ -204,18 +204,17 @@ function purchaseTickets(ticketData, purchases) {
   );
 
   
-  const receiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${noExtraReceiptString}-------------------------------------------\nTOTAL: $${ticketTotal / 100}.00`
+  const receiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${noExtraReceiptString}-------------------------------------------\nTOTAL: $${ticketTotal / 100}.00`;
 
-  const extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`
+  const extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`;
 
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length === 0 && humanType.includes(purchases[0].entrantType)) {
-    return receiptMsg
+    return receiptMsg;
   }
 
   if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length >= 1 && humanType.includes(purchases[0].entrantType)){
-    return extraReceiptMsg
+    return extraReceiptMsg;
   }
-
 }
 
 

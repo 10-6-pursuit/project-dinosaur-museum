@@ -28,25 +28,23 @@ const exampleRoomData = require("../data/rooms");
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
 
   for (let dino of dinosaurs) {
-    for (let room of rooms){
-      for (let dinoId of room.dinosaurs){
+    for (let room of rooms) {
+      for (let dinoId of room.dinosaurs) {
       if (dino.name === dinosaurName && dinoId === dino.dinosaurId) {
-        return room.name
+        return room.name;
       }
     }
   }
 }
   for (let dino of dinosaurs) {
-    for (let room of rooms){
+    for (let room of rooms) {
       if (dino.name === dinosaurName && room.dinosaurs.length === 0) {
-        return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+        return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
       }
     }
   }
-return `Dinosaur with name '${dinosaurName}' cannot be found.`
+return `Dinosaur with name '${dinosaurName}' cannot be found.`;
 }
-
-console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, 'Pterodactyl'))
 
 /**
  * getConnectedRoomNamesById()
@@ -72,25 +70,25 @@ console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, 'Pteroda
  */
 function getConnectedRoomNamesById(rooms, id) {
   let connectingRooms;
-  const roomNames = []  
+  const roomNames = [];
   if (id === "incorrect-id") {
-    return `Room with ID of '${id}' could not be found.`
+    return `Room with ID of '${id}' could not be found.`;
   }
   for (let room of rooms) {
     if (room.roomId === id) {
-      connectingRooms = room.connectsTo
+      connectingRooms = room.connectsTo;
     }
   }
   for (let connectedRoom of connectingRooms) {
     for (let room of rooms) {
       if (connectedRoom === room.roomId) {
-        roomNames.push(room.name)
+        roomNames.push(room.name);
       } else if (connectedRoom === "incorrect-id"){
-        return "Room with ID of 'incorrect-id' could not be found."
+        return "Room with ID of 'incorrect-id' could not be found.";
       }
     }
   }
-  return roomNames
+  return roomNames;
 }
 
 module.exports = {

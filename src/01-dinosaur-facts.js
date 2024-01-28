@@ -64,16 +64,16 @@ function getLongestDinosaur(dinosaurs) {
 function getDinosaurDescription(dinosaurs, id) {
   
   let dinoDescription;
-  const errorMsg = `A dinosaur with an ID of '${id}' cannot be found.`
+  const errorMsg = `A dinosaur with an ID of '${id}' cannot be found.`;
 
-  for (let dinoObj of dinosaurs){
-    if (dinoObj.dinosaurId === id){
-        const dino = dinoObj
-        dinoDescription = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`
-        return dinoDescription
+  for (let dinoObj of dinosaurs) {
+    if (dinoObj.dinosaurId === id) {
+      const dino = dinoObj;
+      dinoDescription = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[dino.mya.length - 1]} million years ago.`;
+      return dinoDescription;
     }
   }
-  return errorMsg
+  return errorMsg;
 }
 
 /**
@@ -106,17 +106,17 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   const aliveDinoArray = [];
 
   for (let dinoInfo of dinosaurs) {
-    if (mya <= dinoInfo.mya[0] && mya >= dinoInfo.mya[1] || mya === dinoInfo.mya[0] || mya === dinoInfo.mya[0] - 1){
+    if (mya <= dinoInfo.mya[0] && mya >= dinoInfo.mya[1] || mya === dinoInfo.mya[0] || mya === dinoInfo.mya[0] - 1) {
       if (key === "incorrectKey") {
-        aliveDinoArray.push(dinoInfo.dinosaurId)
-      } else if (key){
-        aliveDinoArray.push(dinoInfo[key])
+        aliveDinoArray.push(dinoInfo.dinosaurId);
+      } else if (key) {
+        aliveDinoArray.push(dinoInfo[key]);
       } else if (!key) {
-        aliveDinoArray.push(dinoInfo.dinosaurId)
+        aliveDinoArray.push(dinoInfo.dinosaurId);
       }
     }
   }
-  return aliveDinoArray
+  return aliveDinoArray;
 }
 
 module.exports = {
