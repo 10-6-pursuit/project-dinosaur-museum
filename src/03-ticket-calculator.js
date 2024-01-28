@@ -164,37 +164,50 @@ const exampleTicketData = require("../data/tickets");
  */
     ;
 function purchaseTickets(ticketData, purchases) {
-  function  capitalize(string){
 
-     let str=string[0].toUpperCase()+string.slice(1)
+  function  camelCasing(string){
 
-    return str
+    let camelCasedString =string[0].toUpperCase()+string.slice(1)
 
-    }
+    return camelCasedString;
 
-let str1=``;
+  };
+
+  let ticketTypeString=``;
+
   let sum=0;
+
   for(let purchase of purchases){
     
     let price=calculateTicketPrice(ticketData,purchase) ;
     typeof price===`number`?sum+=price:sum=price;
 
-    
+    let extrasString=``  
 
-  let stringExtras=``  
     for(let extra of purchase.extras){
-      stringExtras+=capitalize(extra)+` Access, `
-      }
-      str1+=`\n${capitalize(purchase.entrantType)} ${capitalize(purchase.ticketType)} Admission: $${price/100}.00`;
-    if (purchase.extras.length!==0){str1+= ` (${stringExtras.slice(0,-2)})`}
-    
-    }
-     if(typeof sum===`string`){return sum}
-     else return "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------"+str1+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`
-    
-   x
 
-   
+      extrasString+=camelCasing(extra)+` Access, `;
+
+    }
+
+    ticketTypeString+=`\n${camelCasing(purchase.entrantType)} ${camelCasing(purchase.ticketType)} Admission: $${price/100}.00`;
+
+    if (purchase.extras.length!==0){
+
+      ticketTypeString+= ` (${extrasString.slice(0,-2)})`
+      
+    }
+    
+  };
+
+  if(typeof sum===`string`){
+    
+    return sum;
+
+  }
+
+  else return "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------"+ticketTypeString+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`;
+    
 }
 
 // Do not change anything below this line.
