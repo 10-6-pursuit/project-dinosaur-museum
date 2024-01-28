@@ -92,7 +92,7 @@ describe("getConnectedRoomNamesById()", () => {
         connectsTo: [
           "GHPLI7EmD", // Room B
           "eU46gvYUF", // Room C
-          "incorrect-id", // Incorrect Room. Does not exist.
+          "idincorrect-", // Incorrect Room. Does not exist.
         ],
       },
       {

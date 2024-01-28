@@ -19,6 +19,17 @@ describe("getLongestDinosaur()", () => {
     expect(actual[name]).toBeCloseTo(98.42, 1);
   });
 
+  function getLongestDinosaur(dinosaurs){
+    let dinoLength = dinosaurs[0]
+    for (let i = 0; i < dinosaurs.length; i++);
+    if(dinosaurs[i].lengthInMeters > dinoLength.lengthInMeters){
+ dinoLength = dinosaurs[i];
+    }
+
+  }  
+    return {[dinoLength.name] : [dinoLength.lengthInMeters * 3.281]}
+
+    }
   test("should return the first dinosaur if there are multiples with the same length", () => {
     const input = [
       ...dinosaurs,
