@@ -100,20 +100,6 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   return totalPrice;
 }
 
-const ticketInfo = [
-  {
-    ticketType: "oo",
-    entrantType: "child",
-    extras: ["education", "movie", "terrace"]
-  },
-  {
-    ticketType: "membership",
-    entrantType: "adult",
-    extras: ["education", "terrace"]
-  }
-]
-
-console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
 
 /**
  * purchaseTickets()
@@ -168,23 +154,31 @@ console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
+
 function purchaseTickets(ticketData, purchases) {
   let totalMessage, totalPurchase = 0, itemPurchase, receipt = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
   
   function  capFirstLetter(string){
-  let capWord = string[0].toUpperCase() + string.slice(1);
-  return capWord
-}
+    let capWord = string[0].toUpperCase() + string.slice(1);
+    return capWord
+  }
 
   for(let ticket of purchases){
     itemPurchase = calculateTicketPrice(ticketData, ticket);
+
+    if(typeof itemPurchase === "string"){
+      return itemPurchase;
+    }
+
     totalPurchase += itemPurchase;
+    
     if(ticket.extras.length){
-    receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)} (${capFirstLetter(ticket.extras[0]+ " Access")}${ticket.extras[1] ? ", " + capFirstLetter(ticket.extras[1]) + " Access" : ""}${ticket.extras[2] ? ", " + capFirstLetter(ticket.extras[2]) + " Access" : ""})\n`
+    receipt += `${capFirstLetter(ticket.entrantType)} ${capFirstLetter(ticket.ticketType)+" Admission"}: $${(itemPurchase/100).toFixed(2)} (${capFirstLetter(ticket.extras[0]+ " Access")}${ticket.extras[1] ? ", " + capFirstLetter(ticket.extras[1]) + " Access" : ""}${ticket.extras[2] ? ", " + capFirstLetter(ticket.extras[2]) + " Access" : ""})\n`
     } else {
-      receipt += `${capFirstLetter(ticket.entrantType)} ${ticketData[ticket.ticketType].description}: $${(itemPurchase/100).toFixed(2)}\n`
+      receipt += `${capFirstLetter(ticket.entrantType)} ${capFirstLetter(ticket.ticketType)+" Admission"}: $${(itemPurchase/100).toFixed(2)}\n`
     }
   }
+
 
   totalMessage = `-------------------------------------------\nTOTAL: $${(totalPurchase/100).toFixed(2)}`;
 
