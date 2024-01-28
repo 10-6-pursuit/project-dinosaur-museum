@@ -29,10 +29,13 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
   let dinosaurID;
   
   for(let dinosaur of dinosaurs){
+
     if(dinosaur.name===dinosaurName){
+
       dinosaurID=dinosaur.dinosaurId; 
     }
   }
+
   if (!dinosaurID) {
      return `Dinosaur with name '${dinosaurName}' cannot be found.`;
   } else {
@@ -43,9 +46,13 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
       return room.name;
       
       };
+
     };
+
   return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`;
+
   };
+
 }
 
 /**
@@ -72,30 +79,28 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
  */
     function getConnectedRoomNamesById(rooms, id) {
       let result;
-      let roomIds
+
+      let idsOfConnectedRooms;
+
       let arrayOfRooms;
+
       for (let room of rooms) {
-        if(room.roomId===id){roomIds=room.connectsTo}
+
+        if(room.roomId===id){idsOfConnectedRooms=room.connectsTo}
            
       }
-      if(roomIds){ arrayOfRooms= rooms.filter(room=>(roomIds.includes(room.roomId)&&room)?room:null)
+      if(idsOfConnectedRooms){ arrayOfRooms= rooms.filter(room=>(idsOfConnectedRooms.includes(room.roomId)&&room)?room:null)
         
           result= arrayOfRooms.map(room=>room.name)
-      if(roomIds.length!==arrayOfRooms.length){
+
+      if(idsOfConnectedRooms.length!==arrayOfRooms.length){
+
         return "Room with ID of 'incorrect-id' could not be found."
       }
         else  return result;
       }
         
        return `Room with ID of '${id}' could not be found.`
-
-       
-    
-    
-      
-      // let arrayOfRooms = rooms.map((room) =>
-      //   roomIds.includes(room.roomId) && room ? room.name : null,
-      // );
     
     }
 
