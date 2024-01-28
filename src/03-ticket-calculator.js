@@ -56,64 +56,60 @@ const exampleTicketData = require("../data/tickets");
  */
     function calculateTicketPrice(ticketData, ticketInfo) {
       let ticketPrice=0;
-      let wasTicketFound=false;
-      let thereIsEntrantType=false;
+      let isTicketFound=false;
+      let isEntrantTypeFound=false;
 
       if (Object.hasOwn(ticketData, ticketInfo.ticketType)) {
-        wasTicketFound = true;
+
+        isTicketFound = true;
+
         if(Object.hasOwn(ticketData[ticketInfo.ticketType].priceInCents,ticketInfo.entrantType)){
           
+          ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType];
 
-          ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]
-           thereIsEntrantType=true;
-        }
-      }
-      // ticketData[ticketInfo.ticketType]
+          isEntrantTypeFound=true;
 
-      // ORIGINAL WORKING CODE
-      // for(let ticketType in ticketData){
-      //   // console.log(ticketType)
-      //   if(ticketType===ticketInfo.ticketType){
-      //     wasTicketFound = true;
-      //     if(Object.hasOwn(ticketData[ticketInfo.ticketType].priceInCents,ticketInfo.entrantType)){
-            
+        };
 
-      //       ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]
-      //        thereIsEntrantType=true;
-      //     }
-      //   }
-      // }
-      
-       
-        if(ticketInfo.extras.length!==0){
+      };
+
+      if(ticketInfo.extras.length!==0){
           
-          for(let extra of ticketInfo.extras){
-            let extraIsNotEmpty=false;
-          if(Object.hasOwn(ticketData.extras,extra)){
-            extraIsNotEmpty=true;
-            ticketPrice+=ticketData.extras[extra].priceInCents[ticketInfo.entrantType]
-           
-          }else{return "Extra type 'incorrect-extra' cannot be found."}
-        
-          // if (!extraIsNotEmpty) return "Extra type 'incorrect-extra' cannot be found.";
-         }}
-        
+        for(let extra of ticketInfo.extras){
 
+          let extraIsNotEmpty=false;
+
+          if(Object.hasOwn(ticketData.extras,extra)){
+
+             extraIsNotEmpty=true;
+
+             ticketPrice+=ticketData.extras[extra].priceInCents[ticketInfo.entrantType];
+           
+          } else {
+
+            return "Extra type 'incorrect-extra' cannot be found.";
+
+          };
+    
+        };
+
+      };
        
-        if(!wasTicketFound){
-          return "Ticket type 'incorrect-type' cannot be found."
-       }
+      if(!isTicketFound){
+
+        return "Ticket type 'incorrect-type' cannot be found.";
+
+      }
       
-       else if(!thereIsEntrantType){
-        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
-       }
+      else if(!isEntrantTypeFound){
+
+        return `Entrant type '${ticketInfo.entrantType}' cannot be found.`;
+
+      }
        
-       else return ticketPrice
-       
-       
-        
-     
-       }
+      else return ticketPrice;
+      
+    };
 
 /**
  * purchaseTickets()
@@ -177,7 +173,6 @@ function purchaseTickets(ticketData, purchases) {
     return str
 
     }
-
 
 let str1=``;
   let sum=0;
