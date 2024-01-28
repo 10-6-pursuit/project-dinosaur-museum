@@ -62,16 +62,20 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   // entrantType = "child" || "adult" || "senior";
   // // let access = ticketType + entrantType;
 
-  for (let obj in ticketData) {
-    if (obj === ticketType) {
+   
+    if (ticketData[ticketType]) {
+      if (ticketData[ticketType].priceInCents[entrantType]) {
       ticketPrice += ticketData[ticketType].priceInCents[entrantType];
-    }
-  }
+    } else return "Entrant type 'incorrect-entrant' cannot be found."
+  } else return "Ticket type 'incorrect-type' cannot be found.";
+  
     if (ticketInfo["extras"].length > 0) {
       for (let ex of extras) {
+        if (ticketData["extras"][ex]) {
       ticketPrice += ticketData["extras"][ex].priceInCents[entrantType];
+    } else return "Extra type 'incorrect-extra' cannot be found."
     }
-  } 
+  }
   return ticketPrice;
 }
 
