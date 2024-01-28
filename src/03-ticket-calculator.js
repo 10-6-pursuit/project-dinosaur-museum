@@ -66,10 +66,12 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     if (obj === ticketType) {
       ticketPrice += ticketData[ticketType].priceInCents[entrantType];
     }
-    if (ticketInfo["extras"].length > 0) {
-      ticketPrice += ticketData["extras"][extras[0]].priceInCents[entrantType];
-    }
   }
+    if (ticketInfo["extras"].length > 0) {
+      for (let ex of extras) {
+      ticketPrice += ticketData["extras"][ex].priceInCents[entrantType];
+    }
+  } 
   return ticketPrice;
 }
 
