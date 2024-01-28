@@ -110,70 +110,45 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
+  let dinosaurMyaRange=[];
   for (let dinosaur of dinosaurs){
-    let dinosaur1MyaRange=[];
-    let dinosaur2MyaRange=[];
+    
     if(dinosaur.mya.length===1){
-       if(dinosaur.mya[0]===mya||dinosaur.mya[0]===mya+1){
+       if(mya<=dinosaur.mya[0]&&mya>=(dinosaur.mya[0]-1)){
         if(dinosaur[key]){
-          dinosaur1MyaRange.push(dinosaur[key])
+          dinosaurMyaRange.push(dinosaur[key])
           
         }
         else {
-          dinosaur1MyaRange.push(dinosaur.dinosaurId)
+          dinosaurMyaRange.push(dinosaur.dinosaurId)
           
 
         }
-        return dinosaur1MyaRange
+        
 
        }
 
     }
     
     if(dinosaur.mya.length===2){
-      function range(start,end) {
-        let rangeArray = [];
-         // console.log(Math.floor(dinosaur.mya[dinosaur.mya.length-1]))
-          for (let i = Math.floor(start); i <= Math.ceil(end); i++) {
-              rangeArray.push(i);
-          }
-          return rangeArray;
-        
-      }
-      for(r of range(dinosaur.mya[dinosaur.mya.length-1],dinosaur.mya[0])){
-        if(r===mya){
-          dinosaur2MyaRange.push(dinosaur.dinosaurId)
+      
+      if(mya<=dinosaur.mya[0]&&mya>=dinosaur.mya[1]){
+       
+        if(dinosaur[key]){
+          dinosaurMyaRange.push(dinosaur[key])
           
         }
-      }
-      return dinosaur2MyaRange
-      // if(!range(dinosaur.mya[dinosaur.mya.length-1],dinosaur.mya[0]).includes(mya)){
-      //   console.log(dinosaur)
-      //   if(dinosaur[key]){
+        else {
+          dinosaurMyaRange.push(dinosaur.dinosaurId)
+          
 
-      //     return dinosaur[key]
-      //   }
-      //   else return dinosaur.dinosaurId
-      // }
-  // }  }
-}
-    
-//     if(dinosaur.mya.length===2){for(let j=dinosaur.mya[dinosaur.mya.length-1];j<=dinosaur.mya[0];j++){
-//       console.log(dinosaur)
-//       dinosaurMyaRange.push(j)
-//       // console.log(dinosaurMyaRange)
+        }          
 
-//       if(dinosaurMyaRange.includes(mya)){
-//         // console.log(dinosaur)
-//        if(dinosaur[key]){
-
-//          return dinosaur[key]
-//        }
-//        else return dinosaur.dinosaurId
-
-//   }
+      }}
    
 } 
+return dinosaurMyaRange
+
   // }  }
 }
 

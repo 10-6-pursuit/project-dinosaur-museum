@@ -58,62 +58,59 @@ const exampleTicketData = require("../data/tickets");
       let ticketPrice=0;
       let wasTicketFound=false;
       let thereIsEntrantType=false;
-      for(let ticketType in ticketData){
-        // console.log(ticketType)
-        if(ticketType===ticketInfo.ticketType){
-          wasTicketFound = true;
-         for(let key in ticketData[ticketType]){
-           
-             // console.log(key)
-           for(let ke in ticketData[ticketType][key]){
-             if(ke===ticketInfo.entrantType){
-              thereIsEntrantType=true;
-               ticketPrice+=ticketData[ticketType][key][ke]
-              
-               
-             } 
-             
-           }
-         }
-        }
-        
 
+      if (Object.hasOwn(ticketData, ticketInfo.ticketType)) {
+        wasTicketFound = true;
+        if(Object.hasOwn(ticketData[ticketInfo.ticketType].priceInCents,ticketInfo.entrantType)){
+          
+
+          ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]
+           thereIsEntrantType=true;
+        }
+      }
+      // ticketData[ticketInfo.ticketType]
+
+      // ORIGINAL WORKING CODE
+      // for(let ticketType in ticketData){
+      //   // console.log(ticketType)
+      //   if(ticketType===ticketInfo.ticketType){
+      //     wasTicketFound = true;
+      //     if(Object.hasOwn(ticketData[ticketInfo.ticketType].priceInCents,ticketInfo.entrantType)){
+            
+
+      //       ticketPrice+=ticketData[ticketInfo.ticketType].priceInCents[ticketInfo.entrantType]
+      //        thereIsEntrantType=true;
+      //     }
+      //   }
+      // }
+      
+       
         if(ticketInfo.extras.length!==0){
           
           for(let extra of ticketInfo.extras){
-          let extraIsNotEmpty=false;
-          for (let key in ticketData[ticketType]){
-           if(key===extra){
+            let extraIsNotEmpty=false;
+          if(Object.hasOwn(ticketData.extras,extra)){
             extraIsNotEmpty=true;
-             for(let ke in ticketData[ticketType][key]){
-             
-               for(let k in ticketData[ticketType][key][ke]){
-                 
-                 if(k===ticketInfo.entrantType){
-                   
-                   ticketPrice+=ticketData[ticketType][key][ke][k]
-     
-     
-                 }      
-               }
-     
-             }   }
+            ticketPrice+=ticketData.extras[extra].priceInCents[ticketInfo.entrantType]
            
-          }
+          }else{return "Extra type 'incorrect-extra' cannot be found."}
+        
           // if (!extraIsNotEmpty) return "Extra type 'incorrect-extra' cannot be found.";
          }}
-        }
-
         
-        if(!wasTicketFound){
-        return "Ticket type 'incorrect-type' cannot be found."
 
+       
+        if(!wasTicketFound){
+          return "Ticket type 'incorrect-type' cannot be found."
        }
+      
        else if(!thereIsEntrantType){
         return `Entrant type '${ticketInfo.entrantType}' cannot be found.`
        }
        
        else return ticketPrice
+       
+       
         
      
        }
@@ -185,18 +182,22 @@ function purchaseTickets(ticketData, purchases) {
 let str1=``;
   let sum=0;
   for(let purchase of purchases){
-  
+    
     let price=calculateTicketPrice(ticketData,purchase) ;
-    sum+=price
+    typeof price===`number`?sum+=price:sum=price;
+
+    
+
   let stringExtras=``  
     for(let extra of purchase.extras){
       stringExtras+=capitalize(extra)+` Access, `
       }
-      str1+=`\n-------------------------------------------\n${capitalize(purchase.entrantType)} ${capitalize(purchase.ticketType)} Admission: $${price/100}.00`;
+      str1+=`\n${capitalize(purchase.entrantType)} ${capitalize(purchase.ticketType)} Admission: $${price/100}.00`;
     if (purchase.extras.length!==0){str1+= ` (${stringExtras.slice(0,-2)})`}
     
     }
-    return "Thank you for visiting the Dinosaur Museum!"+str1+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`
+     if(typeof sum===`string`){return sum}
+     else return "Thank you for visiting the Dinosaur Museum!\n------------------------------------------"+str1+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`
     
    
 
