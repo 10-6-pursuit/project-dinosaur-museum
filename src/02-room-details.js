@@ -27,7 +27,6 @@ const exampleRoomData = require("../data/rooms");
  */
 
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
-
   let result = "";
   let id = "";
 
@@ -53,7 +52,6 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
   }
   
   return result;
-
 }
 
 /**
@@ -109,7 +107,6 @@ function getConnectedRoomNamesById(rooms, id) {
   } else {
     return roomNames;
   }
-
 }
 
 module.exports = {

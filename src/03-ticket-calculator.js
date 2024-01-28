@@ -134,8 +134,16 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
-  // build a receipt that includes: "greeting + (age + admission type + ticket price + extras) + total"
+  //check if purchases array contains any error messages
+  let result = purchases.map(ele => calculateTicketPrice(ticketData, ele));
+  
+  for (let res of result){
+    if (typeof res === "string") {
+      return res;
+    }
+  }
 
+  // build a receipt that includes: "greeting + (age + admission type + ticket price + extras) + total"
   const greeting = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
   const ticketTotals = (purchases.map(ele => calculateTicketPrice(ticketData, ele)).reduce((sum, price) => sum + price, 0)/100).toFixed(2);
   const final = `\n-------------------------------------------\nTOTAL: $${ticketTotals}`;

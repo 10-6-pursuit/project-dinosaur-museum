@@ -104,7 +104,6 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
     let maxMya = dino.mya[0];
     let minMya = dino.mya[1];
   
-
     if (maxMya && minMya) {
       if (mya >= minMya && mya <= maxMya) {
         arr.push(dino[key] || dino.dinosaurId);
