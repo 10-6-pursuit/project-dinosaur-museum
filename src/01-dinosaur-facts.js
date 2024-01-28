@@ -61,12 +61,12 @@ function getLongestDinosaur(dinosaurs) {
  */
 function getDinosaurDescription(dinosaurs, id) {
   let fullInfo = `A dinosaur with an ID of '${id}' cannot be found.`;
-   for(let dinosaur of dinosaurs){
-     if(dinosaur.dinosaurId === id){
-       fullInfo = `${dinosaur.name} (${dinosaur.pronunciation})\n${dinosaur.info} It lived in the ${dinosaur.period} period, over ${!dinosaur.mya[1] ? dinosaur.mya[0] : dinosaur.mya[1]} million years ago.`
-     }
-   }
-   return fullInfo;
+  for(let dinosaur of dinosaurs){
+    if(dinosaur.dinosaurId === id){
+     fullInfo = `${dinosaur.name} (${dinosaur.pronunciation})\n${dinosaur.info} It lived in the ${dinosaur.period} period, over ${!dinosaur.mya[1] ? dinosaur.mya[0] : dinosaur.mya[1]} million years ago.`
+    }
+  }
+  return fullInfo;
 }
 
 
@@ -102,11 +102,11 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
   for(let dinosaur of dinosaurs){
     if(dinosaur.mya[0] >= mya && dinosaur.mya[1] <= mya){
       if(dinosaur[key]){
-         newArr.push(dinosaur.name);
-        } else {
-         newArr.push(dinosaur.dinosaurId);
-       }
-     }
+        newArr.push(dinosaur.name);
+      } else {
+        newArr.push(dinosaur.dinosaurId);
+      }
+    }
 
     if(dinosaur.mya.length === 1 && Math.floor(dinosaur.mya) === mya || Math.floor(dinosaur.mya) - 1 === mya){
       if(dinosaur[key]){

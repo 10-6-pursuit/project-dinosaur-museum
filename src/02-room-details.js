@@ -80,7 +80,7 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
  */
 
 function getConnectedRoomNamesById(rooms, id) {
-  let connectedId = [], connectedRooms = [];
+  let connectedId = [], connectedRooms = [], allValidIds = [];
 
   for(let room of rooms){
     if(room.roomId === id){
@@ -100,11 +100,10 @@ function getConnectedRoomNamesById(rooms, id) {
     }
   }
 
-let allValidIds = []
- allValidIds = rooms.map(room => room.roomId);
+  allValidIds = rooms.map(room => room.roomId);
   for(let id of connectedId){
     if(!allValidIds.includes(id)){
-       return `Room with ID of '${id}' could not be found.`
+      return `Room with ID of '${id}' could not be found.`
     }
   }
 

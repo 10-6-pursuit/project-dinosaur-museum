@@ -55,30 +55,52 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
-  let totalPrice = 0, typeOfTicket;
-   for(let tier in ticketData){
+  let totalPrice = 0;
+  for(let tier in ticketData){
     if(tier === ticketInfo.ticketType){
       for(let price in ticketData[tier].priceInCents){
         if(price === ticketInfo.entrantType){
           totalPrice = ticketData[tier].priceInCents[price];
         }
       }
-    }
-   }
+    } 
+  }
 
-   
-   if(ticketInfo.extras){
-      for(let type in ticketData.extras){
-        for(let extra of ticketInfo.extras){
-          if(type === extra){
-            totalPrice += ticketData.extras[type].priceInCents[ticketInfo.entrantType];
-          }
+  if(ticketInfo.extras?.length){
+    let validExtras = Object.keys(ticketData.extras);
+    for(let extra of ticketInfo.extras){
+      if(!validExtras.includes(extra)){
+        return `Extra type '${extra}' cannot be found.`
+      }
+    }
+
+    for(let type in ticketData.extras){
+      for(let extra of ticketInfo.extras){
+        if(type === extra){
+          totalPrice += ticketData.extras[type].priceInCents[ticketInfo.entrantType];
+          break;
         }
       }
-   }
+    }
+  }
+  
   return totalPrice;
 }
 
+const ticketInfo = [
+  {
+    ticketType: "oo",
+    entrantType: "child",
+    extras: ["education", "movie", "terrace"]
+  },
+  {
+    ticketType: "membership",
+    entrantType: "adult",
+    extras: ["education", "terrace"]
+  }
+]
+
+console.log(calculateTicketPrice(exampleTicketData, ticketInfo));
 
 /**
  * purchaseTickets()
@@ -157,20 +179,6 @@ function purchaseTickets(ticketData, purchases) {
 
 }
 
-const purchases = [
-  {
-    ticketType: "general",
-    entrantType: "child",
-    extras: ["education", "movie", "terrace"]
-  },
-  {
-    ticketType: "membership",
-    entrantType: "adult",
-    extras: ["education", "terrace"]
-  }
-]
-
-console.log(purchaseTickets(exampleTicketData, purchases));
 
 // Do not change anything below this line.
 module.exports = {
