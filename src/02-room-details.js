@@ -88,7 +88,7 @@ function getConnectedRoomNamesById(rooms, id) {
 
   // iterate through all rooms
   for (let i = 0; i < rooms.length; i++) {
-    // push each roomId and roomName to respective list
+    // push each roomId and roomName to respective arrays
     roomsById.push(rooms[i].roomId);
     roomsByName.push(rooms[i].name);
 
@@ -96,13 +96,11 @@ function getConnectedRoomNamesById(rooms, id) {
     if (rooms[i].roomId === id){ 
       initialRoomIndex = i;
       connectedRoomsById = rooms[i].connectsTo;
+    } else {
+      return `Room with ID of '${id}' could not be found.`
     }
-  } 
-  
-  // if target room id is not found return error
-  if (initialRoomIndex === null) {
-    return `Room with ID of '${id}' could not be found.`
   }
+
 
   // iterate through the list of rooms connected to target room
   for (let connectedRoomId of connectedRoomsById) {
