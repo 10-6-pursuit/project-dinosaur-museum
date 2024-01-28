@@ -102,12 +102,8 @@ function getConnectedRoomNamesById(rooms, id) {
     return "Room with ID of 'incorrect-id' could not be found.";
   }
 
-  if (!roomNames.length) {
-   return `Room with ID of '${id}' could not be found.`
-  } else {
-    return roomNames;
+  return !roomNames.length ? `Room with ID of '${id}' could not be found.` : roomNames;
   }
-}
 
 module.exports = {
   getRoomByDinosaurName,

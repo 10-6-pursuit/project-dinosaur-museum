@@ -56,7 +56,6 @@ const exampleTicketData = require("../data/tickets");
     //> "Entrant type 'kid' cannot be found."
  */
 function calculateTicketPrice(ticketData, ticketInfo) {
-
   const basePriceCalc = (ticketSpecs, ticketGuide) => ticketGuide[ticketSpecs.ticketType].priceInCents[ticketSpecs.entrantType];
   let basePrice = 0;
 
