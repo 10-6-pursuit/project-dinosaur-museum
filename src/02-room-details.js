@@ -36,13 +36,17 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
     }
   }
 }
-for (let dino of dinosaurs){
-  if (dino.name === dinosaurName){
-    return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+  for (let dino of dinosaurs) {
+    for (let room of rooms){
+      if (dino.name === dinosaurName && room.dinosaurs.length === 0) {
+        return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+      }
+    }
   }
-}
 return `Dinosaur with name '${dinosaurName}' cannot be found.`
 }
+
+console.log(getRoomByDinosaurName(exampleDinosaurData, exampleRoomData, 'Pterodactyl'))
 
 /**
  * getConnectedRoomNamesById()
