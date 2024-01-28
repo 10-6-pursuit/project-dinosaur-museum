@@ -194,7 +194,7 @@ function purchaseTickets(ticketData, purchases) {
 
     if (purchase.extras.length!==0){
 
-      ticketTypeString+= ` (${extrasString.slice(0,-2)})`
+      ticketTypeString+= ` (${extrasString.slice(0,-2)})`;
       
     }
     
