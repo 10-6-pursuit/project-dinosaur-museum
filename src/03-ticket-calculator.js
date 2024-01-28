@@ -54,7 +54,20 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+function calculateTicketPrice(ticketData, ticketInfo) {
+  const { ticketType, entrantType, extras } = ticketInfo;
+  if (!ticketData[ticketType]) return `Ticket type '${ticketType}' cannot be found.`;
+  if (!ticketData[ticketType].priceInCents[entrantType]) return `Entrant type '${entrantType}' cannot be found.`
+
+  let total = ticketData[ticketType].priceInCents[entrantType];
+
+  for (let i = 0; i < extras.length; i++) {
+    const extra = extras[i];
+    if (!ticketData.extras[extra]) return `Extra type '${extra}' cannot be found.`;
+    total += ticketData.extras[extra].priceInCents[entrantType];
+  }
+  return total;
+}
 
 /**
  * purchaseTickets()
@@ -109,7 +122,35 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  let total = 0, receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n`;
+
+for (let i = 0; i < purchases.length; i++) {
+  let purchased = purchases[i]
+  let ticketPrice = calculateTicketPrice(ticketData, purchased);
+  if (typeof ticketPrice === "string") return ticketPrice;
+  
+  total += ticketPrice;
+  
+  let ticketExtras = '';
+  for (let x = 0; x < purchased.extras.length; x++) {
+    if (x === 0) {
+      ticketExtras += " (" + ticketData.extras[purchased.extras[x]].description;
+    } else {
+      ticketExtras += ", " + ticketData.extras[purchased.extras[x]].description;
+    }
+  
+    if (x === purchases[i].extras.length - 1) {
+      ticketExtras += ")";
+    }
+  }
+  
+  receipt += `${purchased.entrantType[0].toUpperCase() + purchased.entrantType.slice(1)} ${ticketData[purchased.ticketType].description}: $${(ticketPrice / 100).toFixed(2)}${ticketExtras}\n`;
+}
+
+receipt += `-------------------------------------------\nTOTAL: $${(total / 100).toFixed(2)}`;
+return receipt;
+}
 
 // Do not change anything below this line.
 module.exports = {
