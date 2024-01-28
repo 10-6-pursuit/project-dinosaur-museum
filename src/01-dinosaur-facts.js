@@ -110,23 +110,26 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
+
   let dinosaurMyaRange=[];
+
   for (let dinosaur of dinosaurs){
     
     if(dinosaur.mya.length===1){
-       if(mya<=dinosaur.mya[0]&&mya>=(dinosaur.mya[0]-1)){
+
+      if(mya<=dinosaur.mya[0]&&mya>=(dinosaur.mya[0]-1)){
+
         if(dinosaur[key]){
-          dinosaurMyaRange.push(dinosaur[key])
+
+          dinosaurMyaRange.push(dinosaur[key]);
           
         }
         else {
-          dinosaurMyaRange.push(dinosaur.dinosaurId)
+          dinosaurMyaRange.push(dinosaur.dinosaurId);
           
-
         }
-        
 
-       }
+      }
 
     }
     
@@ -135,21 +138,24 @@ function getDinosaursAliveMya(dinosaurs, mya, key) {
       if(mya<=dinosaur.mya[0]&&mya>=dinosaur.mya[1]){
        
         if(dinosaur[key]){
-          dinosaurMyaRange.push(dinosaur[key])
+
+          dinosaurMyaRange.push(dinosaur[key]);
           
         }
         else {
-          dinosaurMyaRange.push(dinosaur.dinosaurId)
+
+          dinosaurMyaRange.push(dinosaur.dinosaurId);
           
 
-        }          
+        };
 
-      }}
+      };
+    };
    
-} 
-return dinosaurMyaRange
+};
+return dinosaurMyaRange;
 
-  // }  }
+
 }
 
 
