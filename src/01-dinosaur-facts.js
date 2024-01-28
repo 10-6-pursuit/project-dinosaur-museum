@@ -22,7 +22,18 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
+function getLongestDinosaur(dinosaurs) {
+  if (!dinosaurs.length) return {};
+
+  let longestDino = dinosaurs[0]
+
+  for (let currDino of dinosaurs) {
+    if (currDino.lengthInMeters > longestDino.lengthInMeters) {
+      longestDino = currDino;
+    }
+  }
+  return { [longestDino.name]: longestDino.lengthInMeters * 3.281 }
+}
 
 /**
  * getDinosaurDescription()
@@ -35,7 +46,7 @@ function getLongestDinosaur(dinosaurs) {}
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @param {string} id - The unique identifier for the dinosaur.
- * @returns {string} A detailed description of the dinosaur.
+ * @return {string} A detailed description of the dinosaur.
  *
  * EXAMPLE:
  *  getDinosaurDescription(dinosaurs, "U9vuZmgKwUr");
@@ -44,7 +55,23 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+
+  let dinosaurDescription = `A dinosaur with an ID of '${id}' cannot be found.`;
+
+  for (let i = 0; i < dinosaurs.length; i++) {
+    if (dinosaurs[i].dinosaurId === id) {
+      const dino = dinosaurs[i];
+      dinosaurDescription = `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[1] || dino.mya[0]} million years ago.`
+      break;
+    }
+  }
+  return dinosaurDescription;
+}
+
+
+
+
 
 /**
  * getDinosaursAliveMya()
@@ -71,7 +98,34 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+
+  let dinosaursAliveMya = [];
+  let finalKey = "dinosaurId";
+
+  if (key != undefined && dinosaurs[0][key] != undefined)
+    finalKey = key;
+
+  dinosaurs.reduce((accumulator, currentVal) => {
+
+    let alive = false;
+    if (currentVal.mya.length == 1) {
+      if (currentVal.mya[0] == mya || currentVal.mya[0] - 1 == mya)
+        alive = true;
+    }
+    else {
+      if (currentVal.mya[0] >= mya && mya >= currentVal.mya[1])
+        alive = true;
+    }
+
+
+    if (alive) {
+      dinosaursAliveMya.push(currentVal[finalKey]);
+    }
+  }, 0);
+
+  return dinosaursAliveMya;
+}
 
 module.exports = {
   getLongestDinosaur,
