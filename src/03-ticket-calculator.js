@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all tickets.
 */
+const tickets = require("../data/tickets");
 const exampleTicketData = require("../data/tickets");
 // Do not change the line above.
 
@@ -77,7 +78,6 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   let addOns = addOnPrices(ticketInfo, ticketData).reduce((sum, price) => sum + price, 0);
 
   return !addOns ? "Extra type '" + "incorrect-extra" + "' cannot be found." : basePrice + addOns;
-
 }
 
 /**
@@ -134,43 +134,24 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
+  // build a receipt that includes: "greeting + (age + admission type + ticket price + extras) + total"
 
-  const ticketPrice = purchases.map(ele => (calculateTicketPrice(ticketData, ele)/100).toFixed(2));
-  const totalPrice = ticketPrice.reduce((sum, price) => sum + price, 0);
-   
-  function createTicketDescription(purchases) {
-    return purchases.map(ele => `${ele.entrantType.charAt(0).toUpperCase() + ele.entrantType.slice(1)} ${ticketData[purchases.ticketType].description}: $${(calculateTicketPrice(ticketData, ele)/100).toFixed(2)}`).join("\n");
-  }
+  const greeting = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
+  const ticketTotals = (purchases.map(ele => calculateTicketPrice(ticketData, ele)).reduce((sum, price) => sum + price, 0)/100).toFixed(2);
+  const final = `\n-------------------------------------------\nTOTAL: $${ticketTotals}`;
 
-  let errorMessage = "";
-  let s = [];
+  // create array of ticket strings "Adult General Admission: $50.00" - (age + admission type + ticket price + extras)
+  const ticketList = purchases.map(ele => {
+        let ageGroup = `${ele.entrantType.charAt(0).toUpperCase()}${ele.entrantType.slice(1)}`;
+        let admissionType = `${ticketData[ele.ticketType].description}:`;
+        let ticketPrice = (calculateTicketPrice(ticketData, ele)/100).toFixed(2);
+        let extras = ele.extras.map(x => ticketData.extras[x].description).join(", ");
+        return !extras.length ? `${ageGroup} ${admissionType} $${ticketPrice}` : `${ageGroup} ${admissionType} $${ticketPrice} (${extras})`;
+    });
 
-  for (let str of ticketPrice) {
-    if (str.includes("cannot be found")) {
-      error = str;
-    } else {
-      error = "";
-    }
-  }
+  return `${greeting}${ticketList.join("\n")}${final}` ;
 
-  const createExtraString = array => (ele => {
-
-    if (ele.extras.length === 0) {
-      return "";
-    } else if (ele.extras.length === 1) {
-      return `(${array[0]})`;
-    } else {
-      s = ele.extras.reduce((list, name) => list + `${name}, `, '').split("");
-      return `${s.slice(0, s.length - 2).join("")}`;
-    }
-    }
-  )
-
-  const receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${createTicketDescription(purchases)} ${createExtraString(purchases.extras)}\n-------------------------------------------\nTOTAL: $${totalPrice}`;
-
-  return !errorMessage.length ? receipt : errorMessage;
-
-  }
+};
 
 // Do not change anything below this line.
 module.exports = {
