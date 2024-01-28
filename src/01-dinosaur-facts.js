@@ -46,11 +46,11 @@ function getLongestDinosaur(dinosaurs) {
 }
 
 
-function getLongestDino( dinosaurs) {
-  let longestDino = [0];
+// function getLongestDino( dinosaurs) {
+//   let longestDino = [0];
 
   
-}
+// npm
 /**
  * getDinosaurDescription()
  * ---------------------
@@ -71,6 +71,7 @@ function getLongestDino( dinosaurs) {
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
+
 function getDinosaurDescription(dinosaurs, id) {
   let description = ""
 
@@ -89,7 +90,7 @@ function getDinosaurDescription(dinosaurs, id) {
     if (dinoId === id) {
       description = `${dinoName} (${dinoPronunciation})\n${dinoInfo} It lived in the ${dinoPeriod} period, over ${dinoMya} million years ago.`
     } 
-
+    
   }
   if(!description) {
     description = `A dinosaur with an ID of 'incorrect-id' cannot be found.`
@@ -103,7 +104,9 @@ function getDinosaurDescription(dinosaurs, id) {
  * ---------------------
  * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. If a `key` is provided, returns the value of that key for each dinosaur alive at that time. Otherwise, returns the ID.
  *
- * If the dinosaur only has a single value for `mya`, allows for the `mya` value to be equal to the given value or one less. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
+ *  
+ * If the dinosaur only has a single value for `mya`, allows for the `mya` value to 
+ be equal to the given value or one less. For example, if a dinosaur has a `mya` value of `[29]`, the dinosaur's information will be returned if `29` is entered or `28` is entered.
  *
  * @param {Object[]} dinosaurs - An array of dinosaur objects. See the `data/dinosaurs.js` file for an example of the input.
  * @param {number} mya - "Millions of years ago."
@@ -124,18 +127,19 @@ function getDinosaurDescription(dinosaurs, id) {
  *  //> ["WHQcpcOj0G"]
  */
 function getDinosaursAliveMya(dinosaurs, mya, key) {
-  let arr = []
-
-  for (let dinosaur of dinosaurs) {
-    const dinoMya = dinosaur.mya
-    const dinoiId = dinosaur.id
-    if (dinoMya === mya || dinoMya === mya - 1 ) {
-      arr.push(dinoiId)
+  
+  const dinoValues = [];
+  for (let dino of dinosaurs) {
+    if (dino.mya.length === 1) {
+      if (mya === dino.mya[0] || mya === (dino.mya[0] - 1)) dinoValues.push(dino[key] || dino.dinosaurId)
+    }
+    else {
+     if (mya >= dino.mya[1] && mya <= dino.mya[0]) dinoValues.push(dino[key] || dino.dinosaurId);
     }
   }
+ return dinoValues;
 
 
-  return arr;
 }
 
 module.exports = {
