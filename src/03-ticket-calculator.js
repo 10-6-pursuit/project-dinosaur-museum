@@ -54,7 +54,50 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+
+// Main function
+function calculateTicketPrice(ticketData, ticketInfo) {  
+  // check for ticket for invalid ticket info
+  const ticketError = checkTicketInfo(ticketData, ticketInfo);
+  if (ticketError) return ticketError;
+
+  // calculate price of admission and extras
+  const admissionPrice = calculateAdmissionPrice(ticketData, ticketInfo)
+  const addonsPrice = calculateAddonPrice(ticketData, ticketInfo);
+  
+  return admissionPrice + addonsPrice;
+}
+
+// Helper function - calculate admission price
+function calculateAdmissionPrice(ticketData, { ticketType, entrantType }) {
+  const admissionPrice = ticketData[ticketType].priceInCents[entrantType];
+  return admissionPrice;
+}
+
+// Helper function - calculate price of extras on ticket
+function calculateAddonPrice(ticketData, { extras, entrantType }) {
+  let addonPrice = 0;
+  for (let addon of extras) {
+    addonPrice += ticketData.extras[addon].priceInCents[entrantType]
+  }
+  return addonPrice;
+}
+ // Helper function - check ticket info for invalid info
+function checkTicketInfo(ticketData, { ticketType, entrantType, extras }) {
+  // get arrays of ticket valid ticket types, entrants, and extras
+  const validTicketTypes = Object.keys(ticketData);
+  const validEntrants = Object.keys(ticketData.general.priceInCents);
+  const validAddons = Object.keys(ticketData.extras);
+
+  // check if all ticket info is invalid
+  //  if invalid return appropriate error
+  if (!validTicketTypes.includes(ticketType)) return `Ticket type '${ticketType}' cannot be found.`
+  if (!validEntrants.includes(entrantType)) return `Entrant type '${entrantType}' cannot be found.`
+  for (let addon of extras) {
+    if (!validAddons.includes(addon)) return `Extra type '${addon}' cannot be found.`
+  }
+  return false;
+}
 
 /**
  * purchaseTickets()
@@ -109,7 +152,66 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+
+// Main function
+function purchaseTickets(ticketData, purchases) {
+  // check tickets in purchases for errors
+  for (let ticket of purchases) {
+    if (checkTicketInfo(ticketData, ticket)) {
+      return checkTicketInfo(ticketData, ticket);
+    }
+  }
+
+  // variables for tickets in purchases and accumulator for price
+  const tickets = [];
+  let purchasePriceInCents = 0; 
+  
+  // for each ticket entrantType, ticketType,:, priceInDollars, (extras)
+  for (let ticket of purchases) {
+    // destructure iterated ticket in purchases
+    const { entrantType, ticketType, extras } = ticket;
+    const ticketPriceInCents = calculateTicketPrice(ticketData, ticket);
+
+    // map `extras` to `access` to add `extras description` for receipt
+    const access = extras.map(extra => ticketData.extras[extra].description);
+
+    // get ticket admission and extra info
+    const admissionDetails = `${capWord(entrantType)} ${ticketData[ticketType].description}: ${centsToDollars(ticketPriceInCents)}`
+    const extrasDetails = access.length ? ' ('+access.join(', ')+')' : '';
+
+    // push ticket admission or admission + extras info
+    tickets.push(access.length ? admissionDetails+extrasDetails : admissionDetails);
+
+    // accumulate ticket prices to purchasePriceInCents
+    purchasePriceInCents += ticketPriceInCents;
+  }
+
+  // receipt variables
+  const greeting = 'Thank you for visiting the Dinosaur Museum!';
+  const horiRule = `\n${'-'.repeat(43)}\n`;
+  const purchaseTotal = `TOTAL: ${centsToDollars(purchasePriceInCents)}`;
+  
+  // build receipt
+  const receipt = 
+    greeting +
+    horiRule +
+    tickets.join('\n') +
+    horiRule +
+    purchaseTotal;
+
+  return receipt;
+}
+
+// Helper function - capitalize word
+function capWord(s) {
+  return s[0].toUpperCase()+s.slice(1).toLowerCase()
+}
+
+// Helper function - convert cents to dollars
+function centsToDollars(cents) {
+  const strCents = String(cents);
+  return `$${strCents.slice(0, -2)}.${strCents.slice(-2)}`
+}
 
 // Do not change anything below this line.
 module.exports = {

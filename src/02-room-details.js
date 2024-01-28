@@ -25,7 +25,29 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
-function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
+
+// Main function
+function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+  let dinoId = null;
+  const noDino = `Dinosaur with name '${dinosaurName}' cannot be found.`
+
+  // check if target dino name is in museum
+  for (let dino of dinosaurs) {
+    if (dino.name === dinosaurName) {
+      dinoId = dino.dinosaurId
+    }
+  }
+
+  if (!dinoId) return noDino; // if search had no result return noDino message
+
+  // check for dinoId in rooms
+  for (let room of rooms) {
+    if (room.dinosaurs.includes(dinoId)) return room.name;
+  }
+
+  // if target dino is not in any room return message
+  return `Dinosaur with name '${dinosaurName}' cannot be found in any rooms.`
+}
 
 /**
  * getConnectedRoomNamesById()
@@ -49,7 +71,71 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {}
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+
+function getConnectedRoomNamesById(rooms, id) {
+  // find room by id
+    // if initial room id doesn't exist error
+  // get connectTo array of roomIds
+  // for each room id get room name
+    // if connected room doesn't exist error
+  
+  const roomsById = [];
+  const roomsByName = [];
+  let initialRoomIndex = null;
+  
+  let connectedRoomsById;
+  let connectedRoomsByName = [];
+
+  // iterate through all rooms
+  for (let i = 0; i < rooms.length; i++) {
+    // push each roomId and roomName to respective arrays
+    roomsById.push(rooms[i].roomId);
+    roomsByName.push(rooms[i].name);
+
+    // if target room id is found save the index and the connected rooms
+    if (rooms[i].roomId === id){ 
+      initialRoomIndex = i;
+      connectedRoomsById = rooms[i].connectsTo;
+    } else {
+      return `Room with ID of '${id}' could not be found.`
+    }
+  }
+
+
+  // iterate through the list of rooms connected to target room
+  for (let connectedRoomId of connectedRoomsById) {
+    // if the connectedRoomId is found in roomsById save the location
+    let connectedRoomIndex = roomsById.indexOf(connectedRoomId)
+    if (connectedRoomIndex > -1) { // check if the roomId was found in roomsById
+      // use the element at the same location in roomsByName;
+      connectedRoomsByName.push(roomsByName[connectedRoomIndex]);
+    } else { // the connected room ID is incorrect.
+      return `Room with ID of '${connectedRoomId}' could not be found.`
+    }
+  }
+  
+  return connectedRoomsByName;
+}
+
+// Helper function - get room by ID - NOT USED
+/*
+function getRoomById(rooms, connectedId) {
+  for (let room of rooms) {
+    if (room.roomId === connectedId ) return room.name
+  }
+  connectedRoomError.push()
+}
+*/
+
+// Helper function - check Room Id - NOT USED
+/*
+function checkRoomId(rooms, id) {
+  const roomsById = [];
+  for (let room of rooms) {
+    rooms.Id
+  }
+}
+*/
 
 module.exports = {
   getRoomByDinosaurName,
