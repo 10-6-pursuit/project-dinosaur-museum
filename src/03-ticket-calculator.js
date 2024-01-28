@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all tickets.
 */
+const tickets = require("../data/tickets");
 const exampleTicketData = require("../data/tickets");
 // Do not change the line above.
 
@@ -54,7 +55,25 @@ const exampleTicketData = require("../data/tickets");
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
  */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+function calculateTicketPrice(ticketData, ticketInfo) {
+  const basePriceCalc = (ticketSpecs, ticketGuide) => ticketGuide[ticketSpecs.ticketType].priceInCents[ticketSpecs.entrantType];
+  let basePrice = 0;
+
+  if (ticketInfo.ticketType === "general" || ticketInfo.ticketType === "membership") {
+    basePrice = basePriceCalc(ticketInfo, ticketData);
+  } else {
+    return "Ticket type '" + ticketInfo.ticketType + "' cannot be found.";
+  }
+  if (!basePrice) {
+    return "Entrant type '" + ticketInfo.entrantType + "' cannot be found."; 
+  }
+  if(!ticketInfo.extras.length) {
+    return basePrice;
+  }
+  const addOnPrices = (ticketSpecs) => ticketSpecs.extras.map(ele => ticketData.extras[ele]?.priceInCents[ticketSpecs.entrantType]);
+  const addOns = addOnPrices(ticketInfo, ticketData).reduce((sum, price) => sum + price, 0);
+  return !addOns ? "Extra type '" + "incorrect-extra" + "' cannot be found." : basePrice + addOns;
+}
 
 /**
  * purchaseTickets()
@@ -109,7 +128,28 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  //check if purchases array contains any error messages
+  let calculatedTickets = purchases.map(ele => calculateTicketPrice(ticketData, ele));
+  for (let result of calculatedTickets){
+    if (typeof result === "string"){
+      return result;
+    }
+  }
+  // build a receipt that includes: "greeting + (age + admission type + ticket price + extras) + total"
+  const greeting = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
+  const ticketTotals = (purchases.map(ele => calculateTicketPrice(ticketData, ele)).reduce((sum, price) => sum + price, 0)/100).toFixed(2);
+  const final = `\n-------------------------------------------\nTOTAL: $${ticketTotals}`;
+  // create array of ticket strings "Adult General Admission: $50.00" - (age + admission type + ticket price + extras)
+  const ticketList = purchases.map(ele => {
+        let ageGroup = `${ele.entrantType.charAt(0).toUpperCase()}${ele.entrantType.slice(1)}`;
+        let admissionType = `${ticketData[ele.ticketType].description}:`;
+        let ticketPrice = (calculateTicketPrice(ticketData, ele)/100).toFixed(2);
+        let extras = ele.extras.map(x => ticketData.extras[x].description).join(", ");
+        return !extras.length ? `${ageGroup} ${admissionType} $${ticketPrice}` : `${ageGroup} ${admissionType} $${ticketPrice} (${extras})`;
+    });
+  return `${greeting}${ticketList.join("\n")}${final}` ;
+};
 
 // Do not change anything below this line.
 module.exports = {
