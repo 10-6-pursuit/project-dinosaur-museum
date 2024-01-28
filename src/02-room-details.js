@@ -26,14 +26,6 @@ const exampleRoomData = require("../data/rooms");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
  */
 
-//What do we want to match between both object?
-//If given a dinosaur name, output the room that it's in
-//We do this by: going to the dinosaurs object (list), look for the dinosaur by name:
-//if(dinoName === dinosaurName)
-//If it does find it, then get it's dinoId.
-//match that dinoId with rooms[j].dinosaurs, and return the dinosaurs[j].room
-
-//We then want to
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
   let id = null;
   let result = null;
