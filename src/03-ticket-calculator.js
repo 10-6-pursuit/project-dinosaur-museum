@@ -64,18 +64,14 @@ function calculateTicketPrice(ticketData, ticketInfo) {
   } else {
     return "Ticket type '" + ticketInfo.ticketType + "' cannot be found.";
   }
-
   if (!basePrice) {
     return "Entrant type '" + ticketInfo.entrantType + "' cannot be found."; 
   }
-
   if(!ticketInfo.extras.length) {
     return basePrice;
   }
-
   const addOnPrices = (ticketSpecs) => ticketSpecs.extras.map(ele => ticketData.extras[ele]?.priceInCents[ticketSpecs.entrantType]);
-  let addOns = addOnPrices(ticketInfo, ticketData).reduce((sum, price) => sum + price, 0);
-
+  const addOns = addOnPrices(ticketInfo, ticketData).reduce((sum, price) => sum + price, 0);
   return !addOns ? "Extra type '" + "incorrect-extra" + "' cannot be found." : basePrice + addOns;
 }
 
@@ -134,19 +130,16 @@ function calculateTicketPrice(ticketData, ticketInfo) {
  */
 function purchaseTickets(ticketData, purchases) {
   //check if purchases array contains any error messages
-  let result = purchases.map(ele => calculateTicketPrice(ticketData, ele));
-  
-  for (let res of result){
-    if (typeof res === "string") {
-      return res;
+  let calculatedTickets = purchases.map(ele => calculateTicketPrice(ticketData, ele));
+  for (let result of calculatedTickets){
+    if (typeof result === "string"){
+      return result;
     }
   }
-
   // build a receipt that includes: "greeting + (age + admission type + ticket price + extras) + total"
   const greeting = "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n";
   const ticketTotals = (purchases.map(ele => calculateTicketPrice(ticketData, ele)).reduce((sum, price) => sum + price, 0)/100).toFixed(2);
   const final = `\n-------------------------------------------\nTOTAL: $${ticketTotals}`;
-
   // create array of ticket strings "Adult General Admission: $50.00" - (age + admission type + ticket price + extras)
   const ticketList = purchases.map(ele => {
         let ageGroup = `${ele.entrantType.charAt(0).toUpperCase()}${ele.entrantType.slice(1)}`;
@@ -155,9 +148,7 @@ function purchaseTickets(ticketData, purchases) {
         let extras = ele.extras.map(x => ticketData.extras[x].description).join(", ");
         return !extras.length ? `${ageGroup} ${admissionType} $${ticketPrice}` : `${ageGroup} ${admissionType} $${ticketPrice} (${extras})`;
     });
-
   return `${greeting}${ticketList.join("\n")}${final}` ;
-
 };
 
 // Do not change anything below this line.

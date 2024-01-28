@@ -25,10 +25,10 @@ const exampleDinosaurData = require("../data/dinosaurs");
  */
 
 function getLongestDinosaur(dinosaurs) {
+  let longestDino = dinosaurs[0];
   if (!dinosaurs.length) {
     return {};
   }
-  let longestDino = dinosaurs[0];
   for (let i = 1; i < dinosaurs.length; i++) {
     if (dinosaurs[i].lengthInMeters > longestDino.lengthInMeters) {
       longestDino = dinosaurs[i];
@@ -99,11 +99,9 @@ function getDinosaurDescription(dinosaurs, id) {
 
 function getDinosaursAliveMya(dinosaurs, mya, key) {
   let arr = [];
-
   for (let dino of dinosaurs) {
     let maxMya = dino.mya[0];
     let minMya = dino.mya[1];
-  
     if (maxMya && minMya) {
       if (mya >= minMya && mya <= maxMya) {
         arr.push(dino[key] || dino.dinosaurId);
