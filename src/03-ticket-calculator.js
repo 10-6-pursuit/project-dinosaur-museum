@@ -199,7 +199,7 @@ let str1=``;
      if(typeof sum===`string`){return sum}
      else return "Thank you for visiting the Dinosaur Museum!\n-------------------------------------------"+str1+`\n-------------------------------------------\nTOTAL: $${sum/100}.00`
     
-   
+   x
 
    
 }
