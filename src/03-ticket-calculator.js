@@ -160,13 +160,13 @@ function purchaseTickets(ticketData, purchases) {
     }
 
     totalCost += ticketPrice;
-    const formattedExtras = extras.length > 0 ? `(${extras.map(extra => ticketData.extras[extra].description).join(", ")})` : "";
-    const formattedPrice = `$${(ticketPrice / 100).toFixed(2)}${formattedExtras}`;
-    receipt += `${capitalizeFirstLetter(entrantType)} ${ticketData[ticketType].description}: ${formattedPrice}\n`;
+
+const formattedExtras = extras.length > 0 ? ` (${extras.map(extra => `${ticketData.extras[extra].description}`).join(", ")})` : "";
+
+const formattedPrice = `$${(ticketPrice / 100).toFixed(2)}${formattedExtras}`;
+receipt += `${capitalizeFirstLetter(entrantType)} ${ticketData[ticketType].description}: ${formattedPrice}\n`;
   }
-
   receipt += `-------------------------------------------\nTOTAL: $${(totalCost / 100).toFixed(2)}`;
-
   return receipt;
 }
 
