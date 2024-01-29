@@ -140,16 +140,16 @@ function purchaseTickets(ticketData, purchases) {
   const newPurchasesArray = purchases.map(obj => ({...obj}));
   const extraPurchasesArray = purchases.map(obj => ({...obj}));
 
-  const humanType = ["child", "adult", "senior"];
-  const ticketType = ["general", "membership", "extras"];
-  const extras = ["movie", "education", "terrace"];
+  const typeOfHuman = ["child", "adult", "senior"];
+  const typeOfTicket = ["general", "membership", "extras"];
+  const typeOfExtras = ["movie", "education", "terrace"];
   
   for (let ticket of purchases) {
-    if (!ticketType.includes(ticket.ticketType)) {
+    if (!typeOfTicket.includes(ticket.ticketType)) {
     return `Ticket type '${ticket.ticketType}' cannot be found.`;
-  } else if (ticket.extras.length >= 1 && !(extras.includes(ticket.extras[0]))) {
+  } else if (ticket.extras.length >= 1 && !typeOfExtras.includes(ticket.extras[0])) {
     return `Extra type '${ticket.extras}' cannot be found.`;
-  } else if (ticketType.includes(ticket.ticketType) && !humanType.includes(ticket.entrantType)) {
+  } else if (typeOfTicket.includes(ticket.ticketType) && !typeOfHuman.includes(ticket.entrantType)) {
     return `Entrant type '${ticket.entrantType}' cannot be found.`;
   } 
 }
@@ -208,11 +208,11 @@ function purchaseTickets(ticketData, purchases) {
 
   const extraReceiptMsg = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n${extraReceiptString}-------------------------------------------\nTOTAL: $${extraTicketTotal / 100}.00`;
 
-  if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length === 0 && humanType.includes(purchases[0].entrantType)) {
+  if (typeOfTicket.includes(purchases[0].ticketType) && purchases[0].extras.length === 0 && typeOfHuman.includes(purchases[0].entrantType)) {
     return receiptMsg;
   }
 
-  if (ticketType.includes(purchases[0].ticketType) && purchases[0].extras.length >= 1 && humanType.includes(purchases[0].entrantType)){
+  if (typeOfTicket.includes(purchases[0].ticketType) && purchases[0].extras.length >= 1 && typeOfHuman.includes(purchases[0].entrantType)){
     return extraReceiptMsg;
   }
 }

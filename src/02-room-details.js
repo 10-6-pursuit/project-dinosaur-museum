@@ -43,6 +43,7 @@ function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
       }
     }
   }
+
 return `Dinosaur with name '${dinosaurName}' cannot be found.`;
 }
 
@@ -83,7 +84,7 @@ function getConnectedRoomNamesById(rooms, id) {
     for (let room of rooms) {
       if (connectedRoom === room.roomId) {
         roomNames.push(room.name);
-      } else if (connectedRoom === "incorrect-id"){
+      } else if (connectedRoom === "incorrect-id") {
         return "Room with ID of 'incorrect-id' could not be found.";
       }
     }
