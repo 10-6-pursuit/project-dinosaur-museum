@@ -53,7 +53,8 @@ const exampleTicketData = require("../data/tickets");
     };
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
- */
+ */ /// Had lots of help with this one from other fellows.
+ 
 function calculateTicketPrice(ticketData, ticketInfo) {
   const { ticketType, entrantType, extras } = ticketInfo;
 
@@ -138,11 +139,20 @@ function calculateTicketPrice(ticketData, ticketInfo) {
     //> "Ticket type 'discount' cannot be found."
  */
 function purchaseTickets(ticketData, purchases) {
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   let totalCost = 0;
   let receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n`;
 
   for (const purchase of purchases) {
     const { ticketType, entrantType, extras } = purchase;
+
+    if (!ticketData[ticketType]) {
+      return `Ticket type '${ticketType}' cannot be found.`;
+    }
+
     const ticketPrice = calculateTicketPrice(ticketData, purchase);
 
     if (typeof ticketPrice === 'string') {
@@ -150,7 +160,9 @@ function purchaseTickets(ticketData, purchases) {
     }
 
     totalCost += ticketPrice;
-    receipt += `${capitalizeFirstLetter(entrantType)} ${ticketData[ticketType].description}: $${(ticketPrice / 100).toFixed(2)} (${extras.join(", ")})\n`;
+    const formattedExtras = extras.length > 0 ? `(${extras.map(extra => ticketData.extras[extra].description).join(", ")})` : "";
+    const formattedPrice = `$${(ticketPrice / 100).toFixed(2)}${formattedExtras}`;
+    receipt += `${capitalizeFirstLetter(entrantType)} ${ticketData[ticketType].description}: ${formattedPrice}\n`;
   }
 
   receipt += `-------------------------------------------\nTOTAL: $${(totalCost / 100).toFixed(2)}`;
