@@ -53,8 +53,37 @@ const exampleTicketData = require("../data/tickets");
     };
     calculateTicketPrice(tickets, ticketInfo);
     //> "Entrant type 'kid' cannot be found."
- */
-function calculateTicketPrice(ticketData, ticketInfo) {}
+ */ /// Had lots of help with this one from other fellows.
+ 
+function calculateTicketPrice(ticketData, ticketInfo) {
+  const { ticketType, entrantType, extras } = ticketInfo;
+
+  if (!ticketData[ticketType]) {
+    return `Ticket type '${ticketType}' cannot be found.`;
+  }
+
+  if (!ticketData[ticketType].priceInCents[entrantType]) {
+    return `Entrant type '${entrantType}' cannot be found.`;
+  }
+
+  let ticketPrice = ticketData[ticketType].priceInCents[entrantType];
+
+  if (extras && extras.length > 0) {
+    for (const extra of extras) {
+      if (!ticketData.extras[extra]) {
+        return `Extra type '${extra}' cannot be found.`;
+      }
+
+      if (!ticketData.extras[extra].priceInCents[entrantType]) {
+        return `Entrant type '${entrantType}' cannot access the extra '${extra}'.`;
+      }
+
+      ticketPrice += ticketData.extras[extra].priceInCents[entrantType];
+    }
+  }
+
+  return ticketPrice;
+}
 
 /**
  * purchaseTickets()
@@ -109,7 +138,37 @@ function calculateTicketPrice(ticketData, ticketInfo) {}
     purchaseTickets(tickets, purchases);
     //> "Ticket type 'discount' cannot be found."
  */
-function purchaseTickets(ticketData, purchases) {}
+function purchaseTickets(ticketData, purchases) {
+  function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  let totalCost = 0;
+  let receipt = `Thank you for visiting the Dinosaur Museum!\n-------------------------------------------\n`;
+
+  for (const purchase of purchases) {
+    const { ticketType, entrantType, extras } = purchase;
+
+    if (!ticketData[ticketType]) {
+      return `Ticket type '${ticketType}' cannot be found.`;
+    }
+
+    const ticketPrice = calculateTicketPrice(ticketData, purchase);
+
+    if (typeof ticketPrice === 'string') {
+      return ticketPrice; // Return the error message directly
+    }
+
+    totalCost += ticketPrice;
+
+const formattedExtras = extras.length > 0 ? ` (${extras.map(extra => `${ticketData.extras[extra].description}`).join(", ")})` : "";
+
+const formattedPrice = `$${(ticketPrice / 100).toFixed(2)}${formattedExtras}`;
+receipt += `${capitalizeFirstLetter(entrantType)} ${ticketData[ticketType].description}: ${formattedPrice}\n`;
+  }
+  receipt += `-------------------------------------------\nTOTAL: $${(totalCost / 100).toFixed(2)}`;
+  return receipt;
+}
 
 // Do not change anything below this line.
 module.exports = {
