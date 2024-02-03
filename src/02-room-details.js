@@ -21,10 +21,23 @@ const exampleRoomData = require("../data/rooms");
  *  getRoomByDinosaurName(dinosaurs, rooms, "Tyrannosaurus");
  *  //> "Roberts Room"
  *
+ * Raz's solution: 
+ * function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
+ * 1. find the dino by its name
+ * const dino = dinosaurs.find(dinosaur => dinosaur.name === dinosaurName)
+ * 2. find the room that has the dino in the dinosaur array
+ * const myRoom = rooms.find(room => room.dinosaurs.includes(dino.dinosaurId));
+ * 
+ * if (!myRoom) return `
+ * return myRoom.name `Dinosaur with name '${dinosaurId}' cannot be found.
+ * }
+ * 
  * EXAMPLE:
  *  getRoomByDinosaurName(dinosaurs, rooms, "Pterodactyl");
  *  //> "Dinosaur with name 'Pterodactyl' cannot be found."
- */ // Hand help with this function. Didn't complete by myself.
+ */ // Had help with this function. Didn't complete by myself.
+
+
 function getRoomByDinosaurName(dinosaurs, rooms, dinosaurName) {
   for (let i = 0; i < dinosaurs.length; i++) {
   if (dinosaurs[i].name === dinosaurName) {
@@ -62,6 +75,18 @@ return `Dinosaur with name '${dinosaurName}' cannot be found.`;
       "Ellis Family Hall",
       "Kit Hopkins Education Wing"
     ]
+Raz solution:
+function functionName(rooms, id) {
+  const myRoom = rooms.find(room => room.roomId === id);
+
+  if (!myRoom) return `Room with ID of '${id}' could not be found.`;
+
+  const filteredRooms = rooms.filter(room => myRoom.connectsTi.includes(room.roomId.map(room => room.name);
+
+  myRoom.connectsTo
+
+}
+
  */
 //Had help with this function.  Didn't solve by myself.
 function getConnectedRoomNamesById(rooms, id) {
