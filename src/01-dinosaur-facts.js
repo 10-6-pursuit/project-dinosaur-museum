@@ -5,6 +5,7 @@
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
 */
+const dinosaurs = require("../data/dinosaurs");
 const exampleDinosaurData = require("../data/dinosaurs");
 // Do not change the line above.
 
@@ -22,8 +23,32 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-function getLongestDinosaur(dinosaurs) {}
 
+//Pseudo Code
+//We need a variable to hold our dinosaur name. 
+//Next we have to use a for loop to iterate through our dinosaurs array.
+//We need to key in to the first desired obj location and assign it to our variable.
+//We have to compare our next target key with our stored variable to find the largest.
+//We convert our value from meters to feet.
+//Initialize our empObj to Dinosaur name and the value of our variable as a key.
+//Lastly return our empObj(use better name!). 
+function getLongestDinosaur(dinosaurs) {
+  if (!dinosaurs.length) {
+    return {};
+  }
+  let longestDino = dinosaurs[0];
+
+    for (let dino of dinosaurs) {
+      if (dino.lengthInMeters > longestDino.lengthInMeters) {
+        longestDino = dino;
+      }
+    }
+  return {
+    [longestDino.name]: longestDino.lengthInMeters * 3.281
+  };
+}
+
+// console.log(getLongestDinosaur(dinosaurs));
 /**
  * getDinosaurDescription()
  * ---------------------
@@ -44,7 +69,14 @@ function getLongestDinosaur(dinosaurs) {}
  *  getDinosaurDescription(dinosaurs, "incorrect-id");
  *  //> "A dinosaur with an ID of 'incorrect-id' cannot be found."
  */
-function getDinosaurDescription(dinosaurs, id) {}
+function getDinosaurDescription(dinosaurs, id) {
+  for (let dino of dinosaurs) {
+    if (dino.dinosaurId === id) {
+      return `${dino.name} (${dino.pronunciation})\n${dino.info} It lived in the ${dino.period} period, over ${dino.mya[1] || dino.mya[0]} million years ago.`
+    }
+  }
+  return `A dinosaur with an ID of '${[id]}' cannot be found.`
+}
 
 /**
  * getDinosaursAliveMya()
@@ -71,7 +103,20 @@ function getDinosaurDescription(dinosaurs, id) {}
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-function getDinosaursAliveMya(dinosaurs, mya, key) {}
+function getDinosaursAliveMya(dinosaurs, mya, key) {
+    const dinoValues = [];
+
+    for (let dino of dinosaurs) {
+
+      if (dino.mya.length === 1) {
+        if (mya === dino.mya[0] || mya === (dino.mya[0] - 1)) dinoValues.push(dino[key] || dino.dinosaurId)
+      } 
+      else {
+       if (mya >= dino.mya[1] && mya <= dino.mya[0]) dinoValues.push(dino[key] || dino.dinosaurId);
+      }
+    }
+   return dinoValues;
+}
 
 module.exports = {
   getLongestDinosaur,
